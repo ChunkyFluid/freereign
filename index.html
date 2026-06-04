@@ -65,6 +65,9 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   
   <link rel="stylesheet" href="/style.css" />
+
+  <!-- Lemon Squeezy Checkout -->
+  <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
 </head>
 <body>
   <div id="app">
@@ -177,10 +180,10 @@
           <span class="modal__price">$14.99</span>
           <span class="modal__price-label">one-time</span>
         </div>
-        <button class="modal__buy-btn" id="pro-buy-btn">
+        <a class="modal__buy-btn lemonsqueezy-button" id="pro-buy-btn" href="CHECKOUT_URL_PLACEHOLDER">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1h2l2.6 9.59a1 1 0 00.97.75h5.42a1 1 0 00.97-.75L15 4H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="14" r="1" fill="currentColor"/><circle cx="13" cy="14" r="1" fill="currentColor"/></svg>
           Purchase Pro License
-        </button>
+        </a>
         <p class="modal__disclaimer">Powered by Lemon Squeezy · Secure checkout · Instant delivery</p>
       </div>
     </div>

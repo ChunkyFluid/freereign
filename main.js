@@ -458,8 +458,26 @@ function bindGlobalEvents() {
 
   proBuyBtn.addEventListener('click', () => {
     analytics.trackProClick();
-    // TODO: Integrate Lemon Squeezy checkout
-    showToast('Payment integration coming soon! Check back shortly.', 'info');
+    // Lemon Squeezy checkout overlay is handled by the SDK via the lemonsqueezy-button class
+    // If the href is still the placeholder, show a coming-soon toast
+    if (proBuyBtn.getAttribute('href') === 'CHECKOUT_URL_PLACEHOLDER') {
+      showToast('Payment integration coming soon! Check back shortly.', 'info');
+    }
+  });
+
+  // Listen for Lemon Squeezy checkout success
+  window.addEventListener('message', (event) => {
+    if (event.data && event.data.event === 'Checkout.Success') {
+      // Activate Pro license
+      localStorage.setItem('fr_pro', 'true');
+      localStorage.setItem('fr_pro_order', JSON.stringify(event.data.data));
+      isPro = true;
+      document.body.classList.add('is-pro');
+      proModalOverlay.classList.remove('visible');
+      renderSidebar();
+      showToast('🎉 Welcome to FreeReign Pro! All tools unlocked.', 'success');
+      analytics.track('pro_purchase', { orderId: event.data?.data?.order?.id });
+    }
   });
 
   // Logo -> landing
