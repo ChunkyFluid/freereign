@@ -64,7 +64,7 @@ No accounts. No sign-ups. No ads. Just tools.
 
 ```bash
 # Clone
-git clone https://github.com/YOUR_USERNAME/freereign.git
+git clone https://github.com/ChunkyFluid/freereign.git
 cd freereign
 
 # Install
