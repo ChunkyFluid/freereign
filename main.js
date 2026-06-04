@@ -230,6 +230,10 @@ function renderTool(tool) {
           <button class="code-tab" data-format="tailwind">Tailwind</button>
         </div>
         <div class="tool-code__actions">
+          <button class="copy-btn" id="download-btn" title="Download CSS file (Ctrl+S)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9M3 7l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Download
+          </button>
           <button class="copy-btn" id="share-btn" title="Share this tool">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8a2 2 0 100-4 2 2 0 000 4zM10 4a2 2 0 100-4 2 2 0 000 4zM10 14a2 2 0 100-4 2 2 0 000 4zM5.7 7.2l2.6 1.6M8.3 3.2L5.7 4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
             Share
@@ -324,6 +328,24 @@ function bindCodePanelEvents(tool) {
           `;
         }, 2000);
       });
+    });
+  }
+
+  // Download button
+  const downloadBtn = document.getElementById('download-btn');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const code = tool.getCode(currentFormat);
+      const ext = currentFormat === 'scss' ? 'scss' : currentFormat === 'tailwind' ? 'html' : 'css';
+      const blob = new Blob([code], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${tool.id}.${ext}`;
+      a.click();
+      URL.revokeObjectURL(url);
+      analytics.track('download', { tool: tool.id, format: currentFormat });
+      showToast(`${tool.id}.${ext} downloaded!`, 'success');
     });
   }
 
@@ -504,6 +526,34 @@ function bindGlobalEvents() {
       });
       sidebarEl.classList.remove('open');
       proModalOverlay.classList.remove('visible');
+    }
+
+    // Arrow key navigation between tools
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && document.activeElement === document.body) {
+      if (!currentTool) return;
+      const idx = TOOLS.findIndex(t => t.id === currentTool.id);
+      if (idx === -1) return;
+      const next = e.key === 'ArrowRight' ? idx + 1 : idx - 1;
+      if (next >= 0 && next < TOOLS.length) {
+        navigateTo(TOOLS[next].id);
+      }
+    }
+
+    // Ctrl+S to download CSS
+    if (e.key === 's' && (e.ctrlKey || e.metaKey) && currentTool) {
+      e.preventDefault();
+      const codeEl = document.getElementById('code-output');
+      if (codeEl) {
+        const code = codeEl.textContent;
+        const blob = new Blob([code], { type: 'text/css' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${currentTool.id}.css`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('CSS file downloaded!', 'success');
+      }
     }
   });
 
