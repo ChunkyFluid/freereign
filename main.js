@@ -177,6 +177,13 @@ function navigateTo(toolId) {
   // Close mobile sidebar
   sidebarEl.classList.remove('open');
 
+  // Update page title and meta for SEO
+  document.title = `${tool.name} — Free CSS Generator | FreeReign`;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute('content', `Free ${tool.name} generator. ${tool.description} Generate CSS, SCSS, and Tailwind code instantly.`);
+  }
+
   // Render tool
   renderTool(tool);
 }
@@ -344,6 +351,13 @@ function renderLanding() {
     btn.classList.remove('active');
   });
   window.location.hash = '';
+
+  // Reset page title and meta
+  document.title = 'FreeReign — Premium CSS & Design Toolkit';
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute('content', '15+ free CSS generators in one beautiful toolkit. Gradients, shadows, glassmorphism, animations & more. Zero friction, instant code.');
+  }
 
   toolContainer.innerHTML = `
     <div class="landing">
