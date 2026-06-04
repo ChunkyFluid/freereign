@@ -1218,6 +1218,108 @@ input[type="color"]::-webkit-color-swatch {
   right: var(--space-3);
 }
 
+/* Landing Stats Bar */
+.landing__stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-10);
+  padding: var(--space-8) 0;
+  margin: var(--space-8) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.landing__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.landing__stat-number {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-extrabold);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing__stat-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Landing Features */
+.landing__features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  margin: var(--space-12) 0;
+  text-align: left;
+}
+
+.landing__feature {
+  padding: var(--space-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.landing__feature:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.landing__feature-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-3);
+}
+
+.landing__feature-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-2);
+  letter-spacing: -0.02em;
+}
+
+.landing__feature-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Landing Bottom CTA */
+.landing__bottom-cta {
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+  margin: var(--space-8) 0 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+}
+
+.landing__bottom-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-3);
+}
+
+.landing__bottom-desc {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* === Toast Notifications === */
 .toast-container {
   position: fixed;

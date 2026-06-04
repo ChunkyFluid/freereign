@@ -364,6 +364,26 @@ function renderLanding() {
           ★ Get Pro — $14.99
         </button>
       </div>
+
+      <div class="landing__stats">
+        <div class="landing__stat">
+          <span class="landing__stat-number">${TOOLS.length}</span>
+          <span class="landing__stat-label">CSS Tools</span>
+        </div>
+        <div class="landing__stat">
+          <span class="landing__stat-number">3</span>
+          <span class="landing__stat-label">Output Formats</span>
+        </div>
+        <div class="landing__stat">
+          <span class="landing__stat-number">$0</span>
+          <span class="landing__stat-label">Forever Free</span>
+        </div>
+        <div class="landing__stat">
+          <span class="landing__stat-number">0</span>
+          <span class="landing__stat-label">Data Collected</span>
+        </div>
+      </div>
+
       <div class="landing__tools-grid">
         ${TOOLS.map(tool => `
           <div class="landing__tool-card" data-tool-id="${tool.id}">
@@ -374,6 +394,30 @@ function renderLanding() {
             ${tool.isNew ? '<span class="sidebar__tool-badge">NEW</span>' : ''}
           </div>
         `).join('')}
+      </div>
+
+      <div class="landing__features">
+        <div class="landing__feature">
+          <div class="landing__feature-icon">⚡</div>
+          <h3 class="landing__feature-title">Instant Code</h3>
+          <p class="landing__feature-desc">Every adjustment generates real CSS, SCSS, and Tailwind code instantly. Just copy and paste.</p>
+        </div>
+        <div class="landing__feature">
+          <div class="landing__feature-icon">🔒</div>
+          <h3 class="landing__feature-title">100% Private</h3>
+          <p class="landing__feature-desc">Everything runs in your browser. No accounts, no tracking, no data collection. Ever.</p>
+        </div>
+        <div class="landing__feature">
+          <div class="landing__feature-icon">🎨</div>
+          <h3 class="landing__feature-title">Premium Design</h3>
+          <p class="landing__feature-desc">Dark and light themes, smooth animations, and keyboard shortcuts. Tools that feel as good as they look.</p>
+        </div>
+      </div>
+
+      <div class="landing__bottom-cta">
+        <h2 class="landing__bottom-title">Ready to build <span class="landing__title-accent">faster</span>?</h2>
+        <p class="landing__bottom-desc">Join thousands of developers who use FreeReign to ship CSS in seconds, not minutes.</p>
+        <button class="landing__cta landing__cta--primary" id="cta-explore-bottom">Start Building →</button>
       </div>
     </div>
   `;
@@ -395,6 +439,11 @@ function renderLanding() {
   const ctaPro = document.getElementById('cta-pro');
   if (ctaPro) {
     ctaPro.addEventListener('click', () => showProModal());
+  }
+
+  const ctaBottom = document.getElementById('cta-explore-bottom');
+  if (ctaBottom) {
+    ctaBottom.addEventListener('click', () => navigateTo(TOOLS[0].id));
   }
 }
 
