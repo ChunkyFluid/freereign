@@ -17,6 +17,9 @@ import { clipPathTool } from './tools/clippath.js';
 import { filterTool } from './tools/filter.js';
 import { typographyTool } from './tools/typography.js';
 import { breakpointTool } from './tools/breakpoint.js';
+import { aspectRatioTool } from './tools/aspectratio.js';
+import { cursorTool } from './tools/cursor.js';
+import { scrollSnapTool } from './tools/scrollsnap.js';
 
 // === Tool Registry ===
 const TOOLS = [
@@ -35,12 +38,15 @@ const TOOLS = [
   filterTool,
   typographyTool,
   breakpointTool,
+  aspectRatioTool,
+  cursorTool,
+  scrollSnapTool,
 ];
 
 const TOOL_CATEGORIES = {
   essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism'],
-  layout: ['flexbox', 'grid', 'breakpoint'],
-  effects: ['animation', 'textshadow', 'transform', 'neumorphism', 'clippath', 'filter'],
+  layout: ['flexbox', 'grid', 'breakpoint', 'aspectratio', 'scrollsnap'],
+  effects: ['animation', 'textshadow', 'transform', 'neumorphism', 'clippath', 'filter', 'cursor'],
   pro: ['typography'],
 };
 
