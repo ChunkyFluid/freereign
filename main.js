@@ -217,6 +217,10 @@ function renderTool(tool) {
           <button class="code-tab" data-format="tailwind">Tailwind</button>
         </div>
         <div class="tool-code__actions">
+          <button class="copy-btn" id="share-btn" title="Share this tool">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8a2 2 0 100-4 2 2 0 000 4zM10 4a2 2 0 100-4 2 2 0 000 4zM10 14a2 2 0 100-4 2 2 0 000 4zM5.7 7.2l2.6 1.6M8.3 3.2L5.7 4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Share
+          </button>
           <button class="copy-btn" id="copy-btn">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 4V3a2 2 0 00-2-2H3a2 2 0 00-2 2v5a2 2 0 002 2h1" stroke="currentColor" stroke-width="1.5"/></svg>
             Copy
@@ -226,6 +230,13 @@ function renderTool(tool) {
       <div class="tool-code__body">
         <pre id="code-output"></pre>
       </div>
+    </div>
+    <div class="tool-footer">
+      <span>Made with ◆ by <strong>FreeReign</strong></span>
+      <span>·</span>
+      <span>${TOOLS.length} tools</span>
+      <span>·</span>
+      <span>100% free & open source</span>
     </div>
   `;
 
@@ -244,6 +255,23 @@ function renderTool(tool) {
       tool.reset?.();
       tool.init();
       bindCodePanelEvents(tool);
+    });
+  }
+
+  // Bind share
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', () => {
+      const url = window.location.href;
+      const title = `FreeReign — ${tool.name}`;
+      const text = `Check out this CSS ${tool.name} generator!`;
+      if (navigator.share) {
+        navigator.share({ title, text, url }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Link copied to clipboard!', 'success');
+        });
+      }
     });
   }
 }
