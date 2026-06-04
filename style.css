@@ -1579,6 +1579,20 @@ input[type="color"]::-webkit-color-swatch {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: var(--space-3);
   }
+
+  .landing__stats {
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .landing__features {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .landing__bottom-cta {
+    padding: var(--space-8) var(--space-4);
+  }
 }
 
 @media (max-width: 480px) {
@@ -1588,6 +1602,14 @@ input[type="color"]::-webkit-color-swatch {
 
   .topbar__pro-btn span {
     display: none;
+  }
+
+  .landing__stats {
+    gap: var(--space-4);
+  }
+
+  .landing__stat-number {
+    font-size: var(--text-xl);
   }
 }
 
