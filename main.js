@@ -458,11 +458,6 @@ function bindGlobalEvents() {
 
   proBuyBtn.addEventListener('click', () => {
     analytics.trackProClick();
-    // Lemon Squeezy checkout overlay is handled by the SDK via the lemonsqueezy-button class
-    // If the href is still the placeholder, show a coming-soon toast
-    if (proBuyBtn.getAttribute('href') === 'CHECKOUT_URL_PLACEHOLDER') {
-      showToast('Payment integration coming soon! Check back shortly.', 'info');
-    }
   });
 
   // Listen for Lemon Squeezy checkout success
