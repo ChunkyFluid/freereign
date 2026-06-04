@@ -1,0 +1,12 @@
+# FreeReign — CSS & Design Toolkit
+User-agent: *
+Allow: /
+
+Sitemap: https://freereign.dev/sitemap.xml
+
+# Allow all crawlers to index all pages
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

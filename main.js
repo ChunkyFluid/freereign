@@ -1,0 +1,478 @@
+/* ============================================================
+   FreeReign — Main Application Controller
+   ============================================================ */
+import './style.css';
+import { gradientTool } from './tools/gradient.js';
+import { boxShadowTool } from './tools/boxshadow.js';
+import { borderRadiusTool } from './tools/borderradius.js';
+import { colorPaletteTool } from './tools/colorpalette.js';
+import { glassmorphismTool } from './tools/glassmorphism.js';
+import { flexboxTool } from './tools/flexbox.js';
+import { gridTool } from './tools/grid.js';
+import { animationTool } from './tools/animation.js';
+import { textShadowTool } from './tools/textshadow.js';
+import { transformTool } from './tools/transform.js';
+import { neumorphismTool } from './tools/neumorphism.js';
+import { clipPathTool } from './tools/clippath.js';
+import { filterTool } from './tools/filter.js';
+import { typographyTool } from './tools/typography.js';
+import { breakpointTool } from './tools/breakpoint.js';
+
+// === Tool Registry ===
+const TOOLS = [
+  gradientTool,
+  boxShadowTool,
+  borderRadiusTool,
+  colorPaletteTool,
+  glassmorphismTool,
+  flexboxTool,
+  gridTool,
+  animationTool,
+  textShadowTool,
+  transformTool,
+  neumorphismTool,
+  clipPathTool,
+  filterTool,
+  typographyTool,
+  breakpointTool,
+];
+
+const TOOL_CATEGORIES = {
+  essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism'],
+  layout: ['flexbox', 'grid', 'breakpoint'],
+  effects: ['animation', 'textshadow', 'transform', 'neumorphism', 'clippath', 'filter'],
+  pro: ['typography'],
+};
+
+// === State ===
+let currentTool = null;
+let isPro = false;
+
+// === Analytics ===
+const analytics = {
+  sessionStart: Date.now(),
+  toolViews: {},
+  copies: 0,
+  proClicks: 0,
+  track(event, data = {}) {
+    const entry = { event, ...data, timestamp: Date.now() };
+    const stored = JSON.parse(localStorage.getItem('fr_analytics') || '[]');
+    stored.push(entry);
+    if (stored.length > 500) stored.splice(0, stored.length - 500);
+    localStorage.setItem('fr_analytics', JSON.stringify(stored));
+  },
+  trackToolView(toolId) {
+    this.toolViews[toolId] = (this.toolViews[toolId] || 0) + 1;
+    this.track('tool_view', { tool: toolId });
+  },
+  trackCopy(toolId) {
+    this.copies++;
+    this.track('copy', { tool: toolId });
+  },
+  trackProClick() {
+    this.proClicks++;
+    this.track('pro_click');
+  }
+};
+
+// === DOM Elements ===
+const sidebarEl = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const toolContainer = document.getElementById('tool-container');
+const searchInput = document.getElementById('tool-search');
+const themeToggle = document.getElementById('theme-toggle');
+const proBtn = document.getElementById('pro-btn');
+const sidebarProBtn = document.getElementById('sidebar-pro-btn');
+const proModalOverlay = document.getElementById('pro-modal-overlay');
+const proModalClose = document.getElementById('pro-modal-close');
+const proBuyBtn = document.getElementById('pro-buy-btn');
+const logoLink = document.getElementById('logo-link');
+
+// === Initialize App ===
+function init() {
+  checkProStatus();
+  renderSidebar();
+  handleRouting();
+  bindGlobalEvents();
+  initTheme();
+}
+
+// === Theme ===
+function initTheme() {
+  const saved = localStorage.getItem('fr_theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('fr_theme', next);
+}
+
+// === Pro Status ===
+function checkProStatus() {
+  isPro = localStorage.getItem('fr_pro') === 'true';
+  document.body.classList.toggle('is-pro', isPro);
+}
+
+// === Sidebar Rendering ===
+function renderSidebar() {
+  Object.entries(TOOL_CATEGORIES).forEach(([category, toolIds]) => {
+    const container = document.getElementById(`tools-${category}`);
+    if (!container) return;
+    container.innerHTML = '';
+    
+    const tools = toolIds.map(id => TOOLS.find(t => t.id === id)).filter(Boolean);
+    tools.forEach(tool => {
+      const btn = document.createElement('button');
+      btn.className = 'sidebar__tool-btn';
+      btn.dataset.toolId = tool.id;
+      btn.innerHTML = `
+        <span class="sidebar__tool-icon">${tool.icon}</span>
+        <span class="sidebar__tool-name">${tool.name}</span>
+        ${tool.isPro && !isPro ? '<span class="sidebar__tool-lock">🔒</span>' : ''}
+        ${tool.isNew ? '<span class="sidebar__tool-badge">NEW</span>' : ''}
+      `;
+      btn.addEventListener('click', () => navigateTo(tool.id));
+      container.appendChild(btn);
+    });
+  });
+}
+
+// === Routing ===
+function handleRouting() {
+  const hash = window.location.hash.slice(1);
+  if (hash && hash !== 'pro') {
+    navigateTo(hash);
+  } else {
+    renderLanding();
+  }
+}
+
+function navigateTo(toolId) {
+  const tool = TOOLS.find(t => t.id === toolId);
+  if (!tool) {
+    renderLanding();
+    return;
+  }
+
+  if (tool.isPro && !isPro) {
+    showProModal();
+    return;
+  }
+
+  currentTool = tool;
+  window.location.hash = toolId;
+  analytics.trackToolView(toolId);
+
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar__tool-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.toolId === toolId);
+  });
+
+  // Close mobile sidebar
+  sidebarEl.classList.remove('open');
+
+  // Render tool
+  renderTool(tool);
+}
+
+// === Tool Rendering ===
+function renderTool(tool) {
+  toolContainer.innerHTML = '';
+  toolContainer.style.animation = 'none';
+  toolContainer.offsetHeight; // trigger reflow
+  toolContainer.style.animation = '';
+
+  const html = `
+    <div class="tool-header">
+      <h1 class="tool-header__title">${tool.name}</h1>
+      <p class="tool-header__desc">${tool.description}</p>
+    </div>
+    <div class="tool-body">
+      <div class="tool-controls" id="tool-controls">
+        ${tool.renderControls()}
+      </div>
+      <div class="tool-preview" id="tool-preview-panel">
+        <div class="tool-preview__header">
+          <span class="tool-preview__title">Preview</span>
+          <div class="tool-preview__actions">
+            <button class="preview-action-btn" id="reset-btn">Reset</button>
+          </div>
+        </div>
+        <div class="tool-preview__body" id="preview-body">
+          ${tool.renderPreview()}
+        </div>
+      </div>
+    </div>
+    <div class="tool-code" id="tool-code-panel">
+      <div class="tool-code__header">
+        <div class="tool-code__tabs">
+          <button class="code-tab active" data-format="css">CSS</button>
+          <button class="code-tab" data-format="scss">SCSS</button>
+          <button class="code-tab" data-format="tailwind">Tailwind</button>
+        </div>
+        <div class="tool-code__actions">
+          <button class="copy-btn" id="copy-btn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 4V3a2 2 0 00-2-2H3a2 2 0 00-2 2v5a2 2 0 002 2h1" stroke="currentColor" stroke-width="1.5"/></svg>
+            Copy
+          </button>
+        </div>
+      </div>
+      <div class="tool-code__body">
+        <pre id="code-output"></pre>
+      </div>
+    </div>
+  `;
+
+  toolContainer.innerHTML = html;
+
+  // Initialize tool logic
+  tool.init();
+
+  // Bind code panel events
+  bindCodePanelEvents(tool);
+
+  // Bind reset
+  const resetBtn = document.getElementById('reset-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      tool.reset?.();
+      tool.init();
+      bindCodePanelEvents(tool);
+    });
+  }
+}
+
+function bindCodePanelEvents(tool) {
+  const copyBtn = document.getElementById('copy-btn');
+  const codeTabs = document.querySelectorAll('.code-tab');
+  let currentFormat = 'css';
+
+  // Update code output
+  function updateCode() {
+    const output = document.getElementById('code-output');
+    if (!output) return;
+    const code = tool.getCode(currentFormat);
+    output.innerHTML = highlightCSS(code);
+  }
+
+  updateCode();
+
+  // Copy button
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const code = tool.getCode(currentFormat);
+      navigator.clipboard.writeText(code).then(() => {
+        copyBtn.classList.add('copied');
+        copyBtn.innerHTML = `
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Copied!
+        `;
+        analytics.trackCopy(tool.id);
+        showToast('Code copied to clipboard!', 'success');
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 4V3a2 2 0 00-2-2H3a2 2 0 00-2 2v5a2 2 0 002 2h1" stroke="currentColor" stroke-width="1.5"/></svg>
+            Copy
+          `;
+        }, 2000);
+      });
+    });
+  }
+
+  // Format tabs
+  codeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      codeTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentFormat = tab.dataset.format;
+      updateCode();
+    });
+  });
+
+  // Expose update function globally for tools to call
+  window.__updateCode = updateCode;
+}
+
+// === CSS Syntax Highlighting ===
+function highlightCSS(code) {
+  return code
+    .replace(/\/\*[\s\S]*?\*\//g, match => `<span class="css-comment">${match}</span>`)
+    .replace(/([\w-]+)(\s*:\s*)/g, '<span class="css-prop">$1</span>$2')
+    .replace(/([{}\[\]])/g, '<span class="css-brace">$1</span>')
+    .replace(/(\.[\w-]+)/g, '<span class="css-selector">$1</span>');
+}
+
+// === Landing Page ===
+function renderLanding() {
+  currentTool = null;
+  document.querySelectorAll('.sidebar__tool-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  window.location.hash = '';
+
+  toolContainer.innerHTML = `
+    <div class="landing">
+      <span class="landing__eyebrow">✦ Free & Open Source CSS Toolkit</span>
+      <h1 class="landing__title">
+        Design with<br/>
+        <span class="landing__title-accent">Total FreeReign</span>
+      </h1>
+      <p class="landing__subtitle">
+        ${TOOLS.length} premium CSS generators in one beautiful toolkit.
+        Visual controls, instant code, zero friction.
+      </p>
+      <div class="landing__cta-group">
+        <button class="landing__cta landing__cta--primary" id="cta-explore">
+          Explore Tools →
+        </button>
+        <button class="landing__cta landing__cta--secondary" id="cta-pro">
+          ★ Get Pro — $14.99
+        </button>
+      </div>
+      <div class="landing__tools-grid">
+        ${TOOLS.map(tool => `
+          <div class="landing__tool-card" data-tool-id="${tool.id}">
+            <div class="landing__tool-card-icon">${tool.icon}</div>
+            <div class="landing__tool-card-name">${tool.name}</div>
+            <div class="landing__tool-card-desc">${tool.shortDesc || tool.description}</div>
+            ${tool.isPro ? '<span class="sidebar__tool-badge">PRO</span>' : ''}
+            ${tool.isNew ? '<span class="sidebar__tool-badge">NEW</span>' : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // Bind landing events
+  document.querySelectorAll('.landing__tool-card').forEach(card => {
+    card.addEventListener('click', () => {
+      navigateTo(card.dataset.toolId);
+    });
+  });
+
+  const ctaExplore = document.getElementById('cta-explore');
+  if (ctaExplore) {
+    ctaExplore.addEventListener('click', () => {
+      navigateTo(TOOLS[0].id);
+    });
+  }
+
+  const ctaPro = document.getElementById('cta-pro');
+  if (ctaPro) {
+    ctaPro.addEventListener('click', () => showProModal());
+  }
+}
+
+// === Global Events ===
+function bindGlobalEvents() {
+  // Sidebar toggle (mobile)
+  sidebarToggle.addEventListener('click', () => {
+    sidebarEl.classList.toggle('open');
+  });
+
+  sidebarOverlay.addEventListener('click', () => {
+    sidebarEl.classList.remove('open');
+  });
+
+  // Theme toggle
+  themeToggle.addEventListener('click', toggleTheme);
+
+  // Search
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.sidebar__tool-btn').forEach(btn => {
+      const name = btn.querySelector('.sidebar__tool-name').textContent.toLowerCase();
+      btn.style.display = name.includes(query) ? '' : 'none';
+    });
+  });
+
+  // Keyboard shortcut for search
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+      searchInput.blur();
+      searchInput.value = '';
+      document.querySelectorAll('.sidebar__tool-btn').forEach(btn => {
+        btn.style.display = '';
+      });
+      sidebarEl.classList.remove('open');
+      proModalOverlay.classList.remove('visible');
+    }
+  });
+
+  // Pro modal
+  proBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    showProModal();
+  });
+
+  sidebarProBtn.addEventListener('click', () => showProModal());
+
+  proModalClose.addEventListener('click', () => {
+    proModalOverlay.classList.remove('visible');
+  });
+
+  proModalOverlay.addEventListener('click', (e) => {
+    if (e.target === proModalOverlay) {
+      proModalOverlay.classList.remove('visible');
+    }
+  });
+
+  proBuyBtn.addEventListener('click', () => {
+    analytics.trackProClick();
+    // TODO: Integrate Lemon Squeezy checkout
+    showToast('Payment integration coming soon! Check back shortly.', 'info');
+  });
+
+  // Logo -> landing
+  logoLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    renderLanding();
+  });
+
+  // Hash change
+  window.addEventListener('hashchange', handleRouting);
+}
+
+// === Pro Modal ===
+function showProModal() {
+  analytics.trackProClick();
+  proModalOverlay.classList.add('visible');
+}
+
+// === Toast System ===
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast toast--${type}`;
+  
+  const icons = {
+    success: '✓',
+    error: '✕',
+    info: 'ℹ',
+  };
+
+  toast.innerHTML = `<span>${icons[type] || 'ℹ'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 200);
+  }, 3000);
+}
+
+// Make toast available globally for tools
+window.__showToast = showToast;
+
+// === Boot ===
+init();

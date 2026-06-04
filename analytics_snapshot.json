@@ -1,0 +1,27 @@
+{
+  "venture": "FreeReign",
+  "startDate": "2026-06-04",
+  "currentDay": 1,
+  "metrics": {
+    "toolsBuilt": 10,
+    "revenue": 0,
+    "proLicensesSold": 0,
+    "uniqueVisitors": 0,
+    "toolViews": 0,
+    "codeCopies": 0,
+    "proModalViews": 0,
+    "deploymentStatus": "local-dev",
+    "paymentIntegration": "pending"
+  },
+  "milestones": [
+    { "day": 1, "target": "Build core app + 10 tools", "status": "complete" },
+    { "day": 3, "target": "Deploy to Netlify", "status": "pending" },
+    { "day": 5, "target": "Integrate Lemon Squeezy", "status": "pending" },
+    { "day": 7, "target": "SEO optimization", "status": "pending" },
+    { "day": 10, "target": "All 15 tools complete", "status": "pending" },
+    { "day": 14, "target": "Product Hunt launch", "status": "pending" },
+    { "day": 21, "target": "First $100 revenue", "status": "pending" },
+    { "day": 30, "target": "$400+ revenue target", "status": "pending" }
+  ],
+  "dailySnapshots": []
+}
