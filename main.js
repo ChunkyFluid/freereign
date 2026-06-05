@@ -73,6 +73,20 @@ let currentTool = null;
 let isPro = false;
 let isPreviewingPro = false;
 
+// Conversion nudge: after a non-Pro user copies a few times, surface the Pro
+// modal once per session — they've clearly found value worth converting on.
+let copyCount = 0;
+let copyNudgeShown = false;
+const COPY_NUDGE_AT = 3;
+function maybeShowCopyNudge() {
+  if (isPro || copyNudgeShown) return;
+  copyCount++;
+  if (copyCount >= COPY_NUDGE_AT) {
+    copyNudgeShown = true;
+    setTimeout(() => showProModal('copy_nudge'), 600); // let the copy toast land first
+  }
+}
+
 // === Analytics ===
 // Provider-agnostic funnel tracking. Forwards every event to an external
 // analytics provider (Plausible by default — see index.html) and keeps a
@@ -396,6 +410,7 @@ function bindCodePanelEvents(tool) {
         `;
         analytics.codeCopy(tool.id, currentFormat);
         showToast('Code copied to clipboard!', 'success');
+        maybeShowCopyNudge();
         setTimeout(() => {
           copyBtn.classList.remove('copied');
           copyBtn.innerHTML = `
@@ -698,6 +713,7 @@ function bindGlobalEvents() {
           const fmt = document.querySelector('.code-tab.active')?.dataset.format || 'css';
           analytics.codeCopy(currentTool.id, fmt);
           showToast('Code copied!', 'success');
+          maybeShowCopyNudge();
         });
       }
     }
@@ -813,8 +829,8 @@ function applyState(tool, snap) {
   });
   if (window.__updateCode) window.__updateCode();
 }
-function savePreset(tool) {
-  const name = (prompt('Name this preset:') || '').trim();
+function savePreset(tool, rawName) {
+  const name = (rawName || '').trim();
   if (!name) return;
   const all = getAllPresets();
   const list = all[tool.id] || [];
@@ -826,6 +842,25 @@ function savePreset(tool) {
   renderPresetsBar(tool);
   analytics.track('preset_save', { tool: tool.id });
   showToast(`Preset "${name}" saved`, 'success');
+}
+// Inline name entry (replaces a native prompt for a cleaner, on-brand UX)
+function showPresetSaveInput(tool) {
+  const bar = document.getElementById('tool-presets');
+  if (!bar) return;
+  bar.innerHTML = `
+    <form class="preset-form" id="preset-form">
+      <input class="preset-name-input" id="preset-name-input" type="text" placeholder="Preset name…" maxlength="40" autocomplete="off" aria-label="Preset name" />
+      <button class="preset-save-btn" type="submit">Save</button>
+      <button class="preset-chip__del" id="preset-cancel" type="button" aria-label="Cancel">×</button>
+    </form>`;
+  const input = document.getElementById('preset-name-input');
+  input?.focus();
+  document.getElementById('preset-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    savePreset(tool, input.value);
+  });
+  document.getElementById('preset-cancel')?.addEventListener('click', () => renderPresetsBar(tool));
+  input?.addEventListener('keydown', (e) => { if (e.key === 'Escape') renderPresetsBar(tool); });
 }
 function loadPreset(tool, name) {
   const preset = getPresets(tool.id).find(p => p.name === name);
@@ -858,7 +893,7 @@ function renderPresetsBar(tool) {
       </span>`).join('')}
     ${list.length === 0 ? '<span class="preset-empty">No saved presets yet — tweak the controls, then Save.</span>' : ''}
   `;
-  document.getElementById('preset-save')?.addEventListener('click', () => savePreset(tool));
+  document.getElementById('preset-save')?.addEventListener('click', () => showPresetSaveInput(tool));
   bar.querySelectorAll('.preset-chip__load').forEach(b => b.addEventListener('click', () => loadPreset(tool, b.dataset.name)));
   bar.querySelectorAll('.preset-chip__del').forEach(b => b.addEventListener('click', () => deletePreset(tool, b.dataset.name)));
 }
