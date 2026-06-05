@@ -158,6 +158,8 @@ function render(a) {
   <meta name="keywords" content="${a.keywords}">
   <link rel="canonical" href="${BASE_URL}/blog/${a.slug}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
   <meta property="og:title" content="${a.title}">
   <meta property="og:description" content="${a.description}">
