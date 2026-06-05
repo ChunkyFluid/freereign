@@ -254,8 +254,8 @@ function renderTool(tool) {
       <div class="tool-code__header">
         <div class="tool-code__tabs">
           <button class="code-tab active" data-format="css">CSS</button>
-          <button class="code-tab" data-format="scss">SCSS</button>
-          <button class="code-tab" data-format="tailwind">Tailwind</button>
+          <button class="code-tab${!isPro ? ' code-tab--locked' : ''}" data-format="scss">SCSS${!isPro ? ' 🔒' : ''}</button>
+          <button class="code-tab${!isPro ? ' code-tab--locked' : ''}" data-format="tailwind">Tailwind${!isPro ? ' 🔒' : ''}</button>
         </div>
         <div class="tool-code__actions">
           <button class="copy-btn" id="download-btn" title="Download CSS file (Ctrl+S)">
@@ -413,9 +413,17 @@ function bindCodePanelEvents(tool) {
   // Format tabs
   codeTabs.forEach(tab => {
     tab.addEventListener('click', () => {
+      const format = tab.dataset.format;
+      // Gate SCSS/Tailwind for non-Pro users
+      if (!isPro && (format === 'scss' || format === 'tailwind')) {
+        analytics.trackProClick();
+        showToast('SCSS & Tailwind output is a Pro feature', 'info');
+        showProModal();
+        return;
+      }
       codeTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      currentFormat = tab.dataset.format;
+      currentFormat = format;
       updateCode();
     });
   });
