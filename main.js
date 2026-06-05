@@ -478,23 +478,32 @@ function renderLanding() {
         <h2 class="landing__bottom-title">Ready to build <span class="landing__title-accent">faster</span>?</h2>
         <p class="landing__bottom-desc">Join developers who use FreeReign to ship CSS in seconds, not minutes.</p>
         <button class="landing__cta landing__cta--primary" id="cta-explore-bottom">Start Building →</button>
-        <div class="landing__newsletter" style="margin-top: 32px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06);">
-          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">📧 Get notified about new tools & updates:</p>
-          <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="newsletter-form" style="display: flex; gap: 8px; max-width: 420px; margin: 0 auto;">
-            <input type="hidden" name="form-name" value="newsletter" />
-            <p style="display: none;"><label>Don't fill this out: <input name="bot-field" /></label></p>
-            <input type="email" name="email" placeholder="you@example.com" required id="newsletter-email" style="
-              flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-default);
-              background: var(--bg-surface); color: var(--text-primary); font-size: 0.85rem;
-              font-family: var(--font-sans); outline: none;
-            " />
-            <button type="submit" style="
-              padding: 10px 20px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-              background: var(--accent-gradient); color: white; cursor: pointer;
-              white-space: nowrap;
-            ">Subscribe</button>
-          </form>
-          <p id="newsletter-success" style="display: none; font-size: 0.8rem; color: #10b981; margin-top: 8px;">✓ You're in! We'll keep you posted.</p>
+      <div class="landing__compare">
+          <h2 class="landing__compare-title">Free vs <span class="landing__title-accent">Pro</span></h2>
+          <div class="landing__compare-table">
+            <div class="landing__compare-row landing__compare-row--header">
+              <span></span><span>Free</span><span>Pro</span>
+            </div>
+            <div class="landing__compare-row">
+              <span>CSS generators</span><span>10 tools</span><span>25 tools</span>
+            </div>
+            <div class="landing__compare-row">
+              <span>Output formats</span><span>CSS only</span><span>CSS, SCSS, Tailwind</span>
+            </div>
+            <div class="landing__compare-row">
+              <span>Code watermark</span><span>Included</span><span>Clean output</span>
+            </div>
+            <div class="landing__compare-row">
+              <span>Save presets</span><span>—</span><span>✓</span>
+            </div>
+            <div class="landing__compare-row">
+              <span>Lifetime updates</span><span>—</span><span>✓</span>
+            </div>
+            <div class="landing__compare-row landing__compare-row--price">
+              <span></span><span>$0</span><span>$14.99 <small>one-time</small></span>
+            </div>
+          </div>
+          <button class="landing__cta landing__cta--secondary" id="cta-pro-compare" style="margin-top: 20px;">★ Upgrade to Pro</button>
         </div>
       </div>
     </div>
@@ -524,25 +533,10 @@ function renderLanding() {
     ctaBottom.addEventListener('click', () => navigateTo(TOOLS[0].id));
   }
 
-  // Newsletter form
-  const nlForm = document.getElementById('newsletter-form');
-  if (nlForm) {
-    nlForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(nlForm);
-      try {
-        await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString(),
-        });
-        nlForm.style.display = 'none';
-        document.getElementById('newsletter-success').style.display = 'block';
-        analytics.track('newsletter_signup');
-      } catch {
-        showToast('Something went wrong. Try again!', 'error');
-      }
-    });
+  // Pro comparison CTA
+  const ctaProCompare = document.getElementById('cta-pro-compare');
+  if (ctaProCompare) {
+    ctaProCompare.addEventListener('click', () => showProModal());
   }
 }
 
