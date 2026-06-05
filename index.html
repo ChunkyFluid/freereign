@@ -70,6 +70,12 @@
   <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
 </head>
 <body>
+  <!-- Netlify Forms detection (hidden, needed for form registration) -->
+  <form name="newsletter" netlify netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="email" type="email" />
+  </form>
+
   <div id="app">
     <!-- Top Bar -->
     <header class="topbar" id="topbar">
