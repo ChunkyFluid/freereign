@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const BASE_URL = 'https://freereign-app.netlify.app';
+const BASE_URL = 'https://freereign.dev';
 
 const tools = [
   {

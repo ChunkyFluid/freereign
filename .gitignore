@@ -35,3 +35,7 @@ src/counter.ts
 src/main.ts
 src/style.css
 src/assets/
+
+# Server-internal files (not for public repo)
+ServerRules/
+nginx-freereign.conf

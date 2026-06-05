@@ -6,7 +6,7 @@
 <p align="center"><strong>The Premium CSS & Design Toolkit — Zero Friction, Instant Code</strong></p>
 
 <p align="center">
-  <a href="https://freereign-app.netlify.app">Live Demo</a> ·
+  <a href="https://freereign.dev">Live Demo</a> ·
   <a href="#tools">22 Tools</a> ·
   <a href="#features">Features</a> ·
   <a href="#pro">Get Pro</a>
