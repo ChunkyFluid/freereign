@@ -203,6 +203,15 @@ Write ONE genuinely good article targeting the hero tool's long-tail. Publish on
 site (`/blog/...` or a static page) AND cross-post to dev.to and Hashnode with a canonical
 link back to your domain. Embed the live tool in the article.
 
+> ✅ **Shipped:** the first article is live at
+> `public/blog/how-to-create-glassmorphism-css.html` →
+> `https://freereign.dev/blog/how-to-create-glassmorphism-css`
+> (Article + FAQ schema, a live in-page glass demo, copy-paste recipes, Tailwind
+> section, and a CTA into the generator; it's in the sitemap). Action items:
+> (1) cross-post to dev.to + Hashnode with `rel=canonical` back to your domain,
+> (2) submit the URL in Google Search Console, (3) add a "Read the guide" link
+> from the glassmorphism tool page for internal linking.
+
 **Working title:** `How to Create Glassmorphism in CSS (2026 Guide + Free Generator)`
 **Target queries:** glassmorphism css, glassmorphism generator, frosted glass css, backdrop-filter blur
 

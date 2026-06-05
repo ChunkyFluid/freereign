@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Create Glassmorphism in CSS (2026 Guide + Free Generator) | FreeReign</title>
+  <meta name="description" content="Learn how to create the frosted-glass glassmorphism effect in CSS with backdrop-filter. Copy-paste recipes for cards, navbars & modals, browser support, gotchas, Tailwind, and a free visual generator.">
+  <meta name="keywords" content="glassmorphism css, glassmorphism generator, frosted glass css, backdrop-filter blur, glassmorphism tailwind, how to create glassmorphism">
+  <link rel="canonical" href="https://freereign.dev/blog/how-to-create-glassmorphism-css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="How to Create Glassmorphism in CSS (2026 Guide + Free Generator)">
+  <meta property="og:description" content="Frosted-glass UI with backdrop-filter — the core CSS, gotchas, copy-paste recipes, Tailwind, and a free visual generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/how-to-create-glassmorphism-css">
+  <meta property="og:type" content="article">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Create Glassmorphism in CSS (2026 Guide)">
+  <meta name="twitter:description" content="The frosted-glass effect with backdrop-filter — recipes, gotchas, Tailwind, and a free generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <!-- JSON-LD: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How to Create Glassmorphism in CSS (2026 Guide)",
+    "description": "A complete guide to building the frosted-glass glassmorphism effect in CSS using backdrop-filter, including browser support, accessibility, and copy-paste recipes.",
+    "author": { "@type": "Organization", "name": "FreeReign" },
+    "publisher": { "@type": "Organization", "name": "FreeReign" },
+    "datePublished": "2026-06-05",
+    "dateModified": "2026-06-05",
+    "mainEntityOfPage": "https://freereign.dev/blog/how-to-create-glassmorphism-css",
+    "image": "https://freereign.dev/og-image.png"
+  }
+  </script>
+
+  <!-- JSON-LD: FAQ (eligible for rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does glassmorphism hurt performance?",
+        "acceptedAnswer": { "@type": "Answer", "text": "backdrop-filter is GPU-accelerated but still one of the more expensive CSS effects because the browser must sample and blur everything behind the element. Keep the number of simultaneously visible glass surfaces small, avoid animating the blur radius, and test on low-end mobile devices." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Safari support backdrop-filter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, but Safari requires the -webkit-backdrop-filter prefix. Always declare both -webkit-backdrop-filter and backdrop-filter so the effect works in Safari and iOS as well as Chrome, Edge, and Firefox." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I create glassmorphism in Tailwind CSS?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tailwind ships backdrop utilities: combine backdrop-blur-md, backdrop-saturate-150, a translucent background like bg-white/10, a faint border such as border border-white/20, and rounded-2xl shadow-lg. For exact blur or saturation values, use arbitrary values like backdrop-blur-[16px]." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my glassmorphism look like a flat semi-transparent box?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The frosted-glass look only appears when there is visible, ideally colorful or busy content behind the element. On a plain solid background there is nothing to blur, so the effect collapses into a plain translucent rectangle. Place the glass card over an image or gradient." }
+      }
+    ]
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo {
+      border-radius: 16px; padding: 40px 24px; margin: 8px 0 28px; text-align: center;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f97316'/%3E%3Cstop offset='0.5' stop-color='%23ec4899'/%3E%3Cstop offset='1' stop-color='%236366f1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='300' fill='url(%23g)'/%3E%3Ccircle cx='80' cy='220' r='90' fill='%2306b6d4' opacity='0.6'/%3E%3Ccircle cx='320' cy='70' r='70' fill='%23fbbf24' opacity='0.6'/%3E%3C/svg%3E");
+      background-size: cover; background-position: center;
+    }
+    .glass-card {
+      display: inline-block; padding: 28px 36px; border-radius: 16px;
+      background: rgba(255, 255, 255, 0.12);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      backdrop-filter: blur(12px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      color: #fff;
+    }
+    .glass-card strong { font-size: 1.1rem; }
+    .glass-card span { display: block; font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / Glassmorphism in CSS
+    </nav>
+
+    <h1>How to Create Glassmorphism in CSS</h1>
+    <p class="lede">Glassmorphism is the frosted-glass UI effect — a translucent, blurred panel that lets colour bleed through from behind. This guide shows you the exact CSS, the gotchas nobody warns you about, copy-paste recipes for cards, navbars and modals, and how to do it in Tailwind. Prefer to skip the math? <a href="https://freereign.dev/#glassmorphism">Use the free visual generator →</a></p>
+
+    <div class="demo">
+      <div class="glass-card">
+        <strong>Frosted glass</strong>
+        <span>This card is real glassmorphism — view source.</span>
+      </div>
+    </div>
+
+    <h2>What is glassmorphism?</h2>
+    <p>Glassmorphism (popularised by macOS Big Sur and Windows 11's "Acrylic" material) layers a semi-transparent surface over busy content and blurs whatever sits behind it. The result reads as a sheet of frosted glass. Three ingredients make it work: <strong>translucency</strong> (a background with alpha), a <strong>backdrop blur</strong>, and a <strong>subtle light border</strong> that catches the "edge" of the glass.</p>
+
+    <h2>The core CSS</h2>
+    <p>Here's the minimal, production-ready recipe. Every glassmorphism effect is a variation on these five lines:</p>
+    <pre><code>.glass {
+  /* 1. translucent fill — keep alpha low (0.08–0.2) */
+  background: rgba(255, 255, 255, 0.12);
+
+  /* 2. blur what's behind it (Safari needs the -webkit- prefix) */
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+
+  /* 3. a faint light border for the glass edge */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  /* 4. soft depth */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}</code></pre>
+    <p>Why each line matters:</p>
+    <ul>
+      <li><strong><code>background: rgba(...)</code></strong> — the glass tint. Low alpha keeps it readable without hiding the colour behind it. Use black tints on light pages, white tints on dark/colourful ones.</li>
+      <li><strong><code>backdrop-filter: blur()</code></strong> — the magic. <code>saturate(160%)</code> pumps the colour behind the glass so it doesn't look washed out.</li>
+      <li><strong>The border</strong> — a 1px semi-transparent white edge simulates the refractive rim of glass and stops the panel from blending into the background.</li>
+      <li><strong>Shadow</strong> — lifts the panel off the page so it reads as a floating surface.</li>
+    </ul>
+
+    <h2>Browser support &amp; the Safari prefix</h2>
+    <p><code>backdrop-filter</code> is supported in all modern browsers — Chrome, Edge, Firefox, and Safari — but <strong>Safari and iOS still require the <code>-webkit-backdrop-filter</code> prefix</strong>. Always declare both, prefix first. If you need a fallback for very old browsers, bump the background alpha higher so the panel is still legible without any blur:</p>
+    <pre><code>@supports not (backdrop-filter: blur(1px)) {
+  .glass { background: rgba(255, 255, 255, 0.6); }
+}</code></pre>
+
+    <h2>The gotchas nobody warns you about</h2>
+    <h3>1. It needs a busy background</h3>
+    <p>The single most common mistake: placing a glass card on a plain solid colour. With nothing interesting behind it, there's nothing to blur, and the effect collapses into a flat translucent box. Glass only looks like glass over an image, a gradient, or other colourful content.</p>
+    <h3>2. Watch performance</h3>
+    <p><code>backdrop-filter</code> is GPU-accelerated but expensive — the browser re-samples and blurs everything behind the element. Keep the number of simultaneously visible glass surfaces small, never animate the blur radius, and test on a real low-end phone before shipping.</p>
+    <h3>3. Mind the contrast (accessibility)</h3>
+    <p>Translucent panels can wreck text contrast depending on what scrolls behind them. Verify text meets WCAG AA (4.5:1) against the <em>worst-case</em> background, not just the screenshot you designed against. A slightly higher background alpha or a text shadow is often the fix.</p>
+
+    <h2>Copy-paste recipes</h2>
+    <h3>Glass card</h3>
+    <pre><code>.glass-card {
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+}</code></pre>
+    <h3>Sticky glass navbar</h3>
+    <pre><code>.glass-nav {
+  position: sticky; top: 0;
+  background: rgba(15, 15, 20, 0.55);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}</code></pre>
+    <h3>Glass modal overlay</h3>
+    <pre><code>.glass-modal {
+  background: rgba(30, 30, 40, 0.45);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+}</code></pre>
+
+    <h2>Glassmorphism in Tailwind CSS</h2>
+    <p>Tailwind ships the backdrop utilities you need out of the box:</p>
+    <pre><code>&lt;div class="bg-white/10 backdrop-blur-md backdrop-saturate-150
+            border border-white/20 rounded-2xl shadow-lg p-7"&gt;
+  Frosted glass
+&lt;/div&gt;</code></pre>
+    <p>For an exact blur or saturation value, use arbitrary values: <code>backdrop-blur-[14px]</code> and <code>backdrop-saturate-[160%]</code>.</p>
+
+    <div class="cta-wrap">
+      <h2>Skip the math — generate it visually</h2>
+      <p>Drag sliders for blur, opacity, saturation, border and radius. Preview on a live colourful background and copy the CSS, SCSS, or Tailwind in one click.</p>
+      <a class="cta-btn" href="https://freereign.dev/#glassmorphism">Open the Glassmorphism Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>Does glassmorphism hurt performance?</h3>
+    <p>It can. <code>backdrop-filter</code> is one of the more expensive effects because the browser blurs everything behind the element on every frame. Limit how many glass surfaces are visible at once, don't animate the blur, and test on low-end mobile.</p>
+    <h3>Does Safari support backdrop-filter?</h3>
+    <p>Yes, with the <code>-webkit-backdrop-filter</code> prefix. Declare both the prefixed and unprefixed properties and it works across Safari, iOS, Chrome, Edge, and Firefox.</p>
+    <h3>How do I do glassmorphism in Tailwind?</h3>
+    <p>Combine <code>backdrop-blur-md</code>, <code>backdrop-saturate-150</code>, a translucent <code>bg-white/10</code>, a faint <code>border border-white/20</code>, and <code>rounded-2xl shadow-lg</code>.</p>
+    <h3>Why does mine look like a flat box?</h3>
+    <p>There's nothing colourful behind it to blur. Place the glass over an image or gradient — on a solid background the effect disappears.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#glassmorphism"><span>💎</span> Glassmorphism Generator</a>
+      <a href="https://freereign.dev/#gradient"><span>🎨</span> Gradient Generator</a>
+      <a href="https://freereign.dev/#boxshadow"><span>🌑</span> Box Shadow Generator</a>
+      <a href="https://freereign.dev/#filter"><span>🔮</span> CSS Filter Generator</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>
