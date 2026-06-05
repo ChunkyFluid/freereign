@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://freereign.dev/sitemap.xml
+Sitemap: https://freereign-app.netlify.app/sitemap.xml
 
 # Allow all crawlers to index all pages
 User-agent: Googlebot

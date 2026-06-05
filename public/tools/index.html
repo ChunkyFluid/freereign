@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All CSS Generator Tools — Free Online | FreeReign</title>
+  <meta name="description" content="22 free CSS generators in one toolkit. Gradients, shadows, glassmorphism, flexbox, grid, animations, and more. No sign-up, no ads, instant code.">
+  <link rel="canonical" href="https://freereign-app.netlify.app/tools/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="22 CSS Generator Tools — FreeReign">
+  <meta property="og:description" content="Free, open-source CSS toolkit with 22 visual generators.">
+  <meta property="og:image" content="https://freereign-app.netlify.app/og-image.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
+    h1 { font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 40px; font-size: 1.05rem; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+    .tool-card {
+      padding: 20px; background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius); text-decoration: none; color: var(--text);
+      transition: border-color 200ms, transform 200ms;
+    }
+    .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .tool-card__icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+    .tool-card__name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .tool-card__desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>22 CSS Generator Tools</h1>
+    <p class="subtitle">Free, open-source, zero friction. Pick a tool and start designing.</p>
+    <div class="tools-grid">
+      
+      <a href="/tools/gradient" class="tool-card">
+        <span class="tool-card__icon">🎨</span>
+        <div class="tool-card__name">CSS Gradient Generator</div>
+        <div class="tool-card__desc">Generate linear, radial, and conic CSS gradients with visual controls. Pick colors, adjust angles, a...</div>
+      </a>
+      <a href="/tools/boxshadow" class="tool-card">
+        <span class="tool-card__icon">🌑</span>
+        <div class="tool-card__name">CSS Box Shadow Generator</div>
+        <div class="tool-card__desc">Build multi-layer box shadows with visual sliders for offset, blur, spread, color, and opacity. Prev...</div>
+      </a>
+      <a href="/tools/borderradius" class="tool-card">
+        <span class="tool-card__icon">⬜</span>
+        <div class="tool-card__name">CSS Border Radius Generator</div>
+        <div class="tool-card__desc">Control each corner's border radius independently. Create pills, circles, organic shapes, and asymme...</div>
+      </a>
+      <a href="/tools/colorpalette" class="tool-card">
+        <span class="tool-card__icon">🎯</span>
+        <div class="tool-card__name">CSS Color Palette Generator</div>
+        <div class="tool-card__desc">Create beautiful, accessible color palettes using color theory. Choose from 6 harmony modes — analog...</div>
+      </a>
+      <a href="/tools/glassmorphism" class="tool-card">
+        <span class="tool-card__icon">💎</span>
+        <div class="tool-card__name">CSS Glassmorphism Generator</div>
+        <div class="tool-card__desc">Generate glassmorphism CSS with backdrop-filter blur, saturation, transparency, and border effects. ...</div>
+      </a>
+      <a href="/tools/variables" class="tool-card">
+        <span class="tool-card__icon">🏷️</span>
+        <div class="tool-card__name">CSS Variables Generator</div>
+        <div class="tool-card__desc">Generate a full CSS custom properties (CSS variables) system from two base colors. Includes auto-gen...</div>
+      </a>
+      <a href="/tools/flexbox" class="tool-card">
+        <span class="tool-card__icon">📐</span>
+        <div class="tool-card__name">CSS Flexbox Playground</div>
+        <div class="tool-card__desc">Build flexbox layouts visually with controls for direction, wrap, justify, align, and gap. See items...</div>
+      </a>
+      <a href="/tools/grid" class="tool-card">
+        <span class="tool-card__icon">🔲</span>
+        <div class="tool-card__name">CSS Grid Generator</div>
+        <div class="tool-card__desc">Design CSS Grid layouts with interactive controls for columns, rows, gaps, and template areas. See g...</div>
+      </a>
+      <a href="/tools/breakpoint" class="tool-card">
+        <span class="tool-card__icon">📏</span>
+        <div class="tool-card__name">CSS Breakpoint Tester</div>
+        <div class="tool-card__desc">Preview your responsive designs at standard breakpoints. Test mobile, tablet, laptop, and desktop vi...</div>
+      </a>
+      <a href="/tools/aspectratio" class="tool-card">
+        <span class="tool-card__icon">📐</span>
+        <div class="tool-card__name">CSS Aspect Ratio Calculator</div>
+        <div class="tool-card__desc">Generate CSS aspect-ratio properties with 9 common presets (16:9, 4:3, 1:1, etc.). Perfect for respo...</div>
+      </a>
+      <a href="/tools/scrollsnap" class="tool-card">
+        <span class="tool-card__icon">📜</span>
+        <div class="tool-card__name">CSS Scroll Snap Generator</div>
+        <div class="tool-card__desc">Generate CSS scroll-snap properties for carousels, galleries, and scrollable sections. Control snap ...</div>
+      </a>
+      <a href="/tools/animation" class="tool-card">
+        <span class="tool-card__icon">✨</span>
+        <div class="tool-card__name">CSS Animation Builder</div>
+        <div class="tool-card__desc">Build CSS animations with 6 presets (fade, slide, bounce, spin, pulse, shake). Control duration, tim...</div>
+      </a>
+      <a href="/tools/textshadow" class="tool-card">
+        <span class="tool-card__icon">💬</span>
+        <div class="tool-card__name">CSS Text Shadow Generator</div>
+        <div class="tool-card__desc">Create multi-layer text shadow effects with controls for offset, blur, and color. Preview on custom ...</div>
+      </a>
+      <a href="/tools/transform" class="tool-card">
+        <span class="tool-card__icon">🔄</span>
+        <div class="tool-card__name">CSS Transform Generator</div>
+        <div class="tool-card__desc">Manipulate CSS transforms visually — rotate, scale, translate, and skew in 2D and 3D. Includes persp...</div>
+      </a>
+      <a href="/tools/transition" class="tool-card">
+        <span class="tool-card__icon">🔀</span>
+        <div class="tool-card__name">CSS Transition Generator</div>
+        <div class="tool-card__desc">Build CSS transitions with 11 easing presets including cubic-bezier curves. Preview timing, duration...</div>
+      </a>
+      <a href="/tools/neumorphism" class="tool-card">
+        <span class="tool-card__icon">🧊</span>
+        <div class="tool-card__name">CSS Neumorphism Generator</div>
+        <div class="tool-card__desc">Generate neumorphic (soft UI) designs with flat, concave, convex, and pressed states. Control shadow...</div>
+      </a>
+      <a href="/tools/clippath" class="tool-card">
+        <span class="tool-card__icon">✂️</span>
+        <div class="tool-card__name">CSS Clip-Path Generator</div>
+        <div class="tool-card__desc">Create CSS clip-path shapes from 16 presets including polygons, circles, ellipses, and custom paths....</div>
+      </a>
+      <a href="/tools/filter" class="tool-card">
+        <span class="tool-card__icon">🔮</span>
+        <div class="tool-card__name">CSS Filter Generator</div>
+        <div class="tool-card__desc">Combine 9 CSS filter properties — blur, brightness, contrast, grayscale, hue-rotate, invert, saturat...</div>
+      </a>
+      <a href="/tools/cursor" class="tool-card">
+        <span class="tool-card__icon">🖱️</span>
+        <div class="tool-card__name">CSS Cursor Styles Reference</div>
+        <div class="tool-card__desc">Preview and test all CSS cursor property values in one place. Click any cursor style to see it in ac...</div>
+      </a>
+    </div>
+  </div>
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign-app.netlify.app">FreeReign</a> · <a href="https://github.com/ChunkyFluid/freereign">GitHub</a></p>
+  </footer>
+</body>
+</html>
