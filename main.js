@@ -208,10 +208,10 @@ function navigateTo(toolId) {
   }
   // Update canonical URL
   const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.setAttribute('href', `https://freereign.dev/${tool.id}`);
+  if (canonical) canonical.setAttribute('href', `https://freereign.dev/tools/${tool.id}`);
   // Update og:url
   const ogUrl = document.querySelector('meta[property="og:url"]');
-  if (ogUrl) ogUrl.setAttribute('content', `https://freereign.dev/${tool.id}`);
+  if (ogUrl) ogUrl.setAttribute('content', `https://freereign.dev/tools/${tool.id}`);
 
   // Render tool
   renderTool(tool);
@@ -717,6 +717,8 @@ function bindGlobalEvents() {
 
   // Listen for Lemon Squeezy checkout success
   window.addEventListener('message', (event) => {
+    // Only trust messages from Lemon Squeezy
+    if (!event.origin.includes('lemonsqueezy.com')) return;
     if (event.data && event.data.event === 'Checkout.Success') {
       // Activate Pro license
       localStorage.setItem('fr_pro', 'true');

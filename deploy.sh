@@ -15,6 +15,6 @@ scp -r dist/* root@178.156.198.6:/var/www/freereign/
 echo "==> Git commit & push..."
 git add -A
 git commit -m "$MSG"
-git push
+git push origin main
 
-echo "==> Done! Live at https://freereign-app.netlify.app"
+echo "==> Done! Live at https://freereign.dev"

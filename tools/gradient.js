@@ -26,7 +26,7 @@ let state = {
 };
 
 function getGradientCSS() {
-  const stopsStr = state.stops
+  const stopsStr = [...state.stops]
     .sort((a, b) => a.position - b.position)
     .map(s => `${s.color} ${s.position}%`)
     .join(', ');
