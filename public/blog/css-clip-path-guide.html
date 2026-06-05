@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS clip-path: The Complete Guide (Shapes, Polygons + Free Generator) | FreeReign</title>
+  <meta name="description" content="Master the CSS clip-path property: circle, ellipse, inset and polygon shapes, the coordinate system explained, copy-paste recipes (hexagon, triangle, arrow), animation, browser support, and a free visual clip-path generator.">
+  <meta name="keywords" content="css clip-path, clip-path generator, clip-path polygon, css clip path shapes, clip-path hexagon, clip-path triangle, css mask shapes">
+  <link rel="canonical" href="https://freereign.dev/blog/css-clip-path-guide">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CSS clip-path: The Complete Guide (Shapes, Polygons + Free Generator)">
+  <meta property="og:description" content="Every clip-path shape explained — circle, ellipse, inset, polygon — with the coordinate system, copy-paste recipes, animation, and a free generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-clip-path-guide">
+  <meta property="og:type" content="article">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS clip-path: The Complete Guide">
+  <meta name="twitter:description" content="Shapes, the polygon coordinate system, recipes, animation, and a free visual generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <!-- JSON-LD: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "CSS clip-path: The Complete Guide",
+    "description": "A complete guide to the CSS clip-path property — basic shapes, the polygon coordinate system, copy-paste recipes, animation, and browser support.",
+    "author": { "@type": "Organization", "name": "FreeReign" },
+    "publisher": { "@type": "Organization", "name": "FreeReign" },
+    "datePublished": "2026-06-05",
+    "dateModified": "2026-06-05",
+    "mainEntityOfPage": "https://freereign.dev/blog/css-clip-path-guide",
+    "image": "https://freereign.dev/og-image.png"
+  }
+  </script>
+
+  <!-- JSON-LD: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the clip-path polygon coordinate system work?",
+        "acceptedAnswer": { "@type": "Answer", "text": "polygon() takes a list of x y point pairs that you connect in order to form the visible region. Coordinates are measured from the top-left corner of the element's box: 0% 0% is top-left, 100% 0% is top-right, 100% 100% is bottom-right, and 0% 100% is bottom-left. Percentages are relative to the element's width (x) and height (y), so the shape scales with the element." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you animate clip-path?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. clip-path is animatable as long as the start and end shapes use the same function and the same number of points. A polygon with four points can transition smoothly to another four-point polygon, which is how reveal and morph effects are built. Animating between different shape functions (e.g. circle to polygon) is not interpolated." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is clip-path supported in all browsers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Basic shapes (circle, ellipse, inset, polygon) are supported in all modern browsers including Chrome, Edge, Firefox and Safari. Safari historically needed the -webkit-clip-path prefix; declaring both -webkit-clip-path and clip-path is the safe approach." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I make a hexagon with clip-path?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use a six-point polygon: clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%). Each pair is an x y coordinate; together they trace the six corners of a flat-top hexagon." }
+      }
+    ]
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .shape-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin: 8px 0 28px; }
+    .shape { text-align: center; }
+    .shape__box { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #8b5cf6, #06b6d4); }
+    .shape__label { display: block; margin-top: 8px; font-size: 0.75rem; color: var(--text-tertiary); font-family: 'JetBrains Mono', monospace; }
+    .hexagon { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+    .triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+    .star { clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+    .circle { clip-path: circle(50% at 50% 50%); }
+    .arrow { clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%); }
+    .chevron { clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%); }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS clip-path Guide
+    </nav>
+
+    <h1>CSS clip-path: The Complete Guide</h1>
+    <p class="lede">The <code>clip-path</code> property crops an element to any shape — circles, hexagons, arrows, stars — without images or SVG masks. This guide explains every shape function, demystifies the polygon coordinate system, and gives you copy-paste recipes. Want to draw shapes visually instead? <a href="https://freereign.dev/#clippath">Use the free clip-path generator →</a></p>
+
+    <div class="shape-grid">
+      <div class="shape"><div class="shape__box hexagon"></div><span class="shape__label">hexagon</span></div>
+      <div class="shape"><div class="shape__box triangle"></div><span class="shape__label">triangle</span></div>
+      <div class="shape"><div class="shape__box star"></div><span class="shape__label">star</span></div>
+      <div class="shape"><div class="shape__box circle"></div><span class="shape__label">circle</span></div>
+      <div class="shape"><div class="shape__box arrow"></div><span class="shape__label">arrow</span></div>
+      <div class="shape"><div class="shape__box chevron"></div><span class="shape__label">chevron</span></div>
+    </div>
+
+    <h2>What is clip-path?</h2>
+    <p><code>clip-path</code> defines a region of an element to keep — everything outside that region becomes invisible (but still occupies layout space unless you handle that separately). Unlike <code>overflow: hidden</code>, which only clips to a rectangle, <code>clip-path</code> clips to <em>any</em> shape: basic geometric functions or arbitrary polygons. It's hardware-accelerated and fully animatable.</p>
+
+    <h2>The basic shape functions</h2>
+    <pre><code>/* Circle — radius + center position */
+clip-path: circle(50% at 50% 50%);
+
+/* Ellipse — x-radius y-radius at center */
+clip-path: ellipse(40% 50% at 50% 50%);
+
+/* Inset — crop in from each edge (top right bottom left), optional round */
+clip-path: inset(10% 20% 10% 20% round 12px);
+
+/* Polygon — the powerful one: a list of x y points */
+clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* triangle */</code></pre>
+    <ul>
+      <li><strong><code>circle()</code></strong> — one radius and a center point. Great for avatars and reveal effects.</li>
+      <li><strong><code>ellipse()</code></strong> — two radii (x and y) and a center.</li>
+      <li><strong><code>inset()</code></strong> — rectangle cropped inward from each edge; <code>round</code> adds corner radius.</li>
+      <li><strong><code>polygon()</code></strong> — arbitrary shapes from a list of coordinates. This is where everything interesting happens.</li>
+    </ul>
+
+    <h2>The polygon coordinate system (the part everyone gets stuck on)</h2>
+    <p><code>polygon()</code> takes a comma-separated list of <code>x y</code> point pairs. The browser connects them in order and fills the enclosed region. Coordinates are measured from the <strong>top-left corner</strong> of the element:</p>
+    <ul>
+      <li><code>0% 0%</code> → top-left</li>
+      <li><code>100% 0%</code> → top-right</li>
+      <li><code>100% 100%</code> → bottom-right</li>
+      <li><code>0% 100%</code> → bottom-left</li>
+    </ul>
+    <p>The first value in each pair is horizontal (relative to width), the second is vertical (relative to height). Because they're percentages, the shape <strong>scales with the element</strong> — make the box bigger and the hexagon stays a hexagon. Walk the points clockwise and you'll trace the outline:</p>
+    <pre><code>/* A flat-top hexagon: six points, clockwise from top-left */
+clip-path: polygon(
+  25% 0%,    /* top-left corner   */
+  75% 0%,    /* top-right corner  */
+  100% 50%,  /* right point       */
+  75% 100%,  /* bottom-right      */
+  25% 100%,  /* bottom-left       */
+  0% 50%     /* left point        */
+);</code></pre>
+
+    <h2>Copy-paste shape recipes</h2>
+    <pre><code>/* Triangle */
+clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+/* Hexagon */
+clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+
+/* Arrow (pointing right) */
+clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+
+/* Chevron */
+clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+
+/* 5-point star */
+clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+
+/* Diagonal section divider */
+clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);</code></pre>
+
+    <h2>Animating clip-path</h2>
+    <p><code>clip-path</code> interpolates smoothly <strong>as long as both shapes use the same function and the same number of points</strong>. This is the trick behind hover reveals and morphing buttons:</p>
+    <pre><code>.reveal {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); /* collapsed at left */
+  transition: clip-path 400ms ease;
+}
+.reveal:hover {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* full box */
+}</code></pre>
+    <div class="callout">Animating between <em>different</em> functions (e.g. <code>circle()</code> → <code>polygon()</code>) is not interpolated and will snap. Keep the same function and matching point count for smooth motion.</div>
+
+    <h2>Browser support &amp; the prefix</h2>
+    <p>Basic shapes are supported across Chrome, Edge, Firefox and Safari. Safari historically required <code>-webkit-clip-path</code>, so declare both for safety:</p>
+    <pre><code>.shape {
+  -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}</code></pre>
+
+    <h2>clip-path in Tailwind CSS</h2>
+    <p>Tailwind has no built-in shape utilities, but arbitrary values work:</p>
+    <pre><code>&lt;div class="[clip-path:polygon(50%_0%,0%_100%,100%_100%)]"&gt;
+  Triangle
+&lt;/div&gt;</code></pre>
+    <p>Underscores stand in for spaces inside the arbitrary value.</p>
+
+    <h2>Gotchas</h2>
+    <ul>
+      <li><strong>Layout still reserves the full box.</strong> Clipped-away pixels are invisible but the element's original rectangle still affects layout — neighbours don't reflow to the shape.</li>
+      <li><strong>Mind the click area.</strong> Pointer events follow the clipped shape in most browsers, so corners you cropped away won't be clickable.</li>
+      <li><strong>Use percentages for responsiveness.</strong> Pixel coordinates won't scale; percentages keep the shape proportional at any size.</li>
+    </ul>
+
+    <div class="cta-wrap">
+      <h2>Draw it instead of counting coordinates</h2>
+      <p>Pick from 16 preset shapes or drag polygon points visually, then copy the CSS, SCSS, or Tailwind in one click.</p>
+      <a class="cta-btn" href="https://freereign.dev/#clippath">Open the Clip-Path Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>How does the polygon coordinate system work?</h3>
+    <p>Each point is an <code>x y</code> pair measured from the top-left corner, as a percentage of the element's width and height. Connect the points in order to trace the visible shape.</p>
+    <h3>Can you animate clip-path?</h3>
+    <p>Yes — between shapes that use the same function and the same number of points. That's how reveal and morph effects work.</p>
+    <h3>Is clip-path supported everywhere?</h3>
+    <p>All modern browsers support the basic shapes. Add the <code>-webkit-clip-path</code> prefix for older Safari.</p>
+    <h3>How do I make a hexagon?</h3>
+    <p><code>clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)</code> — six points tracing a flat-top hexagon.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#clippath"><span>✂️</span> Clip-Path Generator</a>
+      <a href="https://freereign.dev/#borderradius"><span>⬜</span> Border Radius Generator</a>
+      <a href="https://freereign.dev/#transform"><span>🔄</span> Transform Generator</a>
+      <a href="https://freereign.dev/#animation"><span>✨</span> Animation Builder</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

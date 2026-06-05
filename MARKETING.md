@@ -226,8 +226,13 @@ link back to your domain. Embed the live tool in the article.
 6. FAQ (great for SEO featured snippets): Does glassmorphism hurt performance? Does Safari
    support backdrop-filter? How do I do it in Tailwind?
 
-Repeat later for clip-path, neumorphism, and the highest-demand tools. Each article is a
-new front door that links to the rest.
+Repeat for the highest-demand tools. Each article is a new front door that links to the rest.
+
+> ✅ **Shipped (article #2):** `public/blog/css-clip-path-guide.html` →
+> `https://freereign.dev/blog/css-clip-path-guide` (Article + FAQ schema, six live
+> in-page clipped shapes, the polygon coordinate system explained, copy-paste recipes,
+> animation section, Tailwind, FAQ, CTA into the generator; in the sitemap; the
+> clip-path tool page links to it). Cross-post + Search Console it the same way.
 
 ---
 

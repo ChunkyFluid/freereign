@@ -289,6 +289,7 @@ const tools = [
     ],
     useCases: 'hero sections, image masks, decorative dividers, creative layouts',
     isPro: true,
+    guide: { url: '/blog/css-clip-path-guide', title: 'CSS clip-path: the complete guide' },
   },
   {
     id: 'filter',
