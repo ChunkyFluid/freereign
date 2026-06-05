@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node test/presets.test.mjs",
+    "seo": "node generate-seo-pages.cjs"
   },
   "devDependencies": {
+    "jsdom": "^29.1.1",
     "vite": "^8.0.12"
   }
 }
