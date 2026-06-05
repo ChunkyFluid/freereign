@@ -63,6 +63,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
   
+  <!-- Analytics (Plausible — privacy-friendly, no cookies, GDPR-safe).
+       Tracks pageviews + custom funnel events (tool_view, code_copy, download,
+       pro_modal_open, checkout_click, pro_purchase) fired from main.js.
+       To self-host or swap for Umami/PostHog, change the src below and the
+       `send()` method in main.js. The inline shim queues events fired before
+       the script loads so nothing is lost. -->
+  <script defer data-domain="freereign.dev" src="https://plausible.io/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   

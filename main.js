@@ -74,30 +74,38 @@ let isPro = false;
 let isPreviewingPro = false;
 
 // === Analytics ===
+// Provider-agnostic funnel tracking. Forwards every event to an external
+// analytics provider (Plausible by default — see index.html) and keeps a
+// capped local debug log you can inspect via `localStorage.fr_analytics`.
+// Privacy-friendly: no PII, no cookies. To swap providers, change `send()`.
+//
+// Funnel: tool_view → code_copy / download → pro_modal_open → checkout_click → pro_purchase
 const analytics = {
   sessionStart: Date.now(),
-  toolViews: {},
-  copies: 0,
-  proClicks: 0,
-  track(event, data = {}) {
-    const entry = { event, ...data, timestamp: Date.now() };
+  send(event, props = {}) {
+    // Plausible custom events: window.plausible(name, { props: {...} })
+    if (typeof window.plausible === 'function') {
+      window.plausible(event, { props });
+    }
+    // Swap-ins:
+    // Umami:   window.umami?.track(event, props);
+    // PostHog: window.posthog?.capture(event, props);
+  },
+  track(event, props = {}) {
+    this.send(event, props);
+    const entry = { event, ...props, ts: Date.now() };
     const stored = JSON.parse(localStorage.getItem('fr_analytics') || '[]');
     stored.push(entry);
     if (stored.length > 500) stored.splice(0, stored.length - 500);
     localStorage.setItem('fr_analytics', JSON.stringify(stored));
   },
-  trackToolView(toolId) {
-    this.toolViews[toolId] = (this.toolViews[toolId] || 0) + 1;
-    this.track('tool_view', { tool: toolId });
-  },
-  trackCopy(toolId) {
-    this.copies++;
-    this.track('copy', { tool: toolId });
-  },
-  trackProClick() {
-    this.proClicks++;
-    this.track('pro_click');
-  }
+  // --- Funnel steps ---
+  toolView(toolId, pro) { this.track('tool_view', { tool: toolId, tier: pro ? 'pro' : 'free' }); },
+  codeCopy(toolId, format) { this.track('code_copy', { tool: toolId, format }); },
+  codeDownload(toolId, format) { this.track('download', { tool: toolId, format }); },
+  proModalOpen(source) { this.track('pro_modal_open', { source }); },
+  checkoutClick(source) { this.track('checkout_click', { source }); },
+  proPurchase(orderId) { this.track('pro_purchase', { order: orderId || 'unknown' }); },
 };
 
 // === DOM Elements ===
@@ -190,7 +198,7 @@ function navigateTo(toolId) {
 
   currentTool = tool;
   window.location.hash = toolId;
-  analytics.trackToolView(toolId);
+  analytics.toolView(toolId, tool.isPro);
 
   // Update sidebar active state
   document.querySelectorAll('.sidebar__tool-btn').forEach(btn => {
@@ -334,8 +342,7 @@ function renderTool(tool) {
   const proUnlockBtn = document.getElementById('pro-preview-unlock');
   if (proUnlockBtn) {
     proUnlockBtn.addEventListener('click', () => {
-      analytics.trackProClick();
-      showProModal();
+      showProModal('preview_banner');
     });
   }
 }
@@ -374,8 +381,7 @@ function bindCodePanelEvents(tool) {
   if (copyBtn) {
     copyBtn.addEventListener('click', () => {
       if (isPreviewingPro) {
-        analytics.trackProClick();
-        showProModal();
+        showProModal('copy_locked');
         return;
       }
       const code = getCodeWithWatermark();
@@ -385,7 +391,7 @@ function bindCodePanelEvents(tool) {
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Copied!
         `;
-        analytics.trackCopy(tool.id);
+        analytics.codeCopy(tool.id, currentFormat);
         showToast('Code copied to clipboard!', 'success');
         setTimeout(() => {
           copyBtn.classList.remove('copied');
@@ -403,8 +409,7 @@ function bindCodePanelEvents(tool) {
   if (downloadBtn) {
     downloadBtn.addEventListener('click', () => {
       if (isPreviewingPro) {
-        analytics.trackProClick();
-        showProModal();
+        showProModal('download_locked');
         return;
       }
       const code = getCodeWithWatermark();
@@ -416,7 +421,7 @@ function bindCodePanelEvents(tool) {
       a.download = `${tool.id}.${ext}`;
       a.click();
       URL.revokeObjectURL(url);
-      analytics.track('download', { tool: tool.id, format: currentFormat });
+      analytics.codeDownload(tool.id, currentFormat);
       showToast(`${tool.id}.${ext} downloaded!`, 'success');
     });
   }
@@ -427,9 +432,8 @@ function bindCodePanelEvents(tool) {
       const format = tab.dataset.format;
       // Gate SCSS/Tailwind for non-Pro users
       if (!isPro && (format === 'scss' || format === 'tailwind')) {
-        analytics.trackProClick();
         showToast('SCSS & Tailwind output is a Pro feature', 'info');
-        showProModal();
+        showProModal('format_tab');
         return;
       }
       codeTabs.forEach(t => t.classList.remove('active'));
@@ -599,7 +603,7 @@ function renderLanding() {
 
   const ctaPro = document.getElementById('cta-pro');
   if (ctaPro) {
-    ctaPro.addEventListener('click', () => showProModal());
+    ctaPro.addEventListener('click', () => showProModal('landing_hero'));
   }
 
   const ctaBottom = document.getElementById('cta-explore-bottom');
@@ -610,7 +614,7 @@ function renderLanding() {
   // Pro comparison CTA
   const ctaProCompare = document.getElementById('cta-pro-compare');
   if (ctaProCompare) {
-    ctaProCompare.addEventListener('click', () => showProModal());
+    ctaProCompare.addEventListener('click', () => showProModal('landing_compare'));
   }
 }
 
@@ -677,6 +681,7 @@ function bindGlobalEvents() {
         a.download = `${currentTool.id}.css`;
         a.click();
         URL.revokeObjectURL(url);
+        analytics.codeDownload(currentTool.id, 'css');
         showToast('CSS file downloaded!', 'success');
       }
     }
@@ -687,6 +692,8 @@ function bindGlobalEvents() {
       const codeEl = document.getElementById('code-output');
       if (codeEl) {
         navigator.clipboard.writeText(codeEl.textContent).then(() => {
+          const fmt = document.querySelector('.code-tab.active')?.dataset.format || 'css';
+          analytics.codeCopy(currentTool.id, fmt);
           showToast('Code copied!', 'success');
         });
       }
@@ -696,10 +703,10 @@ function bindGlobalEvents() {
   // Pro modal
   proBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    showProModal();
+    showProModal('topbar');
   });
 
-  sidebarProBtn.addEventListener('click', () => showProModal());
+  sidebarProBtn.addEventListener('click', () => showProModal('sidebar'));
 
   proModalClose.addEventListener('click', () => {
     proModalOverlay.classList.remove('visible');
@@ -712,7 +719,7 @@ function bindGlobalEvents() {
   });
 
   proBuyBtn.addEventListener('click', () => {
-    analytics.trackProClick();
+    analytics.checkoutClick(currentProModalSource);
   });
 
   // Listen for Lemon Squeezy checkout success
@@ -728,7 +735,7 @@ function bindGlobalEvents() {
       proModalOverlay.classList.remove('visible');
       renderSidebar();
       showToast('🎉 Welcome to FreeReign Pro! All tools unlocked.', 'success');
-      analytics.track('pro_purchase', { orderId: event.data?.data?.order?.id });
+      analytics.proPurchase(event.data?.data?.order?.id);
     }
   });
 
@@ -743,8 +750,11 @@ function bindGlobalEvents() {
 }
 
 // === Pro Modal ===
-function showProModal() {
-  analytics.trackProClick();
+// Tracks which CTA opened the modal so checkout clicks can be attributed.
+let currentProModalSource = 'unknown';
+function showProModal(source = 'unknown') {
+  currentProModalSource = source;
+  analytics.proModalOpen(source);
   proModalOverlay.classList.add('visible');
 }
 
