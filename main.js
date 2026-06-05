@@ -253,20 +253,20 @@ function renderTool(tool) {
     <div class="tool-code" id="tool-code-panel">
       <div class="tool-code__header">
         <div class="tool-code__tabs">
-          <button class="code-tab active" data-format="css">CSS</button>
+          <button class="code-tab active" data-format="css" aria-label="CSS output format">CSS</button>
           <button class="code-tab${!isPro ? ' code-tab--locked' : ''}" data-format="scss">SCSS${!isPro ? ' 🔒' : ''}</button>
           <button class="code-tab${!isPro ? ' code-tab--locked' : ''}" data-format="tailwind">Tailwind${!isPro ? ' 🔒' : ''}</button>
         </div>
         <div class="tool-code__actions">
-          <button class="copy-btn" id="download-btn" title="Download CSS file (Ctrl+S)">
+          <button class="copy-btn" id="download-btn" title="Download CSS file (Ctrl+S)" aria-label="Download CSS file">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9M3 7l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             ${downloadBtnLabel}
           </button>
-          <button class="copy-btn" id="share-btn" title="Share this tool">
+          <button class="copy-btn" id="share-btn" title="Share this tool" aria-label="Share this tool">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8a2 2 0 100-4 2 2 0 000 4zM10 4a2 2 0 100-4 2 2 0 000 4zM10 14a2 2 0 100-4 2 2 0 000 4zM5.7 7.2l2.6 1.6M8.3 3.2L5.7 4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
             Share
           </button>
-          <button class="copy-btn ${isPreviewingPro ? 'copy-btn--locked' : ''}" id="copy-btn">
+          <button class="copy-btn ${isPreviewingPro ? 'copy-btn--locked' : ''}" id="copy-btn" aria-label="Copy code to clipboard">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 4V3a2 2 0 00-2-2H3a2 2 0 00-2 2v5a2 2 0 002 2h1" stroke="currentColor" stroke-width="1.5"/></svg>
             ${copyBtnLabel}
           </button>

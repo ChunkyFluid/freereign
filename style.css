@@ -164,13 +164,23 @@ button {
   font-size: inherit;
 }
 
+/* Focus-visible: only show focus ring on keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 input, select, textarea {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
   background: none;
   border: none;
-  outline: none;
 }
 
 input[type="range"] {

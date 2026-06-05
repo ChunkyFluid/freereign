@@ -81,9 +81,9 @@
         </a>
       </div>
       <div class="topbar__center">
-        <div class="topbar__search" id="search-container">
+        <div class="topbar__search" id="search-container" role="search">
           <svg class="topbar__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <input type="text" class="topbar__search-input" id="tool-search" placeholder="Search tools..." autocomplete="off" />
+          <input type="text" class="topbar__search-input" id="tool-search" placeholder="Search tools..." autocomplete="off" aria-label="Search tools" />
           <kbd class="topbar__search-kbd">/</kbd>
         </div>
       </div>
@@ -101,7 +101,7 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <nav class="sidebar__nav" id="sidebar-nav">
+      <nav class="sidebar__nav" id="sidebar-nav" aria-label="CSS tools">
         <div class="sidebar__section">
           <span class="sidebar__section-label">Essentials</span>
           <div class="sidebar__tools" id="tools-essentials"></div>
@@ -133,7 +133,7 @@
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <!-- Main Content -->
-    <main class="main" id="main">
+    <main class="main" id="main" aria-label="Tool workspace">
       <!-- Landing / Tool Content injected here -->
       <div class="tool-container" id="tool-container">
         <!-- Dynamic content -->
@@ -145,11 +145,11 @@
 
     <!-- Pro Modal -->
     <div class="modal-overlay" id="pro-modal-overlay">
-      <div class="modal" id="pro-modal">
-        <button class="modal__close" id="pro-modal-close">×</button>
+      <div class="modal" id="pro-modal" role="dialog" aria-modal="true" aria-labelledby="pro-modal-title">
+        <button class="modal__close" id="pro-modal-close" aria-label="Close modal">×</button>
         <div class="modal__header">
           <span class="modal__badge">PRO</span>
-          <h2 class="modal__title">Unlock the full toolkit</h2>
+          <h2 class="modal__title" id="pro-modal-title">Unlock the full toolkit</h2>
           <p class="modal__subtitle">Everything you need to ship CSS faster. One payment, yours forever.</p>
         </div>
 
