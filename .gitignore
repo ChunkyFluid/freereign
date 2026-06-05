@@ -25,3 +25,13 @@ dist-ssr
 
 # Local Netlify folder
 .netlify
+
+# Internal project files (not for public repo)
+DAILY_LOG.md
+analytics_snapshot.json
+
+# Vite template boilerplate
+src/counter.ts
+src/main.ts
+src/style.css
+src/assets/
