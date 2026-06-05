@@ -1674,6 +1674,29 @@ input[type="color"]::-webkit-color-swatch {
   }
 }
 
+/* === Landing Footer === */
+.landing__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6) 0 var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.landing__footer-link {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 150ms;
+}
+
+.landing__footer-link:hover {
+  color: var(--accent-primary);
+}
+
 /* === Pro Preview Banner === */
 .pro-preview-banner {
   display: flex;

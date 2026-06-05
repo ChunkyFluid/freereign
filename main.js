@@ -558,6 +558,13 @@ function renderLanding() {
         </div>
       </div>
     </div>
+    <div class="landing__footer">
+      <span>© ${new Date().getFullYear()} FreeReign</span>
+      <span>·</span>
+      <a href="/terms" class="landing__footer-link">Terms</a>
+      <a href="/privacy" class="landing__footer-link">Privacy</a>
+      <a href="/refund" class="landing__footer-link">Refund</a>
+    </div>
   `;
 
   // Bind landing events
