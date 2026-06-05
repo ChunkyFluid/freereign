@@ -20,6 +20,8 @@ import { breakpointTool } from './tools/breakpoint.js';
 import { aspectRatioTool } from './tools/aspectratio.js';
 import { cursorTool } from './tools/cursor.js';
 import { scrollSnapTool } from './tools/scrollsnap.js';
+import { transitionTool } from './tools/transition.js';
+import { variablesTool } from './tools/variables.js';
 
 // === Tool Registry ===
 const TOOLS = [
@@ -41,12 +43,14 @@ const TOOLS = [
   aspectRatioTool,
   cursorTool,
   scrollSnapTool,
+  transitionTool,
+  variablesTool,
 ];
 
 const TOOL_CATEGORIES = {
-  essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism'],
+  essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism', 'variables'],
   layout: ['flexbox', 'grid', 'breakpoint', 'aspectratio', 'scrollsnap'],
-  effects: ['animation', 'textshadow', 'transform', 'neumorphism', 'clippath', 'filter', 'cursor'],
+  effects: ['animation', 'textshadow', 'transform', 'transition', 'neumorphism', 'clippath', 'filter', 'cursor'],
   pro: ['typography'],
 };
 
