@@ -159,18 +159,18 @@
 
     <div class="bottom-cta">
       <h2>Start Designing</h2>
-      <p>22 CSS generators. Zero friction. Instant code.</p>
+      <p>25 CSS generators. 10 free, 15 Pro. Instant code.</p>
       <a href="https://freereign.dev/#grid" class="cta-btn">Open CSS Grid Generator →</a>
     </div>
   </div>
 
   <footer>
-    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 22 free CSS generators · <a href="https://github.com/ChunkyFluid/freereign">GitHub</a></p>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://github.com/ChunkyFluid/freereign">GitHub</a></p>
   </footer>
 
   <script>
     // Populate related tools (4 random from other tools)
-    const allTools = [{"id":"gradient","name":"CSS Gradient Generator","icon":"🎨"},{"id":"boxshadow","name":"CSS Box Shadow Generator","icon":"🌑"},{"id":"borderradius","name":"CSS Border Radius Generator","icon":"⬜"},{"id":"colorpalette","name":"CSS Color Palette Generator","icon":"🎯"},{"id":"glassmorphism","name":"CSS Glassmorphism Generator","icon":"💎"},{"id":"variables","name":"CSS Variables Generator","icon":"🏷️"},{"id":"flexbox","name":"CSS Flexbox Playground","icon":"📐"},{"id":"breakpoint","name":"CSS Breakpoint Tester","icon":"📏"},{"id":"aspectratio","name":"CSS Aspect Ratio Calculator","icon":"📐"},{"id":"scrollsnap","name":"CSS Scroll Snap Generator","icon":"📜"},{"id":"animation","name":"CSS Animation Builder","icon":"✨"},{"id":"textshadow","name":"CSS Text Shadow Generator","icon":"💬"},{"id":"transform","name":"CSS Transform Generator","icon":"🔄"},{"id":"transition","name":"CSS Transition Generator","icon":"🔀"},{"id":"neumorphism","name":"CSS Neumorphism Generator","icon":"🧊"},{"id":"clippath","name":"CSS Clip-Path Generator","icon":"✂️"},{"id":"filter","name":"CSS Filter Generator","icon":"🔮"},{"id":"cursor","name":"CSS Cursor Styles Reference","icon":"🖱️"}];
+    const allTools = [{"id":"gradient","name":"CSS Gradient Generator","icon":"🎨"},{"id":"boxshadow","name":"CSS Box Shadow Generator","icon":"🌑"},{"id":"borderradius","name":"CSS Border Radius Generator","icon":"⬜"},{"id":"colorpalette","name":"CSS Color Palette Generator","icon":"🎯"},{"id":"glassmorphism","name":"CSS Glassmorphism Generator","icon":"💎"},{"id":"variables","name":"CSS Variables Generator","icon":"🏷️"},{"id":"flexbox","name":"CSS Flexbox Playground","icon":"📐"},{"id":"breakpoint","name":"CSS Breakpoint Tester","icon":"📏"},{"id":"aspectratio","name":"CSS Aspect Ratio Calculator","icon":"📐"},{"id":"scrollsnap","name":"CSS Scroll Snap Generator","icon":"📜"},{"id":"animation","name":"CSS Animation Builder","icon":"✨"},{"id":"textshadow","name":"CSS Text Shadow Generator","icon":"💬"},{"id":"transform","name":"CSS Transform Generator","icon":"🔄"},{"id":"transition","name":"CSS Transition Generator","icon":"🔀"},{"id":"neumorphism","name":"CSS Neumorphism Generator","icon":"🧊"},{"id":"clippath","name":"CSS Clip-Path Generator","icon":"✂️"},{"id":"filter","name":"CSS Filter Generator","icon":"🔮"},{"id":"cursor","name":"CSS Cursor Styles Reference","icon":"🖱️"},{"id":"typography","name":"CSS Typography Scale Generator","icon":"🔤"},{"id":"containerquery","name":"CSS Container Query Generator","icon":"📦"},{"id":"gradienttext","name":"CSS Gradient Text Generator","icon":"✨"},{"id":"fluidtype","name":"CSS Fluid Typography Generator","icon":"📏"},{"id":"scrollbar","name":"CSS Custom Scrollbar Generator","icon":"📜"},{"id":"mediaquery","name":"CSS Media Query Builder","icon":"📱"}];
     const shuffled = allTools.sort(() => 0.5 - Math.random()).slice(0, 4);
     document.getElementById('related-tools').innerHTML = shuffled.map(t =>
       `<a href="/tools/${t.id}"><span>${t.icon}</span> ${t.name}</a>`

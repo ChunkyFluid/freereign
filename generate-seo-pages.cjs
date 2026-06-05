@@ -105,6 +105,7 @@ const tools = [
       'Shadow token collection',
     ],
     useCases: 'design systems, component libraries, theming, dark mode, white-labeling',
+    isPro: true,
   },
   {
     id: 'flexbox',
@@ -153,6 +154,7 @@ const tools = [
       'URL-based iframe preview',
     ],
     useCases: 'responsive testing, QA, design review, client presentations',
+    isPro: true,
   },
   {
     id: 'aspectratio',
@@ -169,6 +171,7 @@ const tools = [
       'Visual preview with live updates',
     ],
     useCases: 'video embeds, image containers, responsive cards, hero sections',
+    isPro: true,
   },
   {
     id: 'scrollsnap',
@@ -185,6 +188,7 @@ const tools = [
       'Interactive scroll preview',
     ],
     useCases: 'carousels, image galleries, onboarding flows, slide decks',
+    isPro: true,
   },
   {
     id: 'animation',
@@ -233,6 +237,7 @@ const tools = [
       'Combined transform output',
     ],
     useCases: 'card flips, hover effects, parallax elements, 3D UI, interactive elements',
+    isPro: true,
   },
   {
     id: 'transition',
@@ -249,6 +254,7 @@ const tools = [
       'Interactive trigger preview',
     ],
     useCases: 'button hovers, page transitions, smooth scroll, menu animations, state changes',
+    isPro: true,
   },
   {
     id: 'neumorphism',
@@ -281,6 +287,7 @@ const tools = [
       'Visual shape preview',
     ],
     useCases: 'hero sections, image masks, decorative dividers, creative layouts',
+    isPro: true,
   },
   {
     id: 'filter',
@@ -297,6 +304,7 @@ const tools = [
       'Reset individual filters',
     ],
     useCases: 'image effects, hover states, disabled states, artistic filters, overlays',
+    isPro: true,
   },
   {
     id: 'cursor',
@@ -313,6 +321,109 @@ const tools = [
       'Instant CSS output',
     ],
     useCases: 'interactive elements, drag handles, resize areas, disabled states, custom UX',
+    isPro: true,
+  },
+  {
+    id: 'typography',
+    name: 'CSS Typography Scale Generator',
+    icon: '🔤',
+    headline: 'Build a Perfect Typographic Scale',
+    description: 'Generate a harmonious typography scale using modular ratios. Choose from 8 classic ratios (Minor Third, Perfect Fourth, Golden Ratio, etc.) and export as CSS custom properties.',
+    keywords: 'typography scale generator, modular scale, type scale css, font size scale, typographic hierarchy',
+    features: [
+      '8 modular ratio presets',
+      'Base size and scale step controls',
+      'CSS custom property output',
+      'Visual hierarchy preview',
+      'Font family and weight customization',
+    ],
+    useCases: 'design systems, editorial design, responsive typography, component libraries',
+    isPro: true,
+  },
+  {
+    id: 'containerquery',
+    name: 'CSS Container Query Generator',
+    icon: '📦',
+    headline: 'Generate CSS Container Queries Visually',
+    description: 'Build CSS container queries with a visual editor. Define container types, set size conditions, and preview responsive component behavior within containers.',
+    keywords: 'css container query generator, container query builder, responsive components, container size query',
+    features: [
+      'Container type and name setup',
+      'Min-width and max-width conditions',
+      'Visual container resize preview',
+      'Nested container support',
+      'Modern CSS syntax output',
+    ],
+    useCases: 'responsive components, design systems, widget libraries, reusable cards',
+    isPro: true,
+  },
+  {
+    id: 'gradienttext',
+    name: 'CSS Gradient Text Generator',
+    icon: '✨',
+    headline: 'Create Stunning CSS Gradient Text Effects',
+    description: 'Apply gradient colors to text using background-clip. Choose direction, colors, and see live preview on editable text. Export production-ready CSS.',
+    keywords: 'css gradient text, gradient text effect, background-clip text, colorful text css, text gradient generator',
+    features: [
+      'Multi-color gradient text',
+      'Direction and angle control',
+      'Editable preview text',
+      'Font size and weight controls',
+      'Cross-browser compatible output',
+    ],
+    useCases: 'hero headings, logos, CTAs, marketing pages, creative typography',
+    isPro: true,
+  },
+  {
+    id: 'fluidtype',
+    name: 'CSS Fluid Typography Generator',
+    icon: '📏',
+    headline: 'Generate Responsive Font Sizes with CSS clamp()',
+    description: 'Create a complete responsive typography scale using CSS clamp(). Set min/max sizes, viewport breakpoints, and scale ratio. Get production-ready fluid type tokens.',
+    keywords: 'css clamp font size, fluid typography, responsive font size, css clamp generator, fluid type scale',
+    features: [
+      'CSS clamp() based responsive sizing',
+      'Multiple scale ratios (Minor Third to Golden Ratio)',
+      'Min/max viewport range controls',
+      'Full type scale with CSS custom properties',
+      'Tailwind config output',
+    ],
+    useCases: 'design systems, responsive typography, fluid layouts, mobile-first design',
+    isPro: true,
+  },
+  {
+    id: 'scrollbar',
+    name: 'CSS Custom Scrollbar Generator',
+    icon: '📜',
+    headline: 'Design Custom CSS Scrollbars',
+    description: 'Style webkit scrollbars with visual controls for width, track color, thumb color, radius, borders, and hover effects. Outputs both webkit and Firefox syntax.',
+    keywords: 'css scrollbar generator, custom scrollbar css, webkit scrollbar, scrollbar-color, scrollbar styling',
+    features: [
+      'Webkit scrollbar track and thumb styling',
+      'Firefox scrollbar-color support',
+      'Border and radius controls',
+      'Hover state customization',
+      'Live scroll preview',
+    ],
+    useCases: 'sidebars, code editors, chat windows, dashboards, custom UI',
+    isPro: true,
+  },
+  {
+    id: 'mediaquery',
+    name: 'CSS Media Query Builder',
+    icon: '📱',
+    headline: 'Build Responsive @media Queries Visually',
+    description: 'Build CSS media queries with a visual builder. Combine width, orientation, color-scheme, hover, and reduced-motion conditions. Supports modern range syntax and legacy syntax.',
+    keywords: 'css media query builder, responsive design, media query generator, breakpoint builder, min-width max-width',
+    features: [
+      'Min-width, max-width, and range modes',
+      'Modern range syntax and legacy syntax toggle',
+      'Compound condition combinator',
+      'Visual breakpoint range indicator',
+      'Tailwind screens config output',
+    ],
+    useCases: 'responsive design, mobile-first development, accessibility, dark mode detection',
+    isPro: true,
   },
 ];
 
@@ -322,14 +433,14 @@ function generatePage(tool) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${tool.name} — Free Online Tool | FreeReign</title>
+  <title>${tool.name} — ${tool.isPro ? 'Pro Tool' : 'Free Online Tool'} | FreeReign</title>
   <meta name="description" content="${tool.description}">
   <meta name="keywords" content="${tool.keywords}">
   <link rel="canonical" href="${BASE_URL}/tools/${tool.id}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="${tool.name} — Free Online Tool | FreeReign">
+  <meta property="og:title" content="${tool.name} — ${tool.isPro ? 'Pro Tool' : 'Free Online Tool'} | FreeReign">
   <meta property="og:description" content="${tool.description}">
   <meta property="og:image" content="${BASE_URL}/og-image.png">
   <meta property="og:url" content="${BASE_URL}/tools/${tool.id}">
@@ -474,13 +585,13 @@ function generatePage(tool) {
 
     <div class="bottom-cta">
       <h2>Start Designing</h2>
-      <p>22 CSS generators. Zero friction. Instant code.</p>
+      <p>25 CSS generators. 10 free, 15 Pro. Instant code.</p>
       <a href="${BASE_URL}/#${tool.id}" class="cta-btn">Open ${tool.name} →</a>
     </div>
   </div>
 
   <footer>
-    <p>Made with ◆ by <a href="${BASE_URL}">FreeReign</a> · 22 free CSS generators · <a href="https://github.com/ChunkyFluid/freereign">GitHub</a></p>
+    <p>Made with ◆ by <a href="${BASE_URL}">FreeReign</a> · 25 CSS generators · <a href="https://github.com/ChunkyFluid/freereign">GitHub</a></p>
   </footer>
 
   <script>
@@ -515,11 +626,11 @@ const indexHtml = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>All CSS Generator Tools — Free Online | FreeReign</title>
-  <meta name="description" content="22 free CSS generators in one toolkit. Gradients, shadows, glassmorphism, flexbox, grid, animations, and more. No sign-up, no ads, instant code.">
+  <meta name="description" content="25 CSS generators in one toolkit. 10 free, 15 Pro. Gradients, shadows, glassmorphism, flexbox, grid, animations, and more.">
   <link rel="canonical" href="${BASE_URL}/tools/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta property="og:title" content="22 CSS Generator Tools — FreeReign">
-  <meta property="og:description" content="Free, open-source CSS toolkit with 22 visual generators.">
+  <meta property="og:title" content="25 CSS Generator Tools — FreeReign">
+  <meta property="og:description" content="CSS toolkit with 25 visual generators. 10 free, 15 Pro.">
   <meta property="og:image" content="${BASE_URL}/og-image.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -552,8 +663,8 @@ const indexHtml = `<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
-    <h1>22 CSS Generator Tools</h1>
-    <p class="subtitle">Free, open-source, zero friction. Pick a tool and start designing.</p>
+    <h1>25 CSS Generator Tools</h1>
+    <p class="subtitle">10 free tools, 15 Pro tools. Pick a tool and start designing.</p>
     <div class="tools-grid">
       ${tools.map(t => `
       <a href="/tools/${t.id}" class="tool-card">
