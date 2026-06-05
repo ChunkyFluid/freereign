@@ -8,7 +8,8 @@ export const scrollSnapTool = {
   icon: '📜',
   description: 'Generate CSS scroll-snap properties with visual controls. Build smooth, snapping scroll containers for carousels and galleries.',
   shortDesc: 'Scroll snap container builder',
-  category: 'layout',
+  
+  isPro: true,
   isNew: true,
 
   renderControls() {

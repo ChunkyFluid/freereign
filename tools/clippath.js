@@ -42,7 +42,7 @@ export const clipPathTool = {
   icon: '✂️',
   description: 'Create CSS clip-path shapes with 16 presets or custom polygon definitions. Triangle, hexagon, star, and more.',
   shortDesc: 'CSS shape clipping',
-  isPro: false,
+  isPro: true,
   isNew: false,
 
   renderControls() {

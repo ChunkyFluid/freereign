@@ -50,7 +50,7 @@ export const filterTool = {
   icon: '🔮',
   description: 'Build CSS filter chains with blur, brightness, contrast, grayscale, hue-rotate, saturate, sepia, and drop-shadow.',
   shortDesc: 'Filter chain builder',
-  isPro: false,
+  isPro: true,
   isNew: false,
 
   renderControls() {

@@ -8,7 +8,8 @@ export const variablesTool = {
   icon: '🏷️',
   description: 'Generate a complete CSS custom properties system. Create color scales, spacing tokens, and typography variables with one click.',
   shortDesc: 'Custom properties system',
-  category: 'essentials',
+  
+  isPro: true,
   isNew: true,
 
   renderControls() {

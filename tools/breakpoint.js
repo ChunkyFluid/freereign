@@ -102,7 +102,7 @@ export const breakpointTool = {
   icon: '📏',
   description: 'Test responsive breakpoints across popular device sizes. Visualize how your layouts respond at different viewport widths.',
   shortDesc: 'Responsive viewport tester',
-  isPro: false,
+  isPro: true,
   isNew: true,
 
   renderControls() {

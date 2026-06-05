@@ -8,7 +8,8 @@ export const cursorTool = {
   icon: '🖱️',
   description: 'Preview and generate all 38 CSS cursor styles. Click any cursor to see it in action and copy the CSS.',
   shortDesc: 'All 38 CSS cursor values',
-  category: 'effects',
+  
+  isPro: true,
   isNew: true,
 
   renderControls() {

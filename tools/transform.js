@@ -47,7 +47,7 @@ export const transformTool = {
   icon: '🔄',
   description: 'Manipulate CSS transforms with visual controls for rotation, scale, translation, skew, and 3D perspective.',
   shortDesc: 'Rotate, scale, skew & translate',
-  isPro: false,
+  isPro: true,
   isNew: false,
 
   renderControls() {

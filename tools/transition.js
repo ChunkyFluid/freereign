@@ -8,7 +8,8 @@ export const transitionTool = {
   icon: '🔀',
   description: 'Design smooth CSS transitions with visual easing curves. Preview timing functions, delays, and multi-property transitions in real time.',
   shortDesc: 'Visual transition builder',
-  category: 'effects',
+  
+  isPro: true,
   isNew: true,
 
   renderControls() {

@@ -8,7 +8,8 @@ export const aspectRatioTool = {
   icon: '📐',
   description: 'Calculate and generate CSS aspect-ratio properties with common presets. Perfect for responsive images, videos, and containers.',
   shortDesc: 'Responsive aspect-ratio calculator',
-  category: 'layout',
+  
+  isPro: true,
   isNew: true,
 
   renderControls() {

@@ -94,7 +94,7 @@ export const typographyTool = {
   icon: '🔤',
   description: 'Generate harmonious typography scales using musical ratios. Perfect for consistent heading and body text sizing.',
   shortDesc: 'Modular type scale calculator',
-  isPro: false,
+  isPro: true,
   isNew: false,
 
   renderControls() {

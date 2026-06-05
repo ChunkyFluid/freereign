@@ -11,8 +11,9 @@ import { flexboxTool } from './tools/flexbox.js';
 import { gridTool } from './tools/grid.js';
 import { animationTool } from './tools/animation.js';
 import { textShadowTool } from './tools/textshadow.js';
-import { transformTool } from './tools/transform.js';
 import { neumorphismTool } from './tools/neumorphism.js';
+// Pro tools
+import { transformTool } from './tools/transform.js';
 import { clipPathTool } from './tools/clippath.js';
 import { filterTool } from './tools/filter.js';
 import { typographyTool } from './tools/typography.js';
@@ -24,9 +25,14 @@ import { transitionTool } from './tools/transition.js';
 import { variablesTool } from './tools/variables.js';
 import { containerQueryTool } from './tools/containerquery.js';
 import { gradientTextTool } from './tools/gradienttext.js';
+import { fluidTypeTool } from './tools/fluidtype.js';
+import { scrollbarTool } from './tools/scrollbar.js';
+import { mediaqueryTool } from './tools/mediaquery.js';
 
 // === Tool Registry ===
+// 10 Free tools, 15 Pro tools = 25 total
 const TOOLS = [
+  // --- Free (10) ---
   gradientTool,
   boxShadowTool,
   borderRadiusTool,
@@ -36,26 +42,30 @@ const TOOLS = [
   gridTool,
   animationTool,
   textShadowTool,
-  transformTool,
   neumorphismTool,
+  // --- Pro (15) ---
+  transformTool,
+  transitionTool,
   clipPathTool,
   filterTool,
   typographyTool,
+  variablesTool,
   breakpointTool,
   aspectRatioTool,
-  cursorTool,
   scrollSnapTool,
-  transitionTool,
-  variablesTool,
+  cursorTool,
   containerQueryTool,
   gradientTextTool,
+  fluidTypeTool,
+  scrollbarTool,
+  mediaqueryTool,
 ];
 
 const TOOL_CATEGORIES = {
-  essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism', 'variables'],
-  layout: ['flexbox', 'grid', 'breakpoint', 'aspectratio', 'scrollsnap'],
-  effects: ['animation', 'textshadow', 'transform', 'transition', 'neumorphism', 'clippath', 'filter', 'cursor'],
-  pro: ['typography', 'containerquery', 'gradienttext'],
+  essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism'],
+  layout: ['flexbox', 'grid'],
+  effects: ['animation', 'textshadow', 'neumorphism'],
+  pro: ['transform', 'transition', 'clippath', 'filter', 'typography', 'variables', 'breakpoint', 'aspectratio', 'scrollsnap', 'cursor', 'containerquery', 'gradienttext', 'fluidtype', 'scrollbar', 'mediaquery'],
 };
 
 // === State ===
@@ -261,7 +271,7 @@ function renderTool(tool) {
       <span>·</span>
       <span>${TOOLS.length} tools</span>
       <span>·</span>
-      <span>100% free & open source</span>
+      <span>100% client-side — no data collected</span>
     </div>
   `;
 
@@ -392,19 +402,19 @@ function renderLanding() {
   document.title = 'FreeReign — Premium CSS & Design Toolkit';
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) {
-    metaDesc.setAttribute('content', '22 free CSS generators in one beautiful toolkit. Gradients, shadows, glassmorphism, animations & more. Zero friction, instant code.');
+    metaDesc.setAttribute('content', '25 CSS generators in one toolkit. 10 free, 15 Pro. Gradients, shadows, glassmorphism, animations & more. Instant code output.');
   }
 
   toolContainer.innerHTML = `
     <div class="landing">
-      <span class="landing__eyebrow">✦ Free & Open Source CSS Toolkit</span>
+      <span class="landing__eyebrow">✦ 10 Free CSS Tools + 15 Pro Tools</span>
       <h1 class="landing__title">
         Design with<br/>
         <span class="landing__title-accent">Total FreeReign</span>
       </h1>
       <p class="landing__subtitle">
-        ${TOOLS.length} premium CSS generators in one beautiful toolkit.
-        Visual controls, instant code, zero friction.
+        ${TOOLS.length} CSS generators in one beautiful toolkit.
+        10 free, ${TOOLS.filter(t => t.isPro).length} Pro. Visual controls, instant code, zero friction.
       </p>
       <div class="landing__cta-group">
         <button class="landing__cta landing__cta--primary" id="cta-explore">
@@ -417,16 +427,16 @@ function renderLanding() {
 
       <div class="landing__stats">
         <div class="landing__stat">
-          <span class="landing__stat-number">${TOOLS.length}</span>
-          <span class="landing__stat-label">CSS Tools</span>
+          <span class="landing__stat-number">10</span>
+          <span class="landing__stat-label">Free Tools</span>
+        </div>
+        <div class="landing__stat">
+          <span class="landing__stat-number">${TOOLS.filter(t => t.isPro).length}</span>
+          <span class="landing__stat-label">Pro Tools</span>
         </div>
         <div class="landing__stat">
           <span class="landing__stat-number">3</span>
           <span class="landing__stat-label">Output Formats</span>
-        </div>
-        <div class="landing__stat">
-          <span class="landing__stat-number">$0</span>
-          <span class="landing__stat-label">Forever Free</span>
         </div>
         <div class="landing__stat">
           <span class="landing__stat-number">0</span>
