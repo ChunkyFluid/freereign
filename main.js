@@ -248,6 +248,7 @@ function renderTool(tool) {
       <h1 class="tool-header__title">${tool.name}${isPreviewingPro ? ' <span class="tool-header__pro-badge">PRO</span>' : ''}</h1>
       <p class="tool-header__desc">${tool.description}</p>
     </div>
+    <div class="tool-presets" id="tool-presets"></div>
     <div class="tool-body">
       <div class="tool-controls" id="tool-controls">
         ${tool.renderControls()}
@@ -308,6 +309,9 @@ function renderTool(tool) {
   // Initialize tool logic
   tool.init();
 
+  // Render the Pro presets bar
+  renderPresetsBar(tool);
+
   // Bind code panel events
   bindCodePanelEvents(tool);
 
@@ -316,8 +320,7 @@ function renderTool(tool) {
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       tool.reset?.();
-      tool.init();
-      bindCodePanelEvents(tool);
+      renderTool(tool); // full re-render so static controls reset too
     });
   }
 
@@ -756,6 +759,108 @@ function showProModal(source = 'unknown') {
   currentProModalSource = source;
   analytics.proModalOpen(source);
   proModalOverlay.classList.add('visible');
+}
+
+// === Presets (Pro feature) ===
+// Saved, named tool configurations persisted in localStorage. Pro-gated.
+// Module-state tools implement getState()/setState(); the rest fall back to a
+// generic DOM-control snapshot (their state lives in the controls themselves).
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function getAllPresets() {
+  try { return JSON.parse(localStorage.getItem('fr_presets') || '{}'); }
+  catch { return {}; }
+}
+function getPresets(toolId) {
+  return getAllPresets()[toolId] || [];
+}
+function persistPresets(all) {
+  localStorage.setItem('fr_presets', JSON.stringify(all));
+}
+// Capture both the structural module state (if the tool exposes one) AND the
+// raw DOM control values. The two layers together give full fidelity: setState
+// restores dynamic structure (gradient stops, shadow layers); the DOM layer
+// restores any control that lives only in the DOM (e.g. text/font inputs).
+function snapshotState(tool) {
+  const snap = { state: null, dom: {} };
+  if (typeof tool.getState === 'function') snap.state = tool.getState();
+  const controls = document.getElementById('tool-controls');
+  if (controls) {
+    controls.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+      snap.dom[el.id] = el.type === 'checkbox' ? { checked: el.checked } : { value: el.value };
+    });
+  }
+  return snap;
+}
+function applyState(tool, snap) {
+  if (!snap) return;
+  // Back-compat: tolerate any older snapshot shape
+  const state = snap.state ?? (snap.__dom ? null : snap);
+  const dom = snap.dom ?? snap.__dom ?? {};
+  // 1) Restore structural state and re-render controls from it
+  if (state != null && typeof tool.setState === 'function') {
+    tool.setState(state);
+    renderTool(tool);
+  }
+  // 2) Apply DOM control values on top (covers DOM-only controls + DOM-state tools)
+  Object.entries(dom).forEach(([id, v]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if ('checked' in v) el.checked = v.checked; else el.value = v.value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  if (window.__updateCode) window.__updateCode();
+}
+function savePreset(tool) {
+  const name = (prompt('Name this preset:') || '').trim();
+  if (!name) return;
+  const all = getAllPresets();
+  const list = all[tool.id] || [];
+  const entry = { name, state: snapshotState(tool), savedAt: Date.now() };
+  const existing = list.findIndex(p => p.name === name);
+  if (existing >= 0) list[existing] = entry; else list.push(entry);
+  all[tool.id] = list;
+  persistPresets(all);
+  renderPresetsBar(tool);
+  analytics.track('preset_save', { tool: tool.id });
+  showToast(`Preset "${name}" saved`, 'success');
+}
+function loadPreset(tool, name) {
+  const preset = getPresets(tool.id).find(p => p.name === name);
+  if (!preset) return;
+  applyState(tool, preset.state);
+  analytics.track('preset_load', { tool: tool.id });
+  showToast(`Preset "${name}" loaded`, 'success');
+}
+function deletePreset(tool, name) {
+  const all = getAllPresets();
+  all[tool.id] = (all[tool.id] || []).filter(p => p.name !== name);
+  persistPresets(all);
+  renderPresetsBar(tool);
+}
+function renderPresetsBar(tool) {
+  const bar = document.getElementById('tool-presets');
+  if (!bar) return;
+  if (!isPro) {
+    bar.innerHTML = `<button class="preset-save-btn preset-save-btn--locked" id="preset-locked">🔒 Save preset (Pro)</button>`;
+    document.getElementById('preset-locked')?.addEventListener('click', () => showProModal('preset_locked'));
+    return;
+  }
+  const list = getPresets(tool.id);
+  bar.innerHTML = `
+    <button class="preset-save-btn" id="preset-save">💾 Save preset</button>
+    ${list.map(p => `
+      <span class="preset-chip">
+        <button class="preset-chip__load" data-name="${escapeHtml(p.name)}" title="Load preset">${escapeHtml(p.name)}</button>
+        <button class="preset-chip__del" data-name="${escapeHtml(p.name)}" aria-label="Delete preset ${escapeHtml(p.name)}">×</button>
+      </span>`).join('')}
+    ${list.length === 0 ? '<span class="preset-empty">No saved presets yet — tweak the controls, then Save.</span>' : ''}
+  `;
+  document.getElementById('preset-save')?.addEventListener('click', () => savePreset(tool));
+  bar.querySelectorAll('.preset-chip__load').forEach(b => b.addEventListener('click', () => loadPreset(tool, b.dataset.name)));
+  bar.querySelectorAll('.preset-chip__del').forEach(b => b.addEventListener('click', () => deletePreset(tool, b.dataset.name)));
 }
 
 // === Toast System ===

@@ -201,6 +201,9 @@ export const colorPaletteTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { baseColor: '#6366f1', harmony: 'analogous', count: 5, palette: [] };
   },

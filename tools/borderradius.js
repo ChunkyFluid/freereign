@@ -163,6 +163,9 @@ export const borderRadiusTool = {
     }
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { all: 16, linked: true, topLeft: 16, topRight: 16, bottomRight: 16, bottomLeft: 16, unit: 'px', size: 200 };
   },

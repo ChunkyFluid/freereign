@@ -129,6 +129,9 @@ export const transformTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = {
       rotateX: 0, rotateY: 0, rotateZ: 0,

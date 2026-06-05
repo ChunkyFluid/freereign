@@ -156,6 +156,9 @@ export const filterTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = {
       blur: 0, brightness: 100, contrast: 100, grayscale: 0, hueRotate: 0,

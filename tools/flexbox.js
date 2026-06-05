@@ -138,6 +138,9 @@ export const flexboxTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { direction: 'row', justifyContent: 'center', alignItems: 'center', flexWrap: 'nowrap', gap: 12, itemCount: 5 };
   },

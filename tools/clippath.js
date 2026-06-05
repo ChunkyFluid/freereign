@@ -124,6 +124,9 @@ export const clipPathTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { clipPath: PRESETS[0].path, customMode: false, selectedPreset: 0 };
   },

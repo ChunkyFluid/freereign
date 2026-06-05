@@ -243,6 +243,9 @@ export const animationTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = {
       name: 'pulse', duration: 2, timingFunction: 'ease-in-out', iterationCount: 'infinite',

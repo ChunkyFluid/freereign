@@ -179,6 +179,9 @@ export const gradientTool = {
     }
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = {
       type: 'linear',

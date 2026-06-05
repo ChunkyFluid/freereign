@@ -1902,3 +1902,85 @@ input[type="color"]::-webkit-color-swatch {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ============================================================
+   Tool Presets Bar (Pro feature)
+   ============================================================ */
+.tool-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.preset-save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-sm);
+  background: var(--accent-gradient-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-save-btn:hover {
+  border-color: var(--accent-primary);
+}
+
+.preset-save-btn--locked {
+  background: var(--bg-elevated);
+  color: var(--text-tertiary);
+  border-style: dashed;
+}
+
+.preset-chip {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.preset-chip__load {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip__load:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.preset-chip__del {
+  padding: 0 var(--space-2);
+  font-size: var(--text-sm);
+  line-height: 1;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip__del:hover {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+.preset-empty {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}

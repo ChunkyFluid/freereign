@@ -221,6 +221,9 @@ export const breakpointTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { width: 375, height: 667, url: '', preset: 'iphone', orientation: 'portrait', showRuler: true };
   },

@@ -152,6 +152,9 @@ export const textShadowTool = {
     });
   },
 
+  getState() { return structuredClone(shadows); },
+  setState(s) { if (s) shadows = structuredClone(s); },
+
   reset() {
     shadows = [{ x: 2, y: 2, blur: 4, color: '#6366f1', opacity: 80 }];
   },

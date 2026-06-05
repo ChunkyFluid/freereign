@@ -139,6 +139,9 @@ export const gridTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { columns: 3, rows: 3, colGap: 12, rowGap: 12, colTemplate: '1fr 1fr 1fr', rowTemplate: '1fr 1fr 1fr', autoMode: true };
   },

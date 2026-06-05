@@ -179,6 +179,9 @@ export const neumorphismTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { size: 200, radius: 30, distance: 8, intensity: 15, blur: 16, bgColor: '#e0e5ec', shape: 'flat' };
   },

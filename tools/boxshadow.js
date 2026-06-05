@@ -163,6 +163,9 @@ export const boxShadowTool = {
     });
   },
 
+  getState() { return structuredClone(shadows); },
+  setState(s) { if (s) shadows = structuredClone(s); },
+
   reset() {
     shadows = [{ x: 0, y: 4, blur: 20, spread: 0, color: '#6366f1', opacity: 40, inset: false }];
   },

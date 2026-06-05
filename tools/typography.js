@@ -189,6 +189,9 @@ export const typographyTool = {
     });
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { baseSize: 16, scale: 1.25, unit: 'rem', steps: 6, baseFont: 'Inter', lineHeight: 1.5, fontWeight: 400 };
   },

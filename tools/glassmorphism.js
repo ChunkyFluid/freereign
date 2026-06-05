@@ -171,6 +171,9 @@ export const glassmorphismTool = {
     bdHex?.addEventListener('input', (e) => { if (/^#[0-9a-f]{6}$/i.test(e.target.value)) { state.backdropColor = e.target.value; bdInput.value = e.target.value; updatePreview(); }});
   },
 
+  getState() { return structuredClone(state); },
+  setState(s) { if (s) state = structuredClone(s); },
+
   reset() {
     state = { blur: 16, opacity: 20, saturation: 120, borderOpacity: 30, borderRadius: 16, bgColor: '#ffffff', backdropColor: '#6366f1' };
   },
