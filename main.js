@@ -281,7 +281,11 @@ function renderTool(tool) {
       <span>·</span>
       <span>${TOOLS.length} tools</span>
       <span>·</span>
-      <span>100% client-side — no data collected</span>
+      <span>100% client-side</span>
+      <span>·</span>
+      <a href="/terms" class="tool-footer__link">Terms</a>
+      <a href="/privacy" class="tool-footer__link">Privacy</a>
+      <a href="/refund" class="tool-footer__link">Refund</a>
     </div>
   `;
 
