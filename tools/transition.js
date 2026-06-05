@@ -2,6 +2,8 @@
    FreeReign — CSS Transition Generator
    ============================================================ */
 
+let easingValue = 'ease';
+
 export const transitionTool = {
   id: 'transition',
   name: 'Transition',
@@ -55,11 +57,11 @@ export const transitionTool = {
             { id: 'cubic-exit', label: 'Exit', value: 'cubic-bezier(0.4, 0, 1, 1)' },
             { id: 'spring', label: 'Spring', value: 'cubic-bezier(0.34, 1.56, 0.64, 1)' },
           ].map(e => `
-            <button class="easing-btn ${e.id === 'ease' ? 'active' : ''}" data-easing="${e.value}" data-id="${e.id}" style="
+            <button class="easing-btn ${e.value === easingValue ? 'active' : ''}" data-easing="${e.value}" data-id="${e.id}" style="
               display: flex; align-items: center; justify-content: space-between;
               padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 500;
-              background: ${e.id === 'ease' ? 'var(--accent-gradient-subtle)' : 'transparent'};
-              color: ${e.id === 'ease' ? 'var(--accent-primary)' : 'var(--text-secondary)'};
+              background: ${e.value === easingValue ? 'var(--accent-gradient-subtle)' : 'transparent'};
+              color: ${e.value === easingValue ? 'var(--accent-primary)' : 'var(--text-secondary)'};
               transition: all 150ms ease; text-align: left; width: 100%;
             ">
               <span>${e.label}</span>
@@ -111,7 +113,6 @@ export const transitionTool = {
     const trigger = document.getElementById('trans-trigger');
     const resetBtn = document.getElementById('trans-reset-preview');
 
-    let easing = 'ease';
     let triggered = false;
 
     function getTransformForProperty(prop) {
@@ -131,7 +132,7 @@ export const transitionTool = {
       const prop = propertySelect.value;
       const duration = durationSlider.value;
       const delay = delaySlider.value;
-      box.style.transition = `${prop} ${duration}ms ${easing} ${delay}ms`;
+      box.style.transition = `${prop} ${duration}ms ${easingValue} ${delay}ms`;
     }
 
     function triggerAnimation() {
@@ -184,7 +185,7 @@ export const transitionTool = {
     easingList.addEventListener('click', (e) => {
       const btn = e.target.closest('.easing-btn');
       if (!btn) return;
-      easing = btn.dataset.easing;
+      easingValue = btn.dataset.easing;
       easingList.querySelectorAll('.easing-btn').forEach(b => {
         b.style.background = 'transparent';
         b.style.color = 'var(--text-secondary)';
@@ -215,7 +216,11 @@ export const transitionTool = {
     update();
   },
 
+  getState() { return { easing: easingValue }; },
+  setState(s) { if (s && s.easing) easingValue = s.easing; },
+
   reset() {
+    easingValue = 'ease';
     document.getElementById('trans-duration').value = 300;
     document.getElementById('trans-delay').value = 0;
     document.getElementById('trans-property').value = 'transform';
@@ -225,8 +230,7 @@ export const transitionTool = {
     const prop = document.getElementById('trans-property')?.value || 'transform';
     const duration = document.getElementById('trans-duration')?.value || 300;
     const delay = document.getElementById('trans-delay')?.value || 0;
-    const activeBtn = document.querySelector('.easing-btn.active');
-    const easing = activeBtn?.dataset.easing || 'ease';
+    const easing = easingValue;
 
     const delayStr = parseInt(delay) > 0 ? ` ${delay}ms` : '';
 
