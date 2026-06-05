@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Guides & Tutorials | FreeReign Blog</title>
+  <meta name="description" content="In-depth CSS guides: glassmorphism, clip-path shapes, fluid typography with clamp(), container queries, and more. Each guide includes copy-paste recipes and links to free visual generators.">
+  <link rel="canonical" href="https://freereign.dev/blog/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+  <meta property="og:title" content="CSS Guides & Tutorials | FreeReign Blog">
+  <meta property="og:description" content="In-depth CSS guides with copy-paste recipes and free visual generators.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Guides & Tutorials | FreeReign Blog">
+  <meta name="twitter:description" content="In-depth CSS guides with copy-paste recipes and free visual generators.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 820px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitle { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 40px; }
+    .posts { display: grid; gap: 20px; }
+    .post { display: block; background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 28px 24px; text-decoration: none; color: var(--text);
+      transition: border-color 250ms, transform 250ms, box-shadow 250ms; }
+    .post:hover { border-color: var(--accent); transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(139,92,246,0.15); }
+    .post__icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .post__title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+    .post__desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+    .post__meta { display: flex; align-items: center; gap: 12px; margin-top: 14px;
+      font-size: 0.75rem; color: var(--text-tertiary); }
+    .post__tag { background: var(--bg-elevated); padding: 3px 10px; border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #c4b5fd; }
+    .cta-banner { text-align: center; margin-top: 48px; padding: 36px 24px;
+      background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; }
+    .cta-banner h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .cta-banner p { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 18px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px;
+      border-radius: var(--radius); font-size: 1rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms;
+      box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / Blog
+    </nav>
+
+    <h1>CSS Guides & Tutorials</h1>
+    <p class="subtitle">Deep dives into modern CSS — each guide has copy-paste recipes and links to a free visual generator.</p>
+
+    <div class="posts">
+      <a class="post" href="/blog/how-to-create-glassmorphism-css">
+        <div class="post__icon">🪟</div>
+        <div class="post__title">How to Create Glassmorphism in CSS (2026 Guide)</div>
+        <div class="post__desc">The backdrop-filter recipe, the three-layer technique, responsive breakpoints, Tailwind setup, and a free generator to build glassmorphism cards visually.</div>
+        <div class="post__meta">
+          <span class="post__tag">backdrop-filter</span>
+          <span class="post__tag">glassmorphism</span>
+          <span>June 2026</span>
+        </div>
+      </a>
+
+      <a class="post" href="/blog/css-clip-path-guide">
+        <div class="post__icon">✂️</div>
+        <div class="post__title">CSS clip-path: The Complete Guide (Shapes, Polygons + Generator)</div>
+        <div class="post__desc">Every clip-path shape function explained — the polygon coordinate system, copy-paste recipes for hexagons, stars, arrows, animation, and browser support.</div>
+        <div class="post__meta">
+          <span class="post__tag">clip-path</span>
+          <span class="post__tag">polygon</span>
+          <span>June 2026</span>
+        </div>
+      </a>
+
+      <a class="post" href="/blog/css-fluid-typography-clamp">
+        <div class="post__icon">📐</div>
+        <div class="post__title">CSS Fluid Typography with clamp(): The Complete Guide</div>
+        <div class="post__desc">Scale font sizes smoothly across viewports without breakpoints. The formula, the accessibility trap to avoid, a full fluid type scale, and Tailwind integration.</div>
+        <div class="post__meta">
+          <span class="post__tag">clamp()</span>
+          <span class="post__tag">fluid-type</span>
+          <span>June 2026</span>
+        </div>
+      </a>
+
+      <a class="post" href="/blog/css-container-queries">
+        <div class="post__icon">📦</div>
+        <div class="post__title">CSS Container Queries: The Complete Guide (with Examples)</div>
+        <div class="post__desc">Make components respond to their container instead of the viewport. container-type, @container syntax, cqi/cqw units, browser support, and Tailwind.</div>
+        <div class="post__meta">
+          <span class="post__tag">@container</span>
+          <span class="post__tag">container-type</span>
+          <span>June 2026</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="cta-banner">
+      <h2>Skip the docs, build it visually</h2>
+      <p>25 interactive CSS generators with live preview and instant code output.</p>
+      <a class="cta-btn" href="https://freereign.dev">Explore all tools →</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>
