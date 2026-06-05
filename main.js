@@ -22,6 +22,8 @@ import { cursorTool } from './tools/cursor.js';
 import { scrollSnapTool } from './tools/scrollsnap.js';
 import { transitionTool } from './tools/transition.js';
 import { variablesTool } from './tools/variables.js';
+import { containerQueryTool } from './tools/containerquery.js';
+import { gradientTextTool } from './tools/gradienttext.js';
 
 // === Tool Registry ===
 const TOOLS = [
@@ -45,13 +47,15 @@ const TOOLS = [
   scrollSnapTool,
   transitionTool,
   variablesTool,
+  containerQueryTool,
+  gradientTextTool,
 ];
 
 const TOOL_CATEGORIES = {
   essentials: ['gradient', 'boxshadow', 'borderradius', 'colorpalette', 'glassmorphism', 'variables'],
   layout: ['flexbox', 'grid', 'breakpoint', 'aspectratio', 'scrollsnap'],
   effects: ['animation', 'textshadow', 'transform', 'transition', 'neumorphism', 'clippath', 'filter', 'cursor'],
-  pro: ['typography'],
+  pro: ['typography', 'containerquery', 'gradienttext'],
 };
 
 // === State ===
