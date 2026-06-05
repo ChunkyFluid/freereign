@@ -313,7 +313,7 @@ function renderTool(tool) {
     shareBtn.addEventListener('click', () => {
       const url = window.location.href;
       const title = `FreeReign — ${tool.name}`;
-      const text = `Check out this CSS ${tool.name} generator!`;
+      const text = `Check out this CSS ${tool.name} tool on FreeReign!`;
       if (navigator.share) {
         navigator.share({ title, text, url }).catch(() => {});
       } else {
@@ -463,21 +463,21 @@ function renderLanding() {
 
   toolContainer.innerHTML = `
     <div class="landing">
-      <span class="landing__eyebrow">✦ 10 Free CSS Tools + 15 Pro Tools</span>
+      <span class="landing__eyebrow">✦ No signup · No install · Works in your browser</span>
       <h1 class="landing__title">
-        Design with<br/>
-        <span class="landing__title-accent">Total FreeReign</span>
+        Ship CSS<br/>
+        <span class="landing__title-accent">10x Faster</span>
       </h1>
       <p class="landing__subtitle">
-        ${TOOLS.length} CSS generators in one beautiful toolkit.
-        10 free, ${TOOLS.filter(t => t.isPro).length} Pro. Visual controls, instant code, zero friction.
+        ${TOOLS.length} visual CSS generators with instant code output.
+        Gradients, shadows, animations, layouts — copy & paste into any project.
       </p>
       <div class="landing__cta-group">
         <button class="landing__cta landing__cta--primary" id="cta-explore">
-          Explore Tools →
+          Start Building — Free →
         </button>
         <button class="landing__cta landing__cta--secondary" id="cta-pro">
-          ★ Get Pro — $14.99
+          ★ Unlock All ${TOOLS.length} Tools — $14.99
         </button>
       </div>
 
@@ -515,18 +515,23 @@ function renderLanding() {
       <div class="landing__features">
         <div class="landing__feature">
           <div class="landing__feature-icon">⚡</div>
-          <h3 class="landing__feature-title">Instant Code</h3>
-          <p class="landing__feature-desc">Every adjustment generates real CSS, SCSS, and Tailwind code instantly. Just copy and paste.</p>
+          <h3 class="landing__feature-title">Instant Output</h3>
+          <p class="landing__feature-desc">Every slider generates real CSS. Copy one line or a full component — paste it right into your project.</p>
         </div>
         <div class="landing__feature">
           <div class="landing__feature-icon">🔒</div>
-          <h3 class="landing__feature-title">100% Private</h3>
-          <p class="landing__feature-desc">Everything runs in your browser. No accounts, no tracking, no data collection. Ever.</p>
+          <h3 class="landing__feature-title">Zero Data Collection</h3>
+          <p class="landing__feature-desc">Everything runs locally in your browser. No accounts, no tracking, no server calls. Your CSS stays yours.</p>
+        </div>
+        <div class="landing__feature">
+          <div class="landing__feature-icon">⌨️</div>
+          <h3 class="landing__feature-title">Power-User Ready</h3>
+          <p class="landing__feature-desc">Keyboard shortcuts (/ to search, Ctrl+S to download, arrow keys to switch tools), share links, and format tabs.</p>
         </div>
         <div class="landing__feature">
           <div class="landing__feature-icon">🎨</div>
-          <h3 class="landing__feature-title">Premium Design</h3>
-          <p class="landing__feature-desc">Dark and light themes, smooth animations, and keyboard shortcuts. Tools that feel as good as they look.</p>
+          <h3 class="landing__feature-title">Framework Agnostic</h3>
+          <p class="landing__feature-desc">Output as CSS, SCSS, or Tailwind. Works with React, Vue, Svelte, vanilla HTML — anything that uses CSS.</p>
         </div>
       </div>
 
@@ -667,6 +672,17 @@ function bindGlobalEvents() {
         a.click();
         URL.revokeObjectURL(url);
         showToast('CSS file downloaded!', 'success');
+      }
+    }
+
+    // Ctrl+Shift+C to copy code
+    if (e.key === 'C' && e.shiftKey && (e.ctrlKey || e.metaKey) && currentTool) {
+      e.preventDefault();
+      const codeEl = document.getElementById('code-output');
+      if (codeEl) {
+        navigator.clipboard.writeText(codeEl.textContent).then(() => {
+          showToast('Code copied!', 'success');
+        });
       }
     }
   });
