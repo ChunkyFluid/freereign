@@ -21,6 +21,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://freereign.dev/blog/css-fluid-typography-clamp</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://freereign.dev/blog/css-container-queries</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://freereign.dev/tools/gradient</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

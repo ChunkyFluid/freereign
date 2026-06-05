@@ -228,6 +228,15 @@ link back to your domain. Embed the live tool in the article.
 
 Repeat for the highest-demand tools. Each article is a new front door that links to the rest.
 
+> 🏭 **Content engine:** new articles are now generated via `npm run blog` from a
+> body partial in `blog-src/` + a config entry in `generate-blog.cjs` (consistent
+> head, schema, FAQ, CTA, related). Four guides are live targeting winnable,
+> lower-competition niche features (all Pro tools, so traffic lands on revenue):
+> glassmorphism, clip-path, **fluid typography / clamp()**
+> (`/blog/css-fluid-typography-clamp`), and **container queries**
+> (`/blog/css-container-queries`). Each tool page links to its guide. Next up:
+> aspect-ratio, scroll-snap, custom scrollbar.
+
 > ✅ **Shipped (article #2):** `public/blog/css-clip-path-guide.html` →
 > `https://freereign.dev/blog/css-clip-path-guide` (Article + FAQ schema, six live
 > in-page clipped shapes, the polygon coordinate system explained, copy-paste recipes,

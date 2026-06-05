@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Container Queries: The Complete Guide (with Examples) | FreeReign</title>
+  <meta name="description" content="Learn CSS container queries: make components respond to their container instead of the viewport. container-type, @container syntax, container query units (cqi/cqw), browser support, Tailwind, and a free generator.">
+  <meta name="keywords" content="css container queries, container query, @container css, container-type inline-size, cqi cqw units, component responsive css">
+  <link rel="canonical" href="https://freereign.dev/blog/css-container-queries">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <meta property="og:title" content="CSS Container Queries: The Complete Guide (with Examples)">
+  <meta property="og:description" content="Learn CSS container queries: make components respond to their container instead of the viewport. container-type, @container syntax, container query units (cqi/cqw), browser support, Tailwind, and a free generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-container-queries">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Container Queries: The Complete Guide (with Examples)">
+  <meta name="twitter:description" content="Learn CSS container queries: make components respond to their container instead of the viewport. container-type, @container syntax, container query units (cqi/cqw), browser support, Tailwind, and a free generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS Container Queries",
+  "description": "Learn CSS container queries: make components respond to their container instead of the viewport. container-type, @container syntax, container query units (cqi/cqw), browser support, Tailwind, and a free generator.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-container-queries",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between container queries and media queries?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Media queries respond to the viewport size; container queries respond to the size of a specified ancestor element. That lets the same component lay itself out differently depending on where it is placed — a wide column versus a narrow sidebar — without viewport breakpoints."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I set up a container query?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Give the parent container-type: inline-size (and optionally container-name), then query it from descendants with @container (min-width: 400px) { ... }. The element you want to restyle must be inside the container, not the container itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are cqi and cqw units?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They are container query length units. cqw is 1% of the container width, cqh is 1% of its height, cqi is 1% of its inline size, and cqb is 1% of its block size. They size relative to the query container instead of the viewport."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are container queries supported in browsers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Container queries are supported in all major browsers (Chrome, Edge, Safari, Firefox) since 2023 and are safe for production."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .cq-wrap { container-type: inline-size; max-width: 420px; margin: 0 auto; resize: horizontal;
+      overflow: auto; padding: 10px; border: 1px dashed var(--border); border-radius: 14px; }
+    .cq-card { display: flex; flex-direction: column; gap: 12px; background: var(--bg-elevated);
+      border-radius: 12px; padding: 16px; text-align: left; }
+    .cq-card__img { font-size: 2.2rem; }
+    .cq-card__body strong { display: block; }
+    .cq-card__body span { font-size: 0.8rem; color: var(--text-secondary); }
+    @container (min-width: 360px) { .cq-card { flex-direction: row; align-items: center; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Container Queries
+    </nav>
+
+    <h1>CSS Container Queries</h1>
+    <p class="lede">Container queries let a component respond to the size of <em>its own container</em> instead of the viewport — the missing piece for truly reusable, responsive components. This guide covers the setup, the new container units, browser support, and the gotchas. Prefer to build it visually? <a href="https://freereign.dev/#containerquery">Use the free container query generator →</a></p>
+
+    <div class="demo">
+  <div class="cq-wrap">
+    <div class="cq-card">
+      <div class="cq-card__img">🖼️</div>
+      <div class="cq-card__body"><strong>Adaptive card</strong><span>Switches layout based on its container's width — not the viewport.</span></div>
+    </div>
+  </div>
+  <p class="demo-note">The same component, sized by the space it's <em>in</em>.</p>
+</div>
+
+<h2>Container queries vs. media queries</h2>
+<p>Media queries respond to the <strong>viewport</strong>. That's a problem for reusable components: a card in a wide main column and the same card in a narrow sidebar both see the same viewport, so they can't lay themselves out differently. Container queries fix this — a component responds to the size of <strong>its own container</strong>, wherever it's placed. It's the missing piece for truly component-driven responsive design.</p>
+
+<h2>The two-step setup</h2>
+<p>First, declare an element as a query container. Then query it from its descendants.</p>
+<pre><code>/* 1. Mark the parent as a container */
+.card-wrapper {
+  container-type: inline-size;   /* query its width */
+  container-name: card;          /* optional name */
+}
+
+/* 2. Style children based on the container's width */
+@container card (min-width: 400px) {
+  .card { display: grid; grid-template-columns: 120px 1fr; }
+}</code></pre>
+<ul>
+  <li><strong><code>container-type: inline-size</code></strong> — the most common; queries the container's inline (horizontal) size.</li>
+  <li><strong><code>container-name</code></strong> — optional label so <code>@container name (...)</code> targets a specific ancestor.</li>
+  <li><strong><code>@container</code></strong> — works just like <code>@media</code>, but measures the nearest matching container instead of the viewport.</li>
+</ul>
+
+<h2>A worked example</h2>
+<p>One card component, dropped into two different columns, adapting itself to each:</p>
+<pre><code>.card-wrapper { container-type: inline-size; }
+
+.card { display: flex; flex-direction: column; }     /* narrow: stacked */
+
+@container (min-width: 380px) {
+  .card { flex-direction: row; align-items: center; } /* wide: side by side */
+}</code></pre>
+<p>Drop <code>.card-wrapper</code> in a 300px sidebar and the card stacks; drop it in a 700px main column and it goes horizontal. No viewport breakpoints, no component variants.</p>
+
+<h2>Container query units</h2>
+<p>Container queries bring their own relative units, sized against the query container instead of the viewport:</p>
+<ul>
+  <li><code>cqw</code> — 1% of the container's width</li>
+  <li><code>cqh</code> — 1% of the container's height</li>
+  <li><code>cqi</code> — 1% of the container's inline size (usually width)</li>
+  <li><code>cqb</code> — 1% of the container's block size</li>
+</ul>
+<pre><code>.card__title { font-size: clamp(1rem, 5cqi, 1.5rem); } /* fluid within the container */</code></pre>
+
+<h2>Browser support &amp; Tailwind</h2>
+<p>Container queries are supported in all major browsers (Chrome, Edge, Safari, Firefox) since 2023 — safe for production today. In Tailwind, the first-party <code>@tailwindcss/container-queries</code> plugin adds <code>@container</code> and <code>@md:</code>-style variants:</p>
+<pre><code>&lt;div class="@container"&gt;
+  &lt;div class="flex flex-col @md:flex-row"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<h2>Gotchas</h2>
+<ul>
+  <li><strong>An element can't query itself.</strong> You need a wrapper: the container is the parent, the queried styles target its descendants.</li>
+  <li><strong>Containment has side effects.</strong> <code>container-type: size</code> (querying height) requires the container's block size to be defined, or content can collapse — <code>inline-size</code> is safer and what you want 90% of the time.</li>
+  <li><strong>Name your containers</strong> when you nest them, so a query targets the right ancestor.</li>
+</ul>
+
+    <div class="cta-wrap">
+      <h2>Build it visually</h2>
+      <p>Set the container type, breakpoints, and rules with live controls and copy the @container CSS in one click.</p>
+      <a class="cta-btn" href="https://freereign.dev/#containerquery">Open the Container Query Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>What is the difference between container queries and media queries?</h3>
+    <p>Media queries respond to the viewport size; container queries respond to the size of a specified ancestor element. That lets the same component lay itself out differently depending on where it is placed — a wide column versus a narrow sidebar — without viewport breakpoints.</p>
+    <h3>How do I set up a container query?</h3>
+    <p>Give the parent container-type: inline-size (and optionally container-name), then query it from descendants with @container (min-width: 400px) { ... }. The element you want to restyle must be inside the container, not the container itself.</p>
+    <h3>What are cqi and cqw units?</h3>
+    <p>They are container query length units. cqw is 1% of the container width, cqh is 1% of its height, cqi is 1% of its inline size, and cqb is 1% of its block size. They size relative to the query container instead of the viewport.</p>
+    <h3>Are container queries supported in browsers?</h3>
+    <p>Yes. Container queries are supported in all major browsers (Chrome, Edge, Safari, Firefox) since 2023 and are safe for production.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#containerquery"><span>📦</span> Container Query Generator</a>
+      <a href="https://freereign.dev/#mediaquery"><span>📱</span> Media Query Builder</a>
+      <a href="https://freereign.dev/#grid"><span>🔲</span> Grid Generator</a>
+      <a href="https://freereign.dev/#flexbox"><span>📐</span> Flexbox Playground</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

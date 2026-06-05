@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Fluid Typography with clamp(): The Complete Guide | FreeReign</title>
+  <meta name="description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <meta name="keywords" content="css fluid typography, clamp css, fluid type scale, responsive font size css, css clamp calculator, fluid font size">
+  <link rel="canonical" href="https://freereign.dev/blog/css-fluid-typography-clamp">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <meta property="og:title" content="CSS Fluid Typography with clamp(): The Complete Guide">
+  <meta property="og:description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-fluid-typography-clamp">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Fluid Typography with clamp(): The Complete Guide">
+  <meta name="twitter:description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS Fluid Typography with clamp()",
+  "description": "Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-fluid-typography-clamp",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the clamp() function in CSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "clamp(MIN, PREFERRED, MAX) returns the preferred value but never lets it drop below MIN or rise above MAX. For typography the preferred value is viewport-relative, so the font size scales fluidly between the two bounds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is fluid typography bad for accessibility?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only if you use a pure viewport unit like 5vw, which ignores browser zoom. Including a rem component in the preferred value — for example 1rem + 4vw — keeps the text responsive to zoom and user font-size settings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I still need media queries with clamp()?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For font sizing, usually not — clamp() interpolates every size between your min and max automatically. You may still use media queries for layout changes, but the typography scales on its own."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is clamp() supported in all browsers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. clamp() has been supported in all modern browsers for years and needs no prefix."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .fluid-demo { font-weight: 800; line-height: 1; font-size: clamp(2rem, 1rem + 8vw, 6rem);
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Fluid Typography with clamp()
+    </nav>
+
+    <h1>CSS Fluid Typography with clamp()</h1>
+    <p class="lede">Fluid typography scales your font sizes smoothly with the viewport — no breakpoints, no jumps. It is all powered by one CSS function: <code>clamp()</code>. This guide covers the formula, the accessibility trap to avoid, and a full fluid type scale. Want the numbers solved for you? <a href="https://freereign.dev/#fluidtype">Use the free fluid typography generator →</a></p>
+
+    <div class="demo">
+  <div class="fluid-demo">Aa</div>
+  <p class="demo-note">This heading is <code>clamp(1.5rem, 1rem + 4vw, 4rem)</code> — resize the window and watch it scale.</p>
+</div>
+
+<h2>What is fluid typography?</h2>
+<p>Fluid typography makes font sizes scale smoothly with the viewport instead of jumping at fixed breakpoints. Rather than declaring <code>font-size: 2rem</code> at mobile and <code>3rem</code> at desktop with a media query in between, you describe a <em>range</em> and let the browser interpolate every size in between. One line replaces a stack of breakpoints.</p>
+
+<h2>The clamp() function</h2>
+<p>Fluid type is built on CSS <code>clamp()</code>, which takes three values:</p>
+<pre><code>font-size: clamp(MIN, PREFERRED, MAX);</code></pre>
+<ul>
+  <li><strong>MIN</strong> — the smallest the value is ever allowed to get.</li>
+  <li><strong>PREFERRED</strong> — the "ideal" value, usually viewport-relative, that the browser uses while it sits between the bounds.</li>
+  <li><strong>MAX</strong> — the largest the value is ever allowed to get.</li>
+</ul>
+<p>The browser picks the <em>middle</em> value, but never lets it fall below MIN or rise above MAX. That's the whole trick.</p>
+
+<h2>The standard recipe</h2>
+<pre><code>h1 {
+  /* min 1.5rem, scales with the viewport, capped at 4rem */
+  font-size: clamp(1.5rem, 1rem + 4vw, 4rem);
+}</code></pre>
+<p>Notice the preferred value is <code>1rem + 4vw</code>, not just <code>4vw</code>. That <code>rem</code> part matters — see the accessibility section below.</p>
+
+<h2>Why the preferred value mixes rem and vw</h2>
+<p>A pure viewport unit like <code>font-size: 5vw</code> looks fluid but breaks accessibility: <strong>it doesn't respond to browser zoom or the user's font-size preference</strong>, because <code>vw</code> is tied to the viewport, not text settings. Mixing in a <code>rem</code> base restores that:</p>
+<pre><code>/* ❌ Inaccessible — ignores zoom */
+font-size: clamp(1.5rem, 5vw, 4rem);
+
+/* ✅ Accessible — the rem term still responds to zoom */
+font-size: clamp(1.5rem, 1rem + 4vw, 4rem);</code></pre>
+<div class="callout">Rule of thumb: always include a <code>rem</code> component in the preferred value. A common safe split is roughly <code>1rem + Nvw</code>.</div>
+
+<h2>Calculating the slope (the math, briefly)</h2>
+<p>To make text go from a min size at one viewport width to a max size at another <em>exactly</em>, you solve for the <code>vw</code> coefficient (the "slope") and the <code>rem</code> intercept:</p>
+<pre><code>slope     = (maxFont - minFont) / (maxWidth - minWidth)
+vw value  = slope * 100
+rem value = minFont - slope * minWidth
+
+/* e.g. 16px → 64px between 320px and 1280px viewports */
+font-size: clamp(1rem, 0.17rem + 4.17vw, 4rem);</code></pre>
+<p>You rarely want to do this by hand — a generator solves it instantly from two font sizes and two breakpoints.</p>
+
+<h2>A fluid type scale</h2>
+<p>Apply the same idea to every step of your type scale and the whole page breathes with the viewport — no breakpoints anywhere:</p>
+<pre><code>:root {
+  --step--1: clamp(0.83rem, 0.78rem + 0.27vw, 1rem);
+  --step-0:  clamp(1rem,   0.91rem + 0.43vw, 1.25rem);
+  --step-1:  clamp(1.2rem, 1.07rem + 0.65vw, 1.56rem);
+  --step-2:  clamp(1.44rem, 1.26rem + 0.93vw, 1.95rem);
+  --step-3:  clamp(1.73rem, 1.48rem + 1.29vw, 2.44rem);
+}</code></pre>
+
+<h2>Browser support &amp; Tailwind</h2>
+<p><code>clamp()</code> is supported in every modern browser and has been for years — no prefix needed. In Tailwind, use an arbitrary value:</p>
+<pre><code>&lt;h1 class="text-[clamp(1.5rem,1rem+4vw,4rem)]"&gt;Fluid heading&lt;/h1&gt;</code></pre>
+
+<h2>Gotchas</h2>
+<ul>
+  <li><strong>Always cap with MAX.</strong> Without it, text keeps growing on ultra-wide monitors until it's comical.</li>
+  <li><strong>Keep MIN readable.</strong> Don't let body text clamp below ~16px on phones.</li>
+  <li><strong>Test zoom to 200%.</strong> If the text doesn't grow, your preferred value is missing its <code>rem</code> term.</li>
+  <li><strong>Use it for spacing too.</strong> <code>clamp()</code> works for padding, margins, and gaps — fluid spacing pairs beautifully with fluid type.</li>
+</ul>
+
+    <div class="cta-wrap">
+      <h2>Skip the math</h2>
+      <p>Enter a min and max font size and two breakpoints — get the exact clamp() value instantly, plus a full fluid scale.</p>
+      <a class="cta-btn" href="https://freereign.dev/#fluidtype">Open the Fluid Typography Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>What is the clamp() function in CSS?</h3>
+    <p>clamp(MIN, PREFERRED, MAX) returns the preferred value but never lets it drop below MIN or rise above MAX. For typography the preferred value is viewport-relative, so the font size scales fluidly between the two bounds.</p>
+    <h3>Is fluid typography bad for accessibility?</h3>
+    <p>Only if you use a pure viewport unit like 5vw, which ignores browser zoom. Including a rem component in the preferred value — for example 1rem + 4vw — keeps the text responsive to zoom and user font-size settings.</p>
+    <h3>Do I still need media queries with clamp()?</h3>
+    <p>For font sizing, usually not — clamp() interpolates every size between your min and max automatically. You may still use media queries for layout changes, but the typography scales on its own.</p>
+    <h3>Is clamp() supported in all browsers?</h3>
+    <p>Yes. clamp() has been supported in all modern browsers for years and needs no prefix.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#fluidtype"><span>📐</span> Fluid Typography Generator</a>
+      <a href="https://freereign.dev/#typography"><span>🔤</span> Type Scale Calculator</a>
+      <a href="https://freereign.dev/#variables"><span>🏷️</span> CSS Variables Generator</a>
+      <a href="https://freereign.dev/#breakpoint"><span>📏</span> Breakpoint Tester</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

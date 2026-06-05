@@ -1,0 +1,64 @@
+<div class="demo">
+  <div class="cq-wrap">
+    <div class="cq-card">
+      <div class="cq-card__img">🖼️</div>
+      <div class="cq-card__body"><strong>Adaptive card</strong><span>Switches layout based on its container's width — not the viewport.</span></div>
+    </div>
+  </div>
+  <p class="demo-note">The same component, sized by the space it's <em>in</em>.</p>
+</div>
+
+<h2>Container queries vs. media queries</h2>
+<p>Media queries respond to the <strong>viewport</strong>. That's a problem for reusable components: a card in a wide main column and the same card in a narrow sidebar both see the same viewport, so they can't lay themselves out differently. Container queries fix this — a component responds to the size of <strong>its own container</strong>, wherever it's placed. It's the missing piece for truly component-driven responsive design.</p>
+
+<h2>The two-step setup</h2>
+<p>First, declare an element as a query container. Then query it from its descendants.</p>
+<pre><code>/* 1. Mark the parent as a container */
+.card-wrapper {
+  container-type: inline-size;   /* query its width */
+  container-name: card;          /* optional name */
+}
+
+/* 2. Style children based on the container's width */
+@container card (min-width: 400px) {
+  .card { display: grid; grid-template-columns: 120px 1fr; }
+}</code></pre>
+<ul>
+  <li><strong><code>container-type: inline-size</code></strong> — the most common; queries the container's inline (horizontal) size.</li>
+  <li><strong><code>container-name</code></strong> — optional label so <code>@container name (...)</code> targets a specific ancestor.</li>
+  <li><strong><code>@container</code></strong> — works just like <code>@media</code>, but measures the nearest matching container instead of the viewport.</li>
+</ul>
+
+<h2>A worked example</h2>
+<p>One card component, dropped into two different columns, adapting itself to each:</p>
+<pre><code>.card-wrapper { container-type: inline-size; }
+
+.card { display: flex; flex-direction: column; }     /* narrow: stacked */
+
+@container (min-width: 380px) {
+  .card { flex-direction: row; align-items: center; } /* wide: side by side */
+}</code></pre>
+<p>Drop <code>.card-wrapper</code> in a 300px sidebar and the card stacks; drop it in a 700px main column and it goes horizontal. No viewport breakpoints, no component variants.</p>
+
+<h2>Container query units</h2>
+<p>Container queries bring their own relative units, sized against the query container instead of the viewport:</p>
+<ul>
+  <li><code>cqw</code> — 1% of the container's width</li>
+  <li><code>cqh</code> — 1% of the container's height</li>
+  <li><code>cqi</code> — 1% of the container's inline size (usually width)</li>
+  <li><code>cqb</code> — 1% of the container's block size</li>
+</ul>
+<pre><code>.card__title { font-size: clamp(1rem, 5cqi, 1.5rem); } /* fluid within the container */</code></pre>
+
+<h2>Browser support &amp; Tailwind</h2>
+<p>Container queries are supported in all major browsers (Chrome, Edge, Safari, Firefox) since 2023 — safe for production today. In Tailwind, the first-party <code>@tailwindcss/container-queries</code> plugin adds <code>@container</code> and <code>@md:</code>-style variants:</p>
+<pre><code>&lt;div class="@container"&gt;
+  &lt;div class="flex flex-col @md:flex-row"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+<h2>Gotchas</h2>
+<ul>
+  <li><strong>An element can't query itself.</strong> You need a wrapper: the container is the parent, the queried styles target its descendants.</li>
+  <li><strong>Containment has side effects.</strong> <code>container-type: size</code> (querying height) requires the container's block size to be defined, or content can collapse — <code>inline-size</code> is safer and what you want 90% of the time.</li>
+  <li><strong>Name your containers</strong> when you nest them, so a query targets the right ancestor.</li>
+</ul>

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node test/presets.test.mjs",
-    "seo": "node generate-seo-pages.cjs"
+    "seo": "node generate-seo-pages.cjs",
+    "blog": "node generate-blog.cjs"
   },
   "devDependencies": {
     "jsdom": "^29.1.1",

@@ -1,0 +1,65 @@
+<div class="demo">
+  <div class="fluid-demo">Aa</div>
+  <p class="demo-note">This heading is <code>clamp(1.5rem, 1rem + 4vw, 4rem)</code> — resize the window and watch it scale.</p>
+</div>
+
+<h2>What is fluid typography?</h2>
+<p>Fluid typography makes font sizes scale smoothly with the viewport instead of jumping at fixed breakpoints. Rather than declaring <code>font-size: 2rem</code> at mobile and <code>3rem</code> at desktop with a media query in between, you describe a <em>range</em> and let the browser interpolate every size in between. One line replaces a stack of breakpoints.</p>
+
+<h2>The clamp() function</h2>
+<p>Fluid type is built on CSS <code>clamp()</code>, which takes three values:</p>
+<pre><code>font-size: clamp(MIN, PREFERRED, MAX);</code></pre>
+<ul>
+  <li><strong>MIN</strong> — the smallest the value is ever allowed to get.</li>
+  <li><strong>PREFERRED</strong> — the "ideal" value, usually viewport-relative, that the browser uses while it sits between the bounds.</li>
+  <li><strong>MAX</strong> — the largest the value is ever allowed to get.</li>
+</ul>
+<p>The browser picks the <em>middle</em> value, but never lets it fall below MIN or rise above MAX. That's the whole trick.</p>
+
+<h2>The standard recipe</h2>
+<pre><code>h1 {
+  /* min 1.5rem, scales with the viewport, capped at 4rem */
+  font-size: clamp(1.5rem, 1rem + 4vw, 4rem);
+}</code></pre>
+<p>Notice the preferred value is <code>1rem + 4vw</code>, not just <code>4vw</code>. That <code>rem</code> part matters — see the accessibility section below.</p>
+
+<h2>Why the preferred value mixes rem and vw</h2>
+<p>A pure viewport unit like <code>font-size: 5vw</code> looks fluid but breaks accessibility: <strong>it doesn't respond to browser zoom or the user's font-size preference</strong>, because <code>vw</code> is tied to the viewport, not text settings. Mixing in a <code>rem</code> base restores that:</p>
+<pre><code>/* ❌ Inaccessible — ignores zoom */
+font-size: clamp(1.5rem, 5vw, 4rem);
+
+/* ✅ Accessible — the rem term still responds to zoom */
+font-size: clamp(1.5rem, 1rem + 4vw, 4rem);</code></pre>
+<div class="callout">Rule of thumb: always include a <code>rem</code> component in the preferred value. A common safe split is roughly <code>1rem + Nvw</code>.</div>
+
+<h2>Calculating the slope (the math, briefly)</h2>
+<p>To make text go from a min size at one viewport width to a max size at another <em>exactly</em>, you solve for the <code>vw</code> coefficient (the "slope") and the <code>rem</code> intercept:</p>
+<pre><code>slope     = (maxFont - minFont) / (maxWidth - minWidth)
+vw value  = slope * 100
+rem value = minFont - slope * minWidth
+
+/* e.g. 16px → 64px between 320px and 1280px viewports */
+font-size: clamp(1rem, 0.17rem + 4.17vw, 4rem);</code></pre>
+<p>You rarely want to do this by hand — a generator solves it instantly from two font sizes and two breakpoints.</p>
+
+<h2>A fluid type scale</h2>
+<p>Apply the same idea to every step of your type scale and the whole page breathes with the viewport — no breakpoints anywhere:</p>
+<pre><code>:root {
+  --step--1: clamp(0.83rem, 0.78rem + 0.27vw, 1rem);
+  --step-0:  clamp(1rem,   0.91rem + 0.43vw, 1.25rem);
+  --step-1:  clamp(1.2rem, 1.07rem + 0.65vw, 1.56rem);
+  --step-2:  clamp(1.44rem, 1.26rem + 0.93vw, 1.95rem);
+  --step-3:  clamp(1.73rem, 1.48rem + 1.29vw, 2.44rem);
+}</code></pre>
+
+<h2>Browser support &amp; Tailwind</h2>
+<p><code>clamp()</code> is supported in every modern browser and has been for years — no prefix needed. In Tailwind, use an arbitrary value:</p>
+<pre><code>&lt;h1 class="text-[clamp(1.5rem,1rem+4vw,4rem)]"&gt;Fluid heading&lt;/h1&gt;</code></pre>
+
+<h2>Gotchas</h2>
+<ul>
+  <li><strong>Always cap with MAX.</strong> Without it, text keeps growing on ultra-wide monitors until it's comical.</li>
+  <li><strong>Keep MIN readable.</strong> Don't let body text clamp below ~16px on phones.</li>
+  <li><strong>Test zoom to 200%.</strong> If the text doesn't grow, your preferred value is missing its <code>rem</code> term.</li>
+  <li><strong>Use it for spacing too.</strong> <code>clamp()</code> works for padding, margins, and gaps — fluid spacing pairs beautifully with fluid type.</li>
+</ul>

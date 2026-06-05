@@ -358,6 +358,7 @@ const tools = [
     ],
     useCases: 'responsive components, design systems, widget libraries, reusable cards',
     isPro: true,
+    guide: { url: '/blog/css-container-queries', title: 'CSS container queries: the complete guide' },
   },
   {
     id: 'gradienttext',
@@ -392,6 +393,7 @@ const tools = [
     ],
     useCases: 'design systems, responsive typography, fluid layouts, mobile-first design',
     isPro: true,
+    guide: { url: '/blog/css-fluid-typography-clamp', title: 'CSS fluid typography with clamp(): the full guide' },
   },
   {
     id: 'scrollbar',
