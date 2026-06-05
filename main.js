@@ -206,6 +206,12 @@ function navigateTo(toolId) {
   if (metaDesc) {
     metaDesc.setAttribute('content', `Free ${tool.name} generator. ${tool.description} Generate CSS, SCSS, and Tailwind code instantly.`);
   }
+  // Update canonical URL
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute('href', `https://freereign.dev/${tool.id}`);
+  // Update og:url
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl) ogUrl.setAttribute('content', `https://freereign.dev/${tool.id}`);
 
   // Render tool
   renderTool(tool);
