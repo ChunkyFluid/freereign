@@ -89,6 +89,7 @@ const tools = [
       'Preview on colorful background',
     ],
     useCases: 'cards, modals, navigation, overlay panels, login forms',
+    guide: { url: '/blog/how-to-create-glassmorphism-css', title: 'How to Create Glassmorphism in CSS — full guide' },
   },
   {
     id: 'variables',
@@ -564,7 +565,14 @@ function generatePage(tool) {
       </ul>
     </section>
 
-    <section class="section">
+    ${tool.guide ? `<section class="section">
+      <h2 class="section__title">Learn</h2>
+      <div class="related">
+        <a href="${BASE_URL}${tool.guide.url}"><span>📖</span> ${tool.guide.title} →</a>
+      </div>
+    </section>
+
+    ` : ''}<section class="section">
       <h2 class="section__title">Output Formats</h2>
       <div class="formats">
         <div class="format-card"><strong>CSS</strong><span>Standard properties</span></div>
