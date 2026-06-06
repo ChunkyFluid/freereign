@@ -119,6 +119,56 @@ const ARTICLES = [
     .cq-card__body span { font-size: 0.8rem; color: var(--text-secondary); }
     @container (min-width: 360px) { .cq-card { flex-direction: row; align-items: center; } }`,
   },
+  {
+    slug: 'css-box-shadow-guide',
+    title: 'CSS box-shadow: The Complete Guide (Layers, Glow, Performance)',
+    description: 'Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.',
+    keywords: 'css box shadow, box shadow generator, css shadow, box shadow examples, multiple box shadows, inset shadow, css shadow effects',
+    h1: 'CSS box-shadow: The Complete Guide',
+    lede: 'The <code>box-shadow</code> property adds depth, elevation, and glow to any element — and stacking multiple shadows is where it gets powerful. This guide covers the syntax, layered shadows, performance tricks, and gives you copy-paste recipes. Want to build them visually? <a href="https://freereign.dev/#boxshadow">Use the free box shadow generator →</a>',
+    cta: { heading: 'Build shadows visually', blurb: 'Add multiple shadow layers, adjust offset, blur, spread, and color with live preview — copy the CSS in one click.', label: 'Open the Box Shadow Generator →', toolId: 'boxshadow' },
+    faqs: [
+      { q: 'Can you have multiple box shadows?', a: 'Yes. Comma-separate them: box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08). The first shadow renders on top. Layering 2-3 shadows creates much more realistic depth than a single shadow.' },
+      { q: 'What is an inset shadow?', a: 'Adding the inset keyword makes the shadow render inside the element instead of outside. It is commonly used for pressed buttons, input fields, and inner glow effects.' },
+      { q: 'Does box-shadow affect layout?', a: 'No. Shadows are purely visual and do not change the element\'s size or position in the document flow. They can overflow parent containers with overflow: hidden.' },
+      { q: 'How do I animate box-shadow performantly?', a: 'Animating box-shadow directly causes repaints. The performant approach is to put the target shadow on a pseudo-element with opacity: 0 and transition the opacity instead — the browser can composite opacity changes on the GPU.' },
+    ],
+    related: [
+      { id: 'boxshadow', icon: '🔲', name: 'Box Shadow Generator' },
+      { id: 'textshadow', icon: '✏️', name: 'Text Shadow Generator' },
+      { id: 'neumorphism', icon: '🔘', name: 'Neumorphism Generator' },
+      { id: 'glassmorphism', icon: '🪟', name: 'Glassmorphism Generator' },
+    ],
+    extraCss: `
+    .shadow-demo { width: 200px; height: 120px; margin: 0 auto; border-radius: 16px;
+      background: var(--bg-elevated); display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08), 0 12px 30px rgba(0,0,0,0.06); }`,
+  },
+  {
+    slug: 'css-gradient-guide',
+    title: 'CSS Gradients: The Complete Guide (Linear, Radial, Conic + Recipes)',
+    description: 'Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, repeating gradients, mesh-like layered effects, Tailwind, and a free visual generator.',
+    keywords: 'css gradient, linear-gradient, radial-gradient, conic-gradient, css gradient generator, gradient background css, repeating gradient',
+    h1: 'CSS Gradients: The Complete Guide',
+    lede: 'CSS gradients let you create smooth color transitions without images — from simple two-color fades to complex mesh-like effects. This guide covers all three gradient functions, color stop tricks, repeating patterns, and gives you copy-paste recipes. Want to build gradients visually? <a href="https://freereign.dev/#gradient">Use the free gradient generator →</a>',
+    cta: { heading: 'Build gradients visually', blurb: 'Drag color stops, adjust angles, pick from presets — get linear, radial, or conic gradient CSS instantly.', label: 'Open the Gradient Generator →', toolId: 'gradient' },
+    faqs: [
+      { q: 'What is the difference between linear, radial, and conic gradients?', a: 'Linear gradients transition colors along a straight line (top to bottom, left to right, or any angle). Radial gradients radiate outward from a center point in a circle or ellipse. Conic gradients sweep colors around a center point like a color wheel.' },
+      { q: 'How do I make a hard edge in a gradient?', a: 'Set two adjacent color stops to the same position: linear-gradient(90deg, #8b5cf6 50%, #06b6d4 50%). This creates a sharp line instead of a smooth transition — useful for stripes and flags.' },
+      { q: 'Can I layer multiple gradients?', a: 'Yes. Comma-separate multiple gradient values in the background property. Each one layers on top of the previous. Use transparent in your stops to let lower layers show through — this is how you create mesh-like effects.' },
+      { q: 'Do CSS gradients need vendor prefixes?', a: 'No. All three gradient functions (linear, radial, conic) are supported unprefixed in all modern browsers.' },
+    ],
+    related: [
+      { id: 'gradient', icon: '🎨', name: 'Gradient Generator' },
+      { id: 'gradienttext', icon: '✨', name: 'Gradient Text Generator' },
+      { id: 'colorpalette', icon: '🎯', name: 'Color Palette Generator' },
+      { id: 'glassmorphism', icon: '🪟', name: 'Glassmorphism Generator' },
+    ],
+    extraCss: `
+    .gradient-demo { width: 100%; height: 120px; border-radius: 16px;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4, #14b8a6); }`,
+  },
 ];
 
 function articleJsonLd(a) {

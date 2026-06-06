@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS box-shadow: The Complete Guide (Layers, Glow, Performance) | FreeReign</title>
+  <meta name="description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <meta name="keywords" content="css box shadow, box shadow generator, css shadow, box shadow examples, multiple box shadows, inset shadow, css shadow effects">
+  <link rel="canonical" href="https://freereign.dev/blog/css-box-shadow-guide">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+  <meta property="og:title" content="CSS box-shadow: The Complete Guide (Layers, Glow, Performance)">
+  <meta property="og:description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-box-shadow-guide">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS box-shadow: The Complete Guide (Layers, Glow, Performance)">
+  <meta name="twitter:description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS box-shadow: The Complete Guide",
+  "description": "Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-box-shadow-guide",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can you have multiple box shadows?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Comma-separate them: box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08). The first shadow renders on top. Layering 2-3 shadows creates much more realistic depth than a single shadow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is an inset shadow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Adding the inset keyword makes the shadow render inside the element instead of outside. It is commonly used for pressed buttons, input fields, and inner glow effects."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does box-shadow affect layout?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Shadows are purely visual and do not change the element's size or position in the document flow. They can overflow parent containers with overflow: hidden."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I animate box-shadow performantly?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Animating box-shadow directly causes repaints. The performant approach is to put the target shadow on a pseudo-element with opacity: 0 and transition the opacity instead — the browser can composite opacity changes on the GPU."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .shadow-demo { width: 200px; height: 120px; margin: 0 auto; border-radius: 16px;
+      background: var(--bg-elevated); display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08), 0 12px 30px rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS box-shadow: The Complete Guide
+    </nav>
+
+    <h1>CSS box-shadow: The Complete Guide</h1>
+    <p class="lede">The <code>box-shadow</code> property adds depth, elevation, and glow to any element — and stacking multiple shadows is where it gets powerful. This guide covers the syntax, layered shadows, performance tricks, and gives you copy-paste recipes. Want to build them visually? <a href="https://freereign.dev/#boxshadow">Use the free box shadow generator →</a></p>
+
+    <h2>The box-shadow syntax</h2>
+    <pre><code>box-shadow: offset-x offset-y blur spread color;
+
+/* Example */
+box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, 0.15);
+
+/* Inset (inner shadow) */
+box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);</code></pre>
+    <ul>
+      <li><strong>offset-x / offset-y</strong> — how far the shadow shifts horizontally and vertically. Positive = right/down.</li>
+      <li><strong>blur</strong> — how soft the edge is. 0 = hard edge, higher = softer.</li>
+      <li><strong>spread</strong> — grows or shrinks the shadow. Positive = bigger, negative = smaller than the element.</li>
+      <li><strong>color</strong> — use <code>rgba()</code> or <code>hsla()</code> for transparency control.</li>
+      <li><strong>inset</strong> — adds the keyword to make it an inner shadow.</li>
+    </ul>
+
+    <h2>Layering multiple shadows</h2>
+    <p>The real power of <code>box-shadow</code> is stacking. Comma-separate multiple shadows to create depth, glow effects, or realistic material design elevation:</p>
+    <pre><code>/* Material Design elevation 3 */
+box-shadow:
+  0 1px 3px rgba(0, 0, 0, 0.12),
+  0 4px 6px rgba(0, 0, 0, 0.08),
+  0 12px 24px rgba(0, 0, 0, 0.06);
+
+/* Neon glow */
+box-shadow:
+  0 0 10px #8b5cf6,
+  0 0 30px rgba(139, 92, 246, 0.4),
+  0 0 60px rgba(139, 92, 246, 0.2);</code></pre>
+    <div class="callout">Shadows render in stack order — the first shadow is on top. Put your sharpest, darkest shadow first and softer ambient shadows after.</div>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="shadow-demo">Box Shadow</div>
+      <p class="demo-note">This box uses a three-layer shadow for realistic depth.</p>
+    </div>
+
+    <h2>Copy-paste shadow recipes</h2>
+    <pre><code>/* Subtle card */
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+/* Medium elevation */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+/* Heavy elevation */
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+/* Colored glow */
+box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+
+/* Hard edge (retro) */
+box-shadow: 5px 5px 0 #000;
+
+/* Inset pressed button */
+box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+
+/* Full surround (no offset) */
+box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);</code></pre>
+
+    <h2>Performance</h2>
+    <p><code>box-shadow</code> is painted on the GPU composite layer, so it's cheap to render. But animating it directly (e.g. on hover) forces a repaint. The performant trick is to put the hover shadow on a pseudo-element with <code>opacity: 0</code> and transition the opacity instead:</p>
+    <pre><code>.card {
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.card:hover::after {
+  opacity: 1;
+}</code></pre>
+
+    <h2>box-shadow in Tailwind CSS</h2>
+    <p>Tailwind has built-in shadow utilities: <code>shadow-sm</code>, <code>shadow</code>, <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>, <code>shadow-2xl</code>. For custom shadows use arbitrary values:</p>
+    <pre><code>&lt;div class="shadow-[0_4px_20px_rgba(139,92,246,0.3)]"&gt;
+  Glow card
+&lt;/div&gt;</code></pre>
+
+    <h2>Common gotchas</h2>
+    <ul>
+      <li><strong>Shadows don't affect layout.</strong> They're purely visual — they can overflow the parent if <code>overflow: hidden</code> is set on a container.</li>
+      <li><strong>Border-radius applies.</strong> Shadows follow the element's border-radius automatically.</li>
+      <li><strong>Transparent backgrounds break inset.</strong> Inset shadows render behind content but in front of the background — if the background is transparent, the shadow shows through.</li>
+      <li><strong>Outline vs box-shadow ring.</strong> A <code>box-shadow: 0 0 0 3px color</code> with no blur acts like an outline but respects border-radius (outlines don't in all browsers).</li>
+    </ul>
+
+    <div class="cta-wrap">
+      <h2>Build shadows visually</h2>
+      <p>Add multiple shadow layers, adjust offset, blur, spread, and color with live preview — copy the CSS in one click.</p>
+      <a class="cta-btn" href="https://freereign.dev/#boxshadow">Open the Box Shadow Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>Can you have multiple box shadows?</h3>
+    <p>Yes. Comma-separate them: box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08). The first shadow renders on top. Layering 2-3 shadows creates much more realistic depth than a single shadow.</p>
+    <h3>What is an inset shadow?</h3>
+    <p>Adding the inset keyword makes the shadow render inside the element instead of outside. It is commonly used for pressed buttons, input fields, and inner glow effects.</p>
+    <h3>Does box-shadow affect layout?</h3>
+    <p>No. Shadows are purely visual and do not change the element's size or position in the document flow. They can overflow parent containers with overflow: hidden.</p>
+    <h3>How do I animate box-shadow performantly?</h3>
+    <p>Animating box-shadow directly causes repaints. The performant approach is to put the target shadow on a pseudo-element with opacity: 0 and transition the opacity instead — the browser can composite opacity changes on the GPU.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#boxshadow"><span>🔲</span> Box Shadow Generator</a>
+      <a href="https://freereign.dev/#textshadow"><span>✏️</span> Text Shadow Generator</a>
+      <a href="https://freereign.dev/#neumorphism"><span>🔘</span> Neumorphism Generator</a>
+      <a href="https://freereign.dev/#glassmorphism"><span>🪟</span> Glassmorphism Generator</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+    <h2>How CSS gradients work</h2>
+    <p>CSS gradients are generated images — they're values for the <code>background-image</code> property (though <code>background</code> shorthand works too). The browser interpolates between the color stops you define:</p>
+    <pre><code>/* Linear — top to bottom by default */
+background: linear-gradient(#8b5cf6, #06b6d4);
+
+/* With an angle */
+background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+
+/* Multiple stops */
+background: linear-gradient(90deg, #f43f5e 0%, #8b5cf6 50%, #06b6d4 100%);</code></pre>
+
+    <h2>The three gradient functions</h2>
+    <h3>linear-gradient()</h3>
+    <p>Colors transition along a straight line. Control the direction with angles (<code>135deg</code>) or keywords (<code>to right</code>, <code>to bottom left</code>):</p>
+    <pre><code>background: linear-gradient(to right, #1e1b4b, #312e81, #4338ca);</code></pre>
+
+    <h3>radial-gradient()</h3>
+    <p>Colors radiate outward from a center point. Control the shape (<code>circle</code> or <code>ellipse</code>) and position:</p>
+    <pre><code>/* Circle from center */
+background: radial-gradient(circle, #8b5cf6, #0f0f14);
+
+/* Ellipse from top-left */
+background: radial-gradient(ellipse at 20% 30%, #06b6d4, transparent);</code></pre>
+
+    <h3>conic-gradient()</h3>
+    <p>Colors sweep around a center point like a color wheel. Great for pie charts and decorative effects:</p>
+    <pre><code>background: conic-gradient(from 45deg, #f43f5e, #8b5cf6, #06b6d4, #f43f5e);</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="gradient-demo"></div>
+      <p class="demo-note">A three-stop linear gradient at 135°. Resize your browser to see it scale.</p>
+    </div>
+
+    <h2>Color stop positioning</h2>
+    <p>Each color stop can have a position (percentage or length). This controls where the transition happens:</p>
+    <pre><code>/* Hard edge at 50% — no smooth transition */
+background: linear-gradient(90deg, #8b5cf6 50%, #06b6d4 50%);
+
+/* Weighted: purple dominates */
+background: linear-gradient(135deg, #8b5cf6 70%, #06b6d4 100%);
+
+/* Color hint: midpoint at 30% instead of 50% */
+background: linear-gradient(#8b5cf6, 30%, #06b6d4);</code></pre>
+    <div class="callout">Setting two adjacent stops to the same position creates a hard edge — useful for striped patterns and flags.</div>
+
+    <h2>Copy-paste gradient recipes</h2>
+    <pre><code>/* Sunset */
+background: linear-gradient(135deg, #f43f5e, #f97316, #facc15);
+
+/* Ocean */
+background: linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6);
+
+/* Purple haze */
+background: linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa);
+
+/* Dark overlay (for text on images) */
+background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+
+/* Mesh-like (layered radials) */
+background:
+  radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.3), transparent 50%),
+  radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.3), transparent 50%),
+  radial-gradient(ellipse at 50% 80%, rgba(244,63,94,0.2), transparent 50%),
+  #0f0f14;</code></pre>
+
+    <h2>Repeating gradients</h2>
+    <p>Wrap any gradient function with <code>repeating-</code> to tile the pattern:</p>
+    <pre><code>/* Stripes */
+background: repeating-linear-gradient(
+  45deg,
+  #8b5cf6 0px, #8b5cf6 10px,
+  #7c3aed 10px, #7c3aed 20px
+);
+
+/* Bullseye */
+background: repeating-radial-gradient(
+  circle,
+  #0f0f14 0px, #0f0f14 10px,
+  #1e1e28 10px, #1e1e28 20px
+);</code></pre>
+
+    <h2>Gradients in Tailwind CSS</h2>
+    <p>Tailwind has built-in gradient utilities:</p>
+    <pre><code>&lt;div class="bg-gradient-to-br from-violet-500 via-purple-500 to-cyan-500"&gt;
+  Gradient card
+&lt;/div&gt;</code></pre>
+    <p>Directions: <code>bg-gradient-to-r</code> (right), <code>bg-gradient-to-br</code> (bottom-right), etc. For radial or conic gradients, use arbitrary values:</p>
+    <pre><code>&lt;div class="bg-[radial-gradient(circle,_#8b5cf6,_#0f0f14)]"&gt;&lt;/div&gt;</code></pre>
+
+    <h2>Accessibility</h2>
+    <ul>
+      <li><strong>Text contrast.</strong> If you put text on a gradient, check contrast at both the lightest and darkest points. Tools like WebAIM's contrast checker help.</li>
+      <li><strong>Motion sensitivity.</strong> Animated gradients should respect <code>prefers-reduced-motion</code>.</li>
+      <li><strong>Fallback color.</strong> Always set a solid <code>background-color</code> before the gradient in case it doesn't render.</li>
+    </ul>
+
+    <h2>Browser support</h2>
+    <p><code>linear-gradient()</code> and <code>radial-gradient()</code> are supported everywhere. <code>conic-gradient()</code> is supported in all modern browsers. No prefixes needed in 2026.</p>

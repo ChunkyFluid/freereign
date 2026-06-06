@@ -1,0 +1,91 @@
+    <h2>The box-shadow syntax</h2>
+    <pre><code>box-shadow: offset-x offset-y blur spread color;
+
+/* Example */
+box-shadow: 4px 4px 12px 0px rgba(0, 0, 0, 0.15);
+
+/* Inset (inner shadow) */
+box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);</code></pre>
+    <ul>
+      <li><strong>offset-x / offset-y</strong> — how far the shadow shifts horizontally and vertically. Positive = right/down.</li>
+      <li><strong>blur</strong> — how soft the edge is. 0 = hard edge, higher = softer.</li>
+      <li><strong>spread</strong> — grows or shrinks the shadow. Positive = bigger, negative = smaller than the element.</li>
+      <li><strong>color</strong> — use <code>rgba()</code> or <code>hsla()</code> for transparency control.</li>
+      <li><strong>inset</strong> — adds the keyword to make it an inner shadow.</li>
+    </ul>
+
+    <h2>Layering multiple shadows</h2>
+    <p>The real power of <code>box-shadow</code> is stacking. Comma-separate multiple shadows to create depth, glow effects, or realistic material design elevation:</p>
+    <pre><code>/* Material Design elevation 3 */
+box-shadow:
+  0 1px 3px rgba(0, 0, 0, 0.12),
+  0 4px 6px rgba(0, 0, 0, 0.08),
+  0 12px 24px rgba(0, 0, 0, 0.06);
+
+/* Neon glow */
+box-shadow:
+  0 0 10px #8b5cf6,
+  0 0 30px rgba(139, 92, 246, 0.4),
+  0 0 60px rgba(139, 92, 246, 0.2);</code></pre>
+    <div class="callout">Shadows render in stack order — the first shadow is on top. Put your sharpest, darkest shadow first and softer ambient shadows after.</div>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="shadow-demo">Box Shadow</div>
+      <p class="demo-note">This box uses a three-layer shadow for realistic depth.</p>
+    </div>
+
+    <h2>Copy-paste shadow recipes</h2>
+    <pre><code>/* Subtle card */
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+/* Medium elevation */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+/* Heavy elevation */
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+/* Colored glow */
+box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+
+/* Hard edge (retro) */
+box-shadow: 5px 5px 0 #000;
+
+/* Inset pressed button */
+box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+
+/* Full surround (no offset) */
+box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);</code></pre>
+
+    <h2>Performance</h2>
+    <p><code>box-shadow</code> is painted on the GPU composite layer, so it's cheap to render. But animating it directly (e.g. on hover) forces a repaint. The performant trick is to put the hover shadow on a pseudo-element with <code>opacity: 0</code> and transition the opacity instead:</p>
+    <pre><code>.card {
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 300ms;
+}
+.card:hover::after {
+  opacity: 1;
+}</code></pre>
+
+    <h2>box-shadow in Tailwind CSS</h2>
+    <p>Tailwind has built-in shadow utilities: <code>shadow-sm</code>, <code>shadow</code>, <code>shadow-md</code>, <code>shadow-lg</code>, <code>shadow-xl</code>, <code>shadow-2xl</code>. For custom shadows use arbitrary values:</p>
+    <pre><code>&lt;div class="shadow-[0_4px_20px_rgba(139,92,246,0.3)]"&gt;
+  Glow card
+&lt;/div&gt;</code></pre>
+
+    <h2>Common gotchas</h2>
+    <ul>
+      <li><strong>Shadows don't affect layout.</strong> They're purely visual — they can overflow the parent if <code>overflow: hidden</code> is set on a container.</li>
+      <li><strong>Border-radius applies.</strong> Shadows follow the element's border-radius automatically.</li>
+      <li><strong>Transparent backgrounds break inset.</strong> Inset shadows render behind content but in front of the background — if the background is transparent, the shadow shows through.</li>
+      <li><strong>Outline vs box-shadow ring.</strong> A <code>box-shadow: 0 0 0 3px color</code> with no blur acts like an outline but respects border-radius (outlines don't in all browsers).</li>
+    </ul>

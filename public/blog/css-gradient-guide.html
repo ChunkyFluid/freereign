@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Gradients: The Complete Guide (Linear, Radial, Conic + Recipes) | FreeReign</title>
+  <meta name="description" content="Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, repeating gradients, mesh-like layered effects, Tailwind, and a free visual generator.">
+  <meta name="keywords" content="css gradient, linear-gradient, radial-gradient, conic-gradient, css gradient generator, gradient background css, repeating gradient">
+  <link rel="canonical" href="https://freereign.dev/blog/css-gradient-guide">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+  <meta property="og:title" content="CSS Gradients: The Complete Guide (Linear, Radial, Conic + Recipes)">
+  <meta property="og:description" content="Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, repeating gradients, mesh-like layered effects, Tailwind, and a free visual generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-gradient-guide">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Gradients: The Complete Guide (Linear, Radial, Conic + Recipes)">
+  <meta name="twitter:description" content="Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, repeating gradients, mesh-like layered effects, Tailwind, and a free visual generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS Gradients: The Complete Guide",
+  "description": "Master CSS gradients: linear-gradient, radial-gradient, conic-gradient, color stops, repeating gradients, mesh-like layered effects, Tailwind, and a free visual generator.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-gradient-guide",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between linear, radial, and conic gradients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Linear gradients transition colors along a straight line (top to bottom, left to right, or any angle). Radial gradients radiate outward from a center point in a circle or ellipse. Conic gradients sweep colors around a center point like a color wheel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I make a hard edge in a gradient?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set two adjacent color stops to the same position: linear-gradient(90deg, #8b5cf6 50%, #06b6d4 50%). This creates a sharp line instead of a smooth transition — useful for stripes and flags."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I layer multiple gradients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Comma-separate multiple gradient values in the background property. Each one layers on top of the previous. Use transparent in your stops to let lower layers show through — this is how you create mesh-like effects."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do CSS gradients need vendor prefixes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All three gradient functions (linear, radial, conic) are supported unprefixed in all modern browsers."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .gradient-demo { width: 100%; height: 120px; border-radius: 16px;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4, #14b8a6); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Gradients: The Complete Guide
+    </nav>
+
+    <h1>CSS Gradients: The Complete Guide</h1>
+    <p class="lede">CSS gradients let you create smooth color transitions without images — from simple two-color fades to complex mesh-like effects. This guide covers all three gradient functions, color stop tricks, repeating patterns, and gives you copy-paste recipes. Want to build gradients visually? <a href="https://freereign.dev/#gradient">Use the free gradient generator →</a></p>
+
+    <h2>How CSS gradients work</h2>
+    <p>CSS gradients are generated images — they're values for the <code>background-image</code> property (though <code>background</code> shorthand works too). The browser interpolates between the color stops you define:</p>
+    <pre><code>/* Linear — top to bottom by default */
+background: linear-gradient(#8b5cf6, #06b6d4);
+
+/* With an angle */
+background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+
+/* Multiple stops */
+background: linear-gradient(90deg, #f43f5e 0%, #8b5cf6 50%, #06b6d4 100%);</code></pre>
+
+    <h2>The three gradient functions</h2>
+    <h3>linear-gradient()</h3>
+    <p>Colors transition along a straight line. Control the direction with angles (<code>135deg</code>) or keywords (<code>to right</code>, <code>to bottom left</code>):</p>
+    <pre><code>background: linear-gradient(to right, #1e1b4b, #312e81, #4338ca);</code></pre>
+
+    <h3>radial-gradient()</h3>
+    <p>Colors radiate outward from a center point. Control the shape (<code>circle</code> or <code>ellipse</code>) and position:</p>
+    <pre><code>/* Circle from center */
+background: radial-gradient(circle, #8b5cf6, #0f0f14);
+
+/* Ellipse from top-left */
+background: radial-gradient(ellipse at 20% 30%, #06b6d4, transparent);</code></pre>
+
+    <h3>conic-gradient()</h3>
+    <p>Colors sweep around a center point like a color wheel. Great for pie charts and decorative effects:</p>
+    <pre><code>background: conic-gradient(from 45deg, #f43f5e, #8b5cf6, #06b6d4, #f43f5e);</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="gradient-demo"></div>
+      <p class="demo-note">A three-stop linear gradient at 135°. Resize your browser to see it scale.</p>
+    </div>
+
+    <h2>Color stop positioning</h2>
+    <p>Each color stop can have a position (percentage or length). This controls where the transition happens:</p>
+    <pre><code>/* Hard edge at 50% — no smooth transition */
+background: linear-gradient(90deg, #8b5cf6 50%, #06b6d4 50%);
+
+/* Weighted: purple dominates */
+background: linear-gradient(135deg, #8b5cf6 70%, #06b6d4 100%);
+
+/* Color hint: midpoint at 30% instead of 50% */
+background: linear-gradient(#8b5cf6, 30%, #06b6d4);</code></pre>
+    <div class="callout">Setting two adjacent stops to the same position creates a hard edge — useful for striped patterns and flags.</div>
+
+    <h2>Copy-paste gradient recipes</h2>
+    <pre><code>/* Sunset */
+background: linear-gradient(135deg, #f43f5e, #f97316, #facc15);
+
+/* Ocean */
+background: linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6);
+
+/* Purple haze */
+background: linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa);
+
+/* Dark overlay (for text on images) */
+background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+
+/* Mesh-like (layered radials) */
+background:
+  radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.3), transparent 50%),
+  radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.3), transparent 50%),
+  radial-gradient(ellipse at 50% 80%, rgba(244,63,94,0.2), transparent 50%),
+  #0f0f14;</code></pre>
+
+    <h2>Repeating gradients</h2>
+    <p>Wrap any gradient function with <code>repeating-</code> to tile the pattern:</p>
+    <pre><code>/* Stripes */
+background: repeating-linear-gradient(
+  45deg,
+  #8b5cf6 0px, #8b5cf6 10px,
+  #7c3aed 10px, #7c3aed 20px
+);
+
+/* Bullseye */
+background: repeating-radial-gradient(
+  circle,
+  #0f0f14 0px, #0f0f14 10px,
+  #1e1e28 10px, #1e1e28 20px
+);</code></pre>
+
+    <h2>Gradients in Tailwind CSS</h2>
+    <p>Tailwind has built-in gradient utilities:</p>
+    <pre><code>&lt;div class="bg-gradient-to-br from-violet-500 via-purple-500 to-cyan-500"&gt;
+  Gradient card
+&lt;/div&gt;</code></pre>
+    <p>Directions: <code>bg-gradient-to-r</code> (right), <code>bg-gradient-to-br</code> (bottom-right), etc. For radial or conic gradients, use arbitrary values:</p>
+    <pre><code>&lt;div class="bg-[radial-gradient(circle,_#8b5cf6,_#0f0f14)]"&gt;&lt;/div&gt;</code></pre>
+
+    <h2>Accessibility</h2>
+    <ul>
+      <li><strong>Text contrast.</strong> If you put text on a gradient, check contrast at both the lightest and darkest points. Tools like WebAIM's contrast checker help.</li>
+      <li><strong>Motion sensitivity.</strong> Animated gradients should respect <code>prefers-reduced-motion</code>.</li>
+      <li><strong>Fallback color.</strong> Always set a solid <code>background-color</code> before the gradient in case it doesn't render.</li>
+    </ul>
+
+    <h2>Browser support</h2>
+    <p><code>linear-gradient()</code> and <code>radial-gradient()</code> are supported everywhere. <code>conic-gradient()</code> is supported in all modern browsers. No prefixes needed in 2026.</p>
+
+    <div class="cta-wrap">
+      <h2>Build gradients visually</h2>
+      <p>Drag color stops, adjust angles, pick from presets — get linear, radial, or conic gradient CSS instantly.</p>
+      <a class="cta-btn" href="https://freereign.dev/#gradient">Open the Gradient Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>What is the difference between linear, radial, and conic gradients?</h3>
+    <p>Linear gradients transition colors along a straight line (top to bottom, left to right, or any angle). Radial gradients radiate outward from a center point in a circle or ellipse. Conic gradients sweep colors around a center point like a color wheel.</p>
+    <h3>How do I make a hard edge in a gradient?</h3>
+    <p>Set two adjacent color stops to the same position: linear-gradient(90deg, #8b5cf6 50%, #06b6d4 50%). This creates a sharp line instead of a smooth transition — useful for stripes and flags.</p>
+    <h3>Can I layer multiple gradients?</h3>
+    <p>Yes. Comma-separate multiple gradient values in the background property. Each one layers on top of the previous. Use transparent in your stops to let lower layers show through — this is how you create mesh-like effects.</p>
+    <h3>Do CSS gradients need vendor prefixes?</h3>
+    <p>No. All three gradient functions (linear, radial, conic) are supported unprefixed in all modern browsers.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#gradient"><span>🎨</span> Gradient Generator</a>
+      <a href="https://freereign.dev/#gradienttext"><span>✨</span> Gradient Text Generator</a>
+      <a href="https://freereign.dev/#colorpalette"><span>🎯</span> Color Palette Generator</a>
+      <a href="https://freereign.dev/#glassmorphism"><span>🪟</span> Glassmorphism Generator</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>
