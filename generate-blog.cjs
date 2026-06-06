@@ -169,6 +169,58 @@ const ARTICLES = [
     .gradient-demo { width: 100%; height: 120px; border-radius: 16px;
       background: linear-gradient(135deg, #8b5cf6, #06b6d4, #14b8a6); }`,
   },
+  {
+    slug: 'css-flexbox-guide',
+    title: 'CSS Flexbox: The Complete Guide (Properties, Patterns + Playground)',
+    description: 'Master CSS flexbox: the mental model, every container and item property, 5 copy-paste layout patterns, flexbox vs grid, Tailwind utilities, and a free visual playground.',
+    keywords: 'css flexbox, flexbox guide, flex css, justify-content, align-items, flex-grow, flexbox layout, flexbox cheat sheet',
+    h1: 'CSS Flexbox: The Complete Guide',
+    lede: 'Flexbox is the CSS layout engine for distributing space in one dimension — rows or columns. This guide covers the mental model, every property, and gives you 5 copy-paste patterns for common layouts. Want to experiment visually? <a href="https://freereign.dev/#flexbox">Use the free flexbox playground →</a>',
+    cta: { heading: 'Try it visually', blurb: 'Toggle every flexbox property with live preview — see how justify-content, align-items, gap, and wrapping work in real time.', label: 'Open the Flexbox Playground →', toolId: 'flexbox' },
+    faqs: [
+      { q: 'What is the difference between flexbox and grid?', a: 'Flexbox is one-dimensional — it lays out items in a row or column. Grid is two-dimensional — it controls rows and columns simultaneously. Use flexbox for navbars, button groups, and single-direction layouts. Use grid for page-level layouts and card grids.' },
+      { q: 'What does flex: 1 mean?', a: 'flex: 1 is shorthand for flex-grow: 1, flex-shrink: 1, flex-basis: 0%. It tells the item to grow and take up an equal share of available space.' },
+      { q: 'How do I center something with flexbox?', a: 'Set display: flex, justify-content: center, and align-items: center on the parent container. This centers the children both horizontally and vertically.' },
+      { q: 'Why does my flex item overflow?', a: 'Flex items default to min-width: auto, which prevents them from shrinking below their content size. Add min-width: 0 to the item to allow it to shrink, and use overflow-wrap: break-word on text.' },
+    ],
+    related: [
+      { id: 'flexbox', icon: '📐', name: 'Flexbox Playground' },
+      { id: 'grid', icon: '🔲', name: 'CSS Grid Generator' },
+      { id: 'containerquery', icon: '📦', name: 'Container Queries' },
+      { id: 'breakpoint', icon: '📏', name: 'Breakpoint Tester' },
+    ],
+    extraCss: `
+    .flex-demo { display: flex; gap: 12px; max-width: 360px; margin: 0 auto; }
+    .flex-item { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 10px;
+      padding: 16px; text-align: center; font-weight: 700; font-size: 1.2rem; color: var(--accent); }`,
+  },
+  {
+    slug: 'css-animation-guide',
+    title: 'CSS Animations: The Complete Guide (@keyframes, Timing, Recipes)',
+    description: 'Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.',
+    keywords: 'css animation, @keyframes css, css animation examples, css animation shorthand, animation timing function, css bounce animation, css fade in',
+    h1: 'CSS Animations: The Complete Guide',
+    lede: 'CSS animations let you create multi-step motion sequences that run on page load, loop infinitely, or trigger on demand — all without JavaScript. This guide covers @keyframes, every animation property, timing functions, and gives you 7 copy-paste recipes. Build them visually? <a href="https://freereign.dev/#animation">Use the free animation builder →</a>',
+    cta: { heading: 'Build animations visually', blurb: 'Pick your timing function, set keyframes, preview the animation live — copy the full @keyframes CSS in one click.', label: 'Open the Animation Builder →', toolId: 'animation' },
+    faqs: [
+      { q: 'What is the difference between CSS transitions and CSS animations?', a: 'Transitions animate between two states and require a trigger (like :hover or a class toggle). Animations use @keyframes to define multiple steps, can run on page load, loop infinitely, and do not need a trigger.' },
+      { q: 'How do I make a CSS animation loop forever?', a: 'Set animation-iteration-count: infinite. For example: animation: spin 1s linear infinite.' },
+      { q: 'What does animation-fill-mode: forwards do?', a: 'It tells the element to keep the styles from the last keyframe after the animation ends, instead of snapping back to its original state.' },
+      { q: 'How do I respect users who prefer reduced motion?', a: 'Use the @media (prefers-reduced-motion: reduce) media query to set animation-duration to near zero and limit iteration count to 1. This respects the user\'s OS-level motion preference.' },
+    ],
+    related: [
+      { id: 'animation', icon: '🎬', name: 'Animation Builder' },
+      { id: 'transition', icon: '🔄', name: 'Transition Generator' },
+      { id: 'transform', icon: '🔀', name: 'Transform Generator' },
+      { id: 'filter', icon: '🎨', name: 'CSS Filter Generator' },
+    ],
+    extraCss: `
+    .anim-demo { display: flex; justify-content: center; padding: 20px; }
+    .anim-box { width: 60px; height: 60px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      animation: pulse-demo 2s ease-in-out infinite; }
+    @keyframes pulse-demo { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }`,
+  },
 ];
 
 function articleJsonLd(a) {

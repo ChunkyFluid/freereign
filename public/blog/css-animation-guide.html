@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Animations: The Complete Guide (@keyframes, Timing, Recipes) | FreeReign</title>
+  <meta name="description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <meta name="keywords" content="css animation, @keyframes css, css animation examples, css animation shorthand, animation timing function, css bounce animation, css fade in">
+  <link rel="canonical" href="https://freereign.dev/blog/css-animation-guide">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+  <meta property="og:title" content="CSS Animations: The Complete Guide (@keyframes, Timing, Recipes)">
+  <meta property="og:description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-animation-guide">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Animations: The Complete Guide (@keyframes, Timing, Recipes)">
+  <meta name="twitter:description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS Animations: The Complete Guide",
+  "description": "Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-animation-guide",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between CSS transitions and CSS animations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Transitions animate between two states and require a trigger (like :hover or a class toggle). Animations use @keyframes to define multiple steps, can run on page load, loop infinitely, and do not need a trigger."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I make a CSS animation loop forever?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set animation-iteration-count: infinite. For example: animation: spin 1s linear infinite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does animation-fill-mode: forwards do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It tells the element to keep the styles from the last keyframe after the animation ends, instead of snapping back to its original state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I respect users who prefer reduced motion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the @media (prefers-reduced-motion: reduce) media query to set animation-duration to near zero and limit iteration count to 1. This respects the user's OS-level motion preference."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .anim-demo { display: flex; justify-content: center; padding: 20px; }
+    .anim-box { width: 60px; height: 60px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      animation: pulse-demo 2s ease-in-out infinite; }
+    @keyframes pulse-demo { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Animations: The Complete Guide
+    </nav>
+
+    <h1>CSS Animations: The Complete Guide</h1>
+    <p class="lede">CSS animations let you create multi-step motion sequences that run on page load, loop infinitely, or trigger on demand — all without JavaScript. This guide covers @keyframes, every animation property, timing functions, and gives you 7 copy-paste recipes. Build them visually? <a href="https://freereign.dev/#animation">Use the free animation builder →</a></p>
+
+    <h2>How CSS animations work</h2>
+    <p>CSS animations have two parts: a <code>@keyframes</code> rule that defines the animation steps, and the <code>animation</code> property that applies it to an element.</p>
+    <pre><code>/* 1. Define the keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. Apply to an element */
+.card {
+  animation: fadeIn 0.5s ease-out forwards;
+}</code></pre>
+
+    <h2>The animation shorthand</h2>
+    <pre><code>animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+
+/* Example */
+animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s 1 normal forwards running;
+
+/* Multiple animations */
+animation: fadeIn 0.5s ease-out, slideUp 0.6s ease-out 0.1s;</code></pre>
+
+    <h3>Individual properties</h3>
+    <pre><code>animation-name: fadeIn;
+animation-duration: 0.5s;
+animation-timing-function: ease-out;    /* ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier() */
+animation-delay: 0.2s;                  /* negative delays start mid-animation */
+animation-iteration-count: 1;           /* number | infinite */
+animation-direction: normal;            /* normal | reverse | alternate | alternate-reverse */
+animation-fill-mode: forwards;          /* none | forwards | backwards | both */
+animation-play-state: running;          /* running | paused */</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="anim-demo">
+        <div class="anim-box"></div>
+      </div>
+      <p class="demo-note">A pulsing box using @keyframes with scale and opacity.</p>
+    </div>
+
+    <h2>Copy-paste animation recipes</h2>
+    <pre><code>/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slide up */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scale in (pop) */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-20px); }
+}
+
+/* Spin */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* Shake (error feedback) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-8px); }
+  50%      { transform: translateX(8px); }
+  75%      { transform: translateX(-4px); }
+}</code></pre>
+
+    <h2>Timing functions deep dive</h2>
+    <p>The <code>animation-timing-function</code> controls the acceleration curve:</p>
+    <ul>
+      <li><strong>ease</strong> — starts slow, speeds up, ends slow (default)</li>
+      <li><strong>linear</strong> — constant speed (good for spins, loading bars)</li>
+      <li><strong>ease-in</strong> — starts slow, speeds up (use for exits)</li>
+      <li><strong>ease-out</strong> — starts fast, slows down (use for entrances)</li>
+      <li><strong>ease-in-out</strong> — slow at both ends</li>
+      <li><strong>cubic-bezier()</strong> — custom curve for professional motion</li>
+    </ul>
+    <div class="callout">For UI animations, <code>cubic-bezier(0.16, 1, 0.3, 1)</code> (a snappy ease-out) feels more polished than the built-in <code>ease-out</code>. It's the curve used by most modern design systems.</div>
+
+    <h2>Animations vs transitions</h2>
+    <ul>
+      <li><strong>Transitions</strong> animate between two states (triggered by :hover, class toggle, etc.). They're simpler — use them for hover effects, toggles, and state changes.</li>
+      <li><strong>Animations</strong> can have multiple keyframes, run on page load, loop infinitely, and don't need a trigger. Use them for loading spinners, entrance effects, and complex multi-step motion.</li>
+    </ul>
+
+    <h2>Respecting reduced motion</h2>
+    <p>Some users are sensitive to motion. Always provide a reduced-motion fallback:</p>
+    <pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre>
+
+    <h2>CSS animations in Tailwind</h2>
+    <pre><code>&lt;!-- Built-in animations --&gt;
+&lt;div class="animate-spin"&gt;Loading&lt;/div&gt;
+&lt;div class="animate-bounce"&gt;Scroll down&lt;/div&gt;
+&lt;div class="animate-pulse"&gt;Loading skeleton&lt;/div&gt;
+&lt;div class="animate-ping"&gt;Notification dot&lt;/div&gt;
+
+&lt;!-- Custom in tailwind.config.js --&gt;
+animation: {
+  'fade-in': 'fadeIn 0.5s ease-out forwards',
+}
+keyframes: {
+  fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
+}</code></pre>
+
+    <h2>Performance tips</h2>
+    <ul>
+      <li><strong>Animate only transform and opacity.</strong> These two properties are GPU-composited and don't trigger layout or paint. Animating <code>width</code>, <code>height</code>, <code>margin</code>, or <code>top/left</code> is expensive.</li>
+      <li><strong>Use <code>will-change: transform</code></strong> on elements you're about to animate — but remove it after the animation ends.</li>
+      <li><strong>Avoid animating box-shadow directly.</strong> Use the pseudo-element opacity trick instead (see our <a href="/blog/css-box-shadow-guide">box-shadow guide</a>).</li>
+    </ul>
+
+    <div class="cta-wrap">
+      <h2>Build animations visually</h2>
+      <p>Pick your timing function, set keyframes, preview the animation live — copy the full @keyframes CSS in one click.</p>
+      <a class="cta-btn" href="https://freereign.dev/#animation">Open the Animation Builder →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>What is the difference between CSS transitions and CSS animations?</h3>
+    <p>Transitions animate between two states and require a trigger (like :hover or a class toggle). Animations use @keyframes to define multiple steps, can run on page load, loop infinitely, and do not need a trigger.</p>
+    <h3>How do I make a CSS animation loop forever?</h3>
+    <p>Set animation-iteration-count: infinite. For example: animation: spin 1s linear infinite.</p>
+    <h3>What does animation-fill-mode: forwards do?</h3>
+    <p>It tells the element to keep the styles from the last keyframe after the animation ends, instead of snapping back to its original state.</p>
+    <h3>How do I respect users who prefer reduced motion?</h3>
+    <p>Use the @media (prefers-reduced-motion: reduce) media query to set animation-duration to near zero and limit iteration count to 1. This respects the user's OS-level motion preference.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#animation"><span>🎬</span> Animation Builder</a>
+      <a href="https://freereign.dev/#transition"><span>🔄</span> Transition Generator</a>
+      <a href="https://freereign.dev/#transform"><span>🔀</span> Transform Generator</a>
+      <a href="https://freereign.dev/#filter"><span>🎨</span> CSS Filter Generator</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

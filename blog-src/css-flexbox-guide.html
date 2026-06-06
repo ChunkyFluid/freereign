@@ -1,0 +1,130 @@
+    <h2>The flexbox mental model</h2>
+    <p>Flexbox works on two axes: the <strong>main axis</strong> (set by <code>flex-direction</code>) and the <strong>cross axis</strong> (perpendicular to it). Everything in flexbox is about distributing space and aligning items along these two axes.</p>
+    <pre><code>.container {
+  display: flex;
+  flex-direction: row;        /* main axis: horizontal (default) */
+  justify-content: center;    /* align along main axis */
+  align-items: center;        /* align along cross axis */
+  gap: 16px;                  /* space between items */
+}</code></pre>
+
+    <h2>The essential properties</h2>
+    <h3>Container properties</h3>
+    <pre><code>/* Direction */
+flex-direction: row | row-reverse | column | column-reverse;
+
+/* Wrapping */
+flex-wrap: nowrap | wrap | wrap-reverse;
+
+/* Main axis alignment */
+justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+
+/* Cross axis alignment (single line) */
+align-items: stretch | flex-start | flex-end | center | baseline;
+
+/* Cross axis alignment (multi-line, when wrapping) */
+align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+
+/* Gap */
+gap: 16px;              /* row and column gap */
+row-gap: 16px;          /* just row gap */
+column-gap: 12px;       /* just column gap */</code></pre>
+
+    <h3>Item properties</h3>
+    <pre><code>/* How much an item should grow relative to siblings */
+flex-grow: 0;   /* default: don't grow */
+flex-grow: 1;   /* take up available space */
+
+/* How much an item should shrink */
+flex-shrink: 1; /* default: allow shrinking */
+flex-shrink: 0; /* don't shrink below basis */
+
+/* Starting size before grow/shrink is applied */
+flex-basis: auto | 200px | 50%;
+
+/* Shorthand (grow, shrink, basis) */
+flex: 1;            /* same as flex: 1 1 0% */
+flex: 0 0 200px;    /* fixed-width item */
+
+/* Override align-items for a single item */
+align-self: auto | flex-start | flex-end | center | stretch;
+
+/* Reorder visually (not in DOM) */
+order: 0; /* default, lower = earlier */</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="flex-demo">
+        <div class="flex-item" style="flex:1">1</div>
+        <div class="flex-item" style="flex:2">2</div>
+        <div class="flex-item" style="flex:1">3</div>
+      </div>
+      <p class="demo-note">Three items with flex ratios 1:2:1 — the center item takes twice the space.</p>
+    </div>
+
+    <h2>Copy-paste flexbox patterns</h2>
+    <pre><code>/* Centered both axes (the holy grail) */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Navbar: logo left, links right */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Equal-width columns */
+.columns {
+  display: flex;
+  gap: 16px;
+}
+.columns > * {
+  flex: 1;
+}
+
+/* Sticky footer layout */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.page > main {
+  flex: 1;
+}
+
+/* Wrap into a grid-like layout */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.card-grid > * {
+  flex: 1 1 300px; /* min 300px, grow to fill */
+}</code></pre>
+
+    <h2>Flexbox vs Grid</h2>
+    <ul>
+      <li><strong>Flexbox</strong> is one-dimensional — it excels at laying out items in a row <em>or</em> a column. Use it for navbars, button groups, centering, and distributing space in one direction.</li>
+      <li><strong>Grid</strong> is two-dimensional — it controls rows <em>and</em> columns simultaneously. Use it for page layouts, card grids, and anything that needs alignment in both directions.</li>
+      <li><strong>Combine them:</strong> Use grid for the page layout and flexbox for the components inside each grid cell.</li>
+    </ul>
+
+    <h2>Flexbox in Tailwind CSS</h2>
+    <pre><code>&lt;div class="flex items-center justify-between gap-4"&gt;
+  &lt;div class="flex-1"&gt;Grows&lt;/div&gt;
+  &lt;div class="flex-none"&gt;Fixed&lt;/div&gt;
+  &lt;div class="flex-1"&gt;Grows&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <p>Key utilities: <code>flex</code>, <code>inline-flex</code>, <code>flex-row</code>, <code>flex-col</code>, <code>flex-wrap</code>, <code>justify-*</code>, <code>items-*</code>, <code>gap-*</code>, <code>flex-1</code>, <code>flex-none</code>, <code>flex-grow</code>, <code>flex-shrink</code>, <code>self-*</code>, <code>order-*</code>.</p>
+
+    <h2>Common flexbox gotchas</h2>
+    <ul>
+      <li><strong>Images stretch.</strong> Images inside a flex container default to <code>align-items: stretch</code>. Add <code>align-self: flex-start</code> or set a fixed height.</li>
+      <li><strong>Text overflow.</strong> Long words in flex items can break layouts. Use <code>min-width: 0</code> on the item and <code>overflow-wrap: break-word</code> on the text.</li>
+      <li><strong>margin: auto absorbs space.</strong> <code>margin-left: auto</code> on a flex item pushes it to the right — this is how you push the last nav link to the right side.</li>
+      <li><strong>flex-basis vs width.</strong> <code>flex-basis</code> sets the initial size before grow/shrink. It overrides <code>width</code> in row direction and <code>height</code> in column direction.</li>
+    </ul>

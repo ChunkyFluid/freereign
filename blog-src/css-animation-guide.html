@@ -1,0 +1,133 @@
+    <h2>How CSS animations work</h2>
+    <p>CSS animations have two parts: a <code>@keyframes</code> rule that defines the animation steps, and the <code>animation</code> property that applies it to an element.</p>
+    <pre><code>/* 1. Define the keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. Apply to an element */
+.card {
+  animation: fadeIn 0.5s ease-out forwards;
+}</code></pre>
+
+    <h2>The animation shorthand</h2>
+    <pre><code>animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+
+/* Example */
+animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s 1 normal forwards running;
+
+/* Multiple animations */
+animation: fadeIn 0.5s ease-out, slideUp 0.6s ease-out 0.1s;</code></pre>
+
+    <h3>Individual properties</h3>
+    <pre><code>animation-name: fadeIn;
+animation-duration: 0.5s;
+animation-timing-function: ease-out;    /* ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier() */
+animation-delay: 0.2s;                  /* negative delays start mid-animation */
+animation-iteration-count: 1;           /* number | infinite */
+animation-direction: normal;            /* normal | reverse | alternate | alternate-reverse */
+animation-fill-mode: forwards;          /* none | forwards | backwards | both */
+animation-play-state: running;          /* running | paused */</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="anim-demo">
+        <div class="anim-box"></div>
+      </div>
+      <p class="demo-note">A pulsing box using @keyframes with scale and opacity.</p>
+    </div>
+
+    <h2>Copy-paste animation recipes</h2>
+    <pre><code>/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slide up */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scale in (pop) */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-20px); }
+}
+
+/* Spin */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* Shake (error feedback) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-8px); }
+  50%      { transform: translateX(8px); }
+  75%      { transform: translateX(-4px); }
+}</code></pre>
+
+    <h2>Timing functions deep dive</h2>
+    <p>The <code>animation-timing-function</code> controls the acceleration curve:</p>
+    <ul>
+      <li><strong>ease</strong> — starts slow, speeds up, ends slow (default)</li>
+      <li><strong>linear</strong> — constant speed (good for spins, loading bars)</li>
+      <li><strong>ease-in</strong> — starts slow, speeds up (use for exits)</li>
+      <li><strong>ease-out</strong> — starts fast, slows down (use for entrances)</li>
+      <li><strong>ease-in-out</strong> — slow at both ends</li>
+      <li><strong>cubic-bezier()</strong> — custom curve for professional motion</li>
+    </ul>
+    <div class="callout">For UI animations, <code>cubic-bezier(0.16, 1, 0.3, 1)</code> (a snappy ease-out) feels more polished than the built-in <code>ease-out</code>. It's the curve used by most modern design systems.</div>
+
+    <h2>Animations vs transitions</h2>
+    <ul>
+      <li><strong>Transitions</strong> animate between two states (triggered by :hover, class toggle, etc.). They're simpler — use them for hover effects, toggles, and state changes.</li>
+      <li><strong>Animations</strong> can have multiple keyframes, run on page load, loop infinitely, and don't need a trigger. Use them for loading spinners, entrance effects, and complex multi-step motion.</li>
+    </ul>
+
+    <h2>Respecting reduced motion</h2>
+    <p>Some users are sensitive to motion. Always provide a reduced-motion fallback:</p>
+    <pre><code>@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre>
+
+    <h2>CSS animations in Tailwind</h2>
+    <pre><code>&lt;!-- Built-in animations --&gt;
+&lt;div class="animate-spin"&gt;Loading&lt;/div&gt;
+&lt;div class="animate-bounce"&gt;Scroll down&lt;/div&gt;
+&lt;div class="animate-pulse"&gt;Loading skeleton&lt;/div&gt;
+&lt;div class="animate-ping"&gt;Notification dot&lt;/div&gt;
+
+&lt;!-- Custom in tailwind.config.js --&gt;
+animation: {
+  'fade-in': 'fadeIn 0.5s ease-out forwards',
+}
+keyframes: {
+  fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
+}</code></pre>
+
+    <h2>Performance tips</h2>
+    <ul>
+      <li><strong>Animate only transform and opacity.</strong> These two properties are GPU-composited and don't trigger layout or paint. Animating <code>width</code>, <code>height</code>, <code>margin</code>, or <code>top/left</code> is expensive.</li>
+      <li><strong>Use <code>will-change: transform</code></strong> on elements you're about to animate — but remove it after the animation ends.</li>
+      <li><strong>Avoid animating box-shadow directly.</strong> Use the pseudo-element opacity trick instead (see our <a href="/blog/css-box-shadow-guide">box-shadow guide</a>).</li>
+    </ul>
