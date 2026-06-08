@@ -16,9 +16,9 @@ const TODAY = '2026-06-05';
 const SHARED_CSS = `
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
-      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
-      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --bg: #111113; --bg-surface: #1c1c1f; --bg-elevated: #232326;
+      --text: #ececec; --text-secondary: #888; --text-tertiary: #555;
+      --accent: #0d9488; --accent-secondary: #14b8a6;
       --border: rgba(255,255,255,0.08); --radius: 12px;
     }
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
@@ -167,7 +167,7 @@ const ARTICLES = [
     ],
     extraCss: `
     .gradient-demo { width: 100%; height: 120px; border-radius: 16px;
-      background: linear-gradient(135deg, #8b5cf6, #06b6d4, #14b8a6); }`,
+      background: linear-gradient(135deg, #0d9488, #14b8a6, #2dd4bf); }`,
   },
   {
     slug: 'css-flexbox-guide',
