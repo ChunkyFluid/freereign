@@ -143,6 +143,49 @@ function init() {
   handleRouting();
   bindGlobalEvents();
   initTheme();
+  initLemonSqueezy();
+}
+
+// === Lemon Squeezy Checkout Handler ===
+function initLemonSqueezy() {
+  // Wait for lemon.js to load, then register the event handler.
+  // The script is loaded with `defer`, so it may not be ready at init() time.
+  function setup() {
+    if (typeof window.LemonSqueezy === 'undefined') {
+      setTimeout(setup, 200);
+      return;
+    }
+    window.LemonSqueezy.Setup({
+      eventHandler: (event) => {
+        if (event.event === 'Checkout.Success') {
+          // Activate Pro
+          localStorage.setItem('fr_pro', 'true');
+          isPro = true;
+          checkProStatus();
+
+          // Close the Pro modal
+          proModalOverlay.classList.remove('visible');
+
+          // Re-render sidebar (removes lock icons)
+          renderSidebar();
+
+          // Re-render current tool if viewing one (removes preview banner + watermark)
+          if (currentTool) {
+            isPreviewingPro = false;
+            renderTool(currentTool);
+          }
+
+          // Track the purchase
+          const orderId = event.data?.order?.data?.id || event.data?.id || 'unknown';
+          analytics.proPurchase(orderId);
+
+          // Show a confirmation toast
+          showToast('🎉 Pro activated! All 25 tools are now unlocked.');
+        }
+      }
+    });
+  }
+  setup();
 }
 
 // === Theme ===
