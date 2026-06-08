@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Grid: The Complete Guide (Columns, Areas, Patterns + Generator) | FreeReign</title>
-  <meta name="description" content="Master CSS Grid: grid-template-columns, rows, areas, auto-fit/auto-fill, repeat(), named lines, alignment, 5 copy-paste layout patterns, and a free visual generator.">
+  <title>CSS Grid in Practice: Layouts, Named Areas, and the auto-fit Trick | FreeReign</title>
+  <meta name="description" content="A practical CSS Grid walkthrough: grid-template-columns, named areas, the auto-fit/auto-fill responsive trick, alignment, and 5 layout patterns you can drop into any project.">
   <meta name="keywords" content="css grid, css grid layout, grid-template-columns, grid-template-areas, css grid generator, auto-fit auto-fill, responsive grid">
   <link rel="canonical" href="https://freereign.dev/blog/css-grid-guide">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS Grid: The Complete Guide (Columns, Areas, Patterns + Generator)">
-  <meta property="og:description" content="Master CSS Grid: grid-template-columns, rows, areas, auto-fit/auto-fill, repeat(), named lines, alignment, 5 copy-paste layout patterns, and a free visual generator.">
+  <meta property="og:title" content="CSS Grid in Practice: Layouts, Named Areas, and the auto-fit Trick">
+  <meta property="og:description" content="A practical CSS Grid walkthrough: grid-template-columns, named areas, the auto-fit/auto-fill responsive trick, alignment, and 5 layout patterns you can drop into any project.">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-grid-guide">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS Grid: The Complete Guide (Columns, Areas, Patterns + Generator)">
-  <meta name="twitter:description" content="Master CSS Grid: grid-template-columns, rows, areas, auto-fit/auto-fill, repeat(), named lines, alignment, 5 copy-paste layout patterns, and a free visual generator.">
+  <meta name="twitter:title" content="CSS Grid in Practice: Layouts, Named Areas, and the auto-fit Trick">
+  <meta name="twitter:description" content="A practical CSS Grid walkthrough: grid-template-columns, named areas, the auto-fit/auto-fill responsive trick, alignment, and 5 layout patterns you can drop into any project.">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS Grid: The Complete Guide",
-  "description": "Master CSS Grid: grid-template-columns, rows, areas, auto-fit/auto-fill, repeat(), named lines, alignment, 5 copy-paste layout patterns, and a free visual generator.",
+  "headline": "CSS Grid in Practice",
+  "description": "A practical CSS Grid walkthrough: grid-template-columns, named areas, the auto-fit/auto-fill responsive trick, alignment, and 5 layout patterns you can drop into any project.",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "What is the difference between auto-fill and auto-fit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "auto-fill creates as many tracks as will fit, leaving empty ones visible. auto-fit collapses empty tracks so items stretch to fill the space. For responsive card grids, auto-fit is usually what you want."
+        "text": "auto-fill creates as many columns as will fit, even if some are empty. auto-fit does the same but collapses the empty ones so your items stretch to fill. For card grids where you want items to grow, auto-fit is almost always what you want."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "How do I make a responsive grid without media queries?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Use grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)). Items will automatically wrap to new rows when they can't fit at the minimum size."
+        "text": "grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)). That's it. Items wrap to new rows when they can't fit at 250px, and they grow to fill available space. One line, fully responsive."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "What is the fr unit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "fr stands for \"fraction of available space.\" 1fr 2fr 1fr creates three columns where the middle one is twice as wide as the others."
+        "text": "It means \"fraction of the leftover space.\" 1fr 2fr 1fr gives you three columns where the middle one gets double the space. Think of it as flex-grow for grid tracks."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "Should I use Grid or Flexbox?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Use Grid for two-dimensional layouts (page layouts, card grids). Use Flexbox for one-dimensional layouts (navbars, button groups). Combine them: Grid for the outer layout, Flexbox for components inside each cell."
+        "text": "Grid for anything two-dimensional — page layouts, card grids, dashboards. Flexbox for one-dimensional stuff — navbars, button rows, vertical stacks. In practice, most projects use both: grid for the outer layout, flexbox inside each cell."
       }
     }
   ]
@@ -146,11 +146,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Grid: The Complete Guide
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Grid in Practice
     </nav>
 
-    <h1>CSS Grid: The Complete Guide</h1>
-    <p class="lede">CSS Grid is the most powerful layout system in CSS — it gives you control over rows and columns simultaneously. This guide covers everything from basic grids to named areas and responsive patterns. Want to build grids visually? <a href="https://freereign.dev/#grid">Use the free CSS Grid generator →</a></p>
+    <h1>CSS Grid in Practice</h1>
+    <p class="lede">Grid is the layout tool where CSS finally got it right. Two dimensions, explicit placement, named areas that literally map to how your page looks. The thing most people miss is <code>repeat(auto-fit, minmax(250px, 1fr))</code> — one line that gives you a responsive card grid with zero media queries. Here's everything you need to use Grid for real projects. <a href="https://freereign.dev/#grid">Build grids visually →</a></p>
 
     <h2>How CSS Grid works</h2>
     <p>CSS Grid gives you control over <strong>rows and columns simultaneously</strong>. Unlike flexbox (which is one-dimensional), grid lets you place items in a two-dimensional layout with precise control over both axes.</p>
@@ -335,13 +335,13 @@ align-content: start | end | center | space-between | space-around;
 
     <h2>FAQ</h2>
     <h3>What is the difference between auto-fill and auto-fit?</h3>
-    <p>auto-fill creates as many tracks as will fit, leaving empty ones visible. auto-fit collapses empty tracks so items stretch to fill the space. For responsive card grids, auto-fit is usually what you want.</p>
+    <p>auto-fill creates as many columns as will fit, even if some are empty. auto-fit does the same but collapses the empty ones so your items stretch to fill. For card grids where you want items to grow, auto-fit is almost always what you want.</p>
     <h3>How do I make a responsive grid without media queries?</h3>
-    <p>Use grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)). Items will automatically wrap to new rows when they can't fit at the minimum size.</p>
+    <p>grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)). That's it. Items wrap to new rows when they can't fit at 250px, and they grow to fill available space. One line, fully responsive.</p>
     <h3>What is the fr unit?</h3>
-    <p>fr stands for "fraction of available space." 1fr 2fr 1fr creates three columns where the middle one is twice as wide as the others.</p>
+    <p>It means "fraction of the leftover space." 1fr 2fr 1fr gives you three columns where the middle one gets double the space. Think of it as flex-grow for grid tracks.</p>
     <h3>Should I use Grid or Flexbox?</h3>
-    <p>Use Grid for two-dimensional layouts (page layouts, card grids). Use Flexbox for one-dimensional layouts (navbars, button groups). Combine them: Grid for the outer layout, Flexbox for components inside each cell.</p>
+    <p>Grid for anything two-dimensional — page layouts, card grids, dashboards. Flexbox for one-dimensional stuff — navbars, button rows, vertical stacks. In practice, most projects use both: grid for the outer layout, flexbox inside each cell.</p>
 
     <h2>Related tools</h2>
     <div class="related">

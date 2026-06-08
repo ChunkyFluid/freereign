@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS box-shadow: The Complete Guide (Layers, Glow, Performance) | FreeReign</title>
-  <meta name="description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <title>Why Your CSS Shadows Look Flat (and How to Fix Them) | FreeReign</title>
+  <meta name="description" content="Single-layer box-shadows look fake. Here's how to stack multiple shadows for realistic depth, plus the pseudo-element trick for animating them without killing performance.">
   <meta name="keywords" content="css box shadow, box shadow generator, css shadow, box shadow examples, multiple box shadows, inset shadow, css shadow effects">
   <link rel="canonical" href="https://freereign.dev/blog/css-box-shadow-guide">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS box-shadow: The Complete Guide (Layers, Glow, Performance)">
-  <meta property="og:description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <meta property="og:title" content="Why Your CSS Shadows Look Flat (and How to Fix Them)">
+  <meta property="og:description" content="Single-layer box-shadows look fake. Here's how to stack multiple shadows for realistic depth, plus the pseudo-element trick for animating them without killing performance.">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-box-shadow-guide">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS box-shadow: The Complete Guide (Layers, Glow, Performance)">
-  <meta name="twitter:description" content="Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.">
+  <meta name="twitter:title" content="Why Your CSS Shadows Look Flat (and How to Fix Them)">
+  <meta name="twitter:description" content="Single-layer box-shadows look fake. Here's how to stack multiple shadows for realistic depth, plus the pseudo-element trick for animating them without killing performance.">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS box-shadow: The Complete Guide",
-  "description": "Master CSS box-shadow: the syntax, layering multiple shadows for depth, glow effects, inset shadows, performance tricks, copy-paste recipes, Tailwind, and a free generator.",
+  "headline": "Why Your CSS Shadows Look Flat",
+  "description": "Single-layer box-shadows look fake. Here's how to stack multiple shadows for realistic depth, plus the pseudo-element trick for animating them without killing performance.",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "Can you have multiple box shadows?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Comma-separate them: box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08). The first shadow renders on top. Layering 2-3 shadows creates much more realistic depth than a single shadow."
+        "text": "Yes, and you should. Comma-separate them — the first one renders on top. Two or three shadows at different distances create way more realistic depth than one big shadow ever will."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "What is an inset shadow?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Adding the inset keyword makes the shadow render inside the element instead of outside. It is commonly used for pressed buttons, input fields, and inner glow effects."
+        "text": "Adding the inset keyword flips the shadow inside the element. It's useful for pressed button states, input fields, and that inner glow effect you see on dark UI cards."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "Does box-shadow affect layout?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Shadows are purely visual and do not change the element's size or position in the document flow. They can overflow parent containers with overflow: hidden."
+        "text": "Nope. Shadows are purely visual and don't change the element's size or position. They can overflow parent containers though, which catches people off guard with overflow: hidden."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "How do I animate box-shadow performantly?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Animating box-shadow directly causes repaints. The performant approach is to put the target shadow on a pseudo-element with opacity: 0 and transition the opacity instead — the browser can composite opacity changes on the GPU."
+        "text": "Don't animate box-shadow directly — it triggers a repaint every frame. Instead, put the hover shadow on a ::before or ::after pseudo-element with opacity: 0, then just transition the opacity. The browser composites opacity on the GPU, so it's buttery smooth."
       }
     }
   ]
@@ -142,11 +142,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS box-shadow: The Complete Guide
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / Why Your CSS Shadows Look Flat
     </nav>
 
-    <h1>CSS box-shadow: The Complete Guide</h1>
-    <p class="lede">The <code>box-shadow</code> property adds depth, elevation, and glow to any element — and stacking multiple shadows is where it gets powerful. This guide covers the syntax, layered shadows, performance tricks, and gives you copy-paste recipes. Want to build them visually? <a href="https://freereign.dev/#boxshadow">Use the free box shadow generator →</a></p>
+    <h1>Why Your CSS Shadows Look Flat</h1>
+    <p class="lede">A single <code>box-shadow</code> looks fake. Always. Real-world light creates multiple layers of shadow at different distances, and CSS lets you do the same thing by comma-separating values. This is the difference between a shadow that looks like a design tool preset and one that looks like an actual object on screen. <a href="https://freereign.dev/#boxshadow">Build layered shadows visually →</a></p>
 
     <h2>The box-shadow syntax</h2>
     <pre><code>box-shadow: offset-x offset-y blur spread color;
@@ -248,13 +248,13 @@ box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.5);</code></pre>
 
     <h2>FAQ</h2>
     <h3>Can you have multiple box shadows?</h3>
-    <p>Yes. Comma-separate them: box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.08). The first shadow renders on top. Layering 2-3 shadows creates much more realistic depth than a single shadow.</p>
+    <p>Yes, and you should. Comma-separate them — the first one renders on top. Two or three shadows at different distances create way more realistic depth than one big shadow ever will.</p>
     <h3>What is an inset shadow?</h3>
-    <p>Adding the inset keyword makes the shadow render inside the element instead of outside. It is commonly used for pressed buttons, input fields, and inner glow effects.</p>
+    <p>Adding the inset keyword flips the shadow inside the element. It's useful for pressed button states, input fields, and that inner glow effect you see on dark UI cards.</p>
     <h3>Does box-shadow affect layout?</h3>
-    <p>No. Shadows are purely visual and do not change the element's size or position in the document flow. They can overflow parent containers with overflow: hidden.</p>
+    <p>Nope. Shadows are purely visual and don't change the element's size or position. They can overflow parent containers though, which catches people off guard with overflow: hidden.</p>
     <h3>How do I animate box-shadow performantly?</h3>
-    <p>Animating box-shadow directly causes repaints. The performant approach is to put the target shadow on a pseudo-element with opacity: 0 and transition the opacity instead — the browser can composite opacity changes on the GPU.</p>
+    <p>Don't animate box-shadow directly — it triggers a repaint every frame. Instead, put the hover shadow on a ::before or ::after pseudo-element with opacity: 0, then just transition the opacity. The browser composites opacity on the GPU, so it's buttery smooth.</p>
 
     <h2>Related tools</h2>
     <div class="related">

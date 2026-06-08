@@ -28,6 +28,7 @@ dist-ssr
 
 # Internal project files (not for public repo)
 DAILY_LOG.md
+MARKETING.md
 analytics_snapshot.json
 
 # Vite template boilerplate

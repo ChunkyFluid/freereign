@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Animations: The Complete Guide (@keyframes, Timing, Recipes) | FreeReign</title>
-  <meta name="description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <title>7 CSS Animations You Can Copy-Paste (Plus When Not to Use Them) | FreeReign</title>
+  <meta name="description" content="@keyframes explained, the animation shorthand demystified, timing functions that actually feel good, 7 ready-to-use recipes, and why you should respect prefers-reduced-motion.">
   <meta name="keywords" content="css animation, @keyframes css, css animation examples, css animation shorthand, animation timing function, css bounce animation, css fade in">
   <link rel="canonical" href="https://freereign.dev/blog/css-animation-guide">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS Animations: The Complete Guide (@keyframes, Timing, Recipes)">
-  <meta property="og:description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <meta property="og:title" content="7 CSS Animations You Can Copy-Paste (Plus When Not to Use Them)">
+  <meta property="og:description" content="@keyframes explained, the animation shorthand demystified, timing functions that actually feel good, 7 ready-to-use recipes, and why you should respect prefers-reduced-motion.">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-animation-guide">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS Animations: The Complete Guide (@keyframes, Timing, Recipes)">
-  <meta name="twitter:description" content="Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.">
+  <meta name="twitter:title" content="7 CSS Animations You Can Copy-Paste (Plus When Not to Use Them)">
+  <meta name="twitter:description" content="@keyframes explained, the animation shorthand demystified, timing functions that actually feel good, 7 ready-to-use recipes, and why you should respect prefers-reduced-motion.">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS Animations: The Complete Guide",
-  "description": "Master CSS animations: @keyframes syntax, the animation shorthand, timing functions, 7 copy-paste recipes (fade, slide, bounce, spin, pulse, shake), reduced motion, performance, and Tailwind.",
+  "headline": "7 CSS Animations You Can Copy-Paste",
+  "description": "@keyframes explained, the animation shorthand demystified, timing functions that actually feel good, 7 ready-to-use recipes, and why you should respect prefers-reduced-motion.",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "What is the difference between CSS transitions and CSS animations?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Transitions animate between two states and require a trigger (like :hover or a class toggle). Animations use @keyframes to define multiple steps, can run on page load, loop infinitely, and do not need a trigger."
+        "text": "Transitions go between two states and need a trigger (hover, class toggle, etc.). Animations use @keyframes, can have as many steps as you want, run on page load, and can loop forever. Use transitions for hover effects; use animations for loading spinners and entrance sequences."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "How do I make a CSS animation loop forever?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Set animation-iteration-count: infinite. For example: animation: spin 1s linear infinite."
+        "text": "animation-iteration-count: infinite. Or in shorthand: animation: spin 1s linear infinite."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "What does animation-fill-mode: forwards do?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "It tells the element to keep the styles from the last keyframe after the animation ends, instead of snapping back to its original state."
+        "text": "Without it, the element snaps back to its original state when the animation ends. With forwards, it stays at wherever the last keyframe left it. You almost always want this for entrance animations."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "How do I respect users who prefer reduced motion?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Use the @media (prefers-reduced-motion: reduce) media query to set animation-duration to near zero and limit iteration count to 1. This respects the user's OS-level motion preference."
+        "text": "Wrap your animations in @media (prefers-reduced-motion: reduce) and set duration to near-zero. This isn't optional — some users get physically sick from motion. The CSS is three lines and it matters."
       }
     }
   ]
@@ -143,11 +143,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Animations: The Complete Guide
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / 7 CSS Animations You Can Copy-Paste
     </nav>
 
-    <h1>CSS Animations: The Complete Guide</h1>
-    <p class="lede">CSS animations let you create multi-step motion sequences that run on page load, loop infinitely, or trigger on demand — all without JavaScript. This guide covers @keyframes, every animation property, timing functions, and gives you 7 copy-paste recipes. Build them visually? <a href="https://freereign.dev/#animation">Use the free animation builder →</a></p>
+    <h1>7 CSS Animations You Can Copy-Paste</h1>
+    <p class="lede">CSS animations are two things: a <code>@keyframes</code> rule and an <code>animation</code> property. That's really it. But the difference between an animation that feels janky and one that feels polished usually comes down to the timing function — and most people just use <code>ease</code>. Here are 7 recipes you can grab right now, plus the timing curve that most design systems actually use. <a href="https://freereign.dev/#animation">Build animations visually →</a></p>
 
     <h2>How CSS animations work</h2>
     <p>CSS animations have two parts: a <code>@keyframes</code> rule that defines the animation steps, and the <code>animation</code> property that applies it to an element.</p>
@@ -291,13 +291,13 @@ keyframes: {
 
     <h2>FAQ</h2>
     <h3>What is the difference between CSS transitions and CSS animations?</h3>
-    <p>Transitions animate between two states and require a trigger (like :hover or a class toggle). Animations use @keyframes to define multiple steps, can run on page load, loop infinitely, and do not need a trigger.</p>
+    <p>Transitions go between two states and need a trigger (hover, class toggle, etc.). Animations use @keyframes, can have as many steps as you want, run on page load, and can loop forever. Use transitions for hover effects; use animations for loading spinners and entrance sequences.</p>
     <h3>How do I make a CSS animation loop forever?</h3>
-    <p>Set animation-iteration-count: infinite. For example: animation: spin 1s linear infinite.</p>
+    <p>animation-iteration-count: infinite. Or in shorthand: animation: spin 1s linear infinite.</p>
     <h3>What does animation-fill-mode: forwards do?</h3>
-    <p>It tells the element to keep the styles from the last keyframe after the animation ends, instead of snapping back to its original state.</p>
+    <p>Without it, the element snaps back to its original state when the animation ends. With forwards, it stays at wherever the last keyframe left it. You almost always want this for entrance animations.</p>
     <h3>How do I respect users who prefer reduced motion?</h3>
-    <p>Use the @media (prefers-reduced-motion: reduce) media query to set animation-duration to near zero and limit iteration count to 1. This respects the user's OS-level motion preference.</p>
+    <p>Wrap your animations in @media (prefers-reduced-motion: reduce) and set duration to near-zero. This isn't optional — some users get physically sick from motion. The CSS is three lines and it matters.</p>
 
     <h2>Related tools</h2>
     <div class="related">

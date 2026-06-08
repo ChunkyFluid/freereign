@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Border Radius: The Complete Guide (Shapes, Scale + Generator) | FreeReign</title>
-  <meta name="description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <title>Beyond Rounded Corners: Circles, Pills, Blobs, and the Slash Trick | FreeReign</title>
+  <meta name="description" content="CSS border-radius does way more than rounded cards. Circles, pill buttons, organic blobs, elliptical corners with the slash syntax, a design system scale, and gradient borders.">
   <meta name="keywords" content="css border radius, border-radius, css rounded corners, css circle, css pill button, border-radius generator, css blob shape">
   <link rel="canonical" href="https://freereign.dev/blog/css-border-radius-guide">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS Border Radius: The Complete Guide (Shapes, Scale + Generator)">
-  <meta property="og:description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <meta property="og:title" content="Beyond Rounded Corners: Circles, Pills, Blobs, and the Slash Trick">
+  <meta property="og:description" content="CSS border-radius does way more than rounded cards. Circles, pill buttons, organic blobs, elliptical corners with the slash syntax, a design system scale, and gradient borders.">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-border-radius-guide">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS Border Radius: The Complete Guide (Shapes, Scale + Generator)">
-  <meta name="twitter:description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <meta name="twitter:title" content="Beyond Rounded Corners: Circles, Pills, Blobs, and the Slash Trick">
+  <meta name="twitter:description" content="CSS border-radius does way more than rounded cards. Circles, pill buttons, organic blobs, elliptical corners with the slash syntax, a design system scale, and gradient borders.">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS Border Radius: The Complete Guide",
-  "description": "Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.",
+  "headline": "Beyond Rounded Corners",
+  "description": "CSS border-radius does way more than rounded cards. Circles, pill buttons, organic blobs, elliptical corners with the slash syntax, a design system scale, and gradient borders.",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "How do I make a circle with CSS?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Set border-radius: 50% on an element with equal width and height. If the element is not square, 50% creates an ellipse instead."
+        "text": "border-radius: 50% on a square element. If it's not square, you get an ellipse — which is sometimes what you want, sometimes not."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "How do I make a pill button?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Set border-radius: 9999px (or 100vmax). This creates a fully rounded capsule shape regardless of the element's width or height."
+        "text": "border-radius: 9999px. This makes a fully rounded capsule shape no matter what the width or height is. Some people use 100vmax instead."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "What does the slash (/) mean in border-radius?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The slash separates horizontal and vertical radii, creating elliptical corners. For example, border-radius: 20px / 10px makes corners that curve more horizontally than vertically."
+        "text": "It separates horizontal and vertical radii, so each corner can have an elliptical curve instead of a circular one. border-radius: 20px / 10px makes corners that are wider than they are tall. It's how you get those subtle squircle-ish shapes."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "Does border-radius affect performance?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Border-radius is extremely cheap to render. Unlike box-shadow or filter, you can use it freely without performance concerns."
+        "text": "Not at all. It's one of the cheapest CSS properties to render. Unlike shadows or filters, you can use it on every element without worrying about paint cost."
       }
     }
   ]
@@ -145,11 +145,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Border Radius: The Complete Guide
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / Beyond Rounded Corners
     </nav>
 
-    <h1>CSS Border Radius: The Complete Guide</h1>
-    <p class="lede">The <code>border-radius</code> property turns sharp rectangles into circles, pills, cards, and organic blobs — all with one line of CSS. This guide covers every syntax, common shapes, a design system scale, and advanced techniques. Generate it visually? <a href="https://freereign.dev/#borderradius">Use the free border radius generator →</a></p>
+    <h1>Beyond Rounded Corners</h1>
+    <p class="lede">Everyone knows <code>border-radius: 12px</code>. But most people don't know about the slash syntax for elliptical corners, how <code>9999px</code> makes a pill shape regardless of dimensions, or how to create organic blob shapes with eight values. <code>border-radius</code> is one of those properties that does more than the name suggests. <a href="https://freereign.dev/#borderradius">Generate shapes visually →</a></p>
 
     <h2>The border-radius property</h2>
     <p><code>border-radius</code> rounds the corners of any element. It works on divs, images, buttons, inputs — anything with a box model.</p>
@@ -311,13 +311,13 @@ img {
 
     <h2>FAQ</h2>
     <h3>How do I make a circle with CSS?</h3>
-    <p>Set border-radius: 50% on an element with equal width and height. If the element is not square, 50% creates an ellipse instead.</p>
+    <p>border-radius: 50% on a square element. If it's not square, you get an ellipse — which is sometimes what you want, sometimes not.</p>
     <h3>How do I make a pill button?</h3>
-    <p>Set border-radius: 9999px (or 100vmax). This creates a fully rounded capsule shape regardless of the element's width or height.</p>
+    <p>border-radius: 9999px. This makes a fully rounded capsule shape no matter what the width or height is. Some people use 100vmax instead.</p>
     <h3>What does the slash (/) mean in border-radius?</h3>
-    <p>The slash separates horizontal and vertical radii, creating elliptical corners. For example, border-radius: 20px / 10px makes corners that curve more horizontally than vertically.</p>
+    <p>It separates horizontal and vertical radii, so each corner can have an elliptical curve instead of a circular one. border-radius: 20px / 10px makes corners that are wider than they are tall. It's how you get those subtle squircle-ish shapes.</p>
     <h3>Does border-radius affect performance?</h3>
-    <p>No. Border-radius is extremely cheap to render. Unlike box-shadow or filter, you can use it freely without performance concerns.</p>
+    <p>Not at all. It's one of the cheapest CSS properties to render. Unlike shadows or filters, you can use it on every element without worrying about paint cost.</p>
 
     <h2>Related tools</h2>
     <div class="related">

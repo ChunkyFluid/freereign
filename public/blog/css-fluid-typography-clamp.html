@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Fluid Typography with clamp(): The Complete Guide | FreeReign</title>
-  <meta name="description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <title>Stop Using Breakpoints for Font Sizes — Use clamp() Instead | FreeReign</title>
+  <meta name="description" content="How to use CSS clamp() for fluid typography that scales smoothly across every viewport. The formula, the accessibility trap most people fall into, and a full type scale you can steal.">
   <meta name="keywords" content="css fluid typography, clamp css, fluid type scale, responsive font size css, css clamp calculator, fluid font size">
   <link rel="canonical" href="https://freereign.dev/blog/css-fluid-typography-clamp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS Fluid Typography with clamp(): The Complete Guide">
-  <meta property="og:description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <meta property="og:title" content="Stop Using Breakpoints for Font Sizes — Use clamp() Instead">
+  <meta property="og:description" content="How to use CSS clamp() for fluid typography that scales smoothly across every viewport. The formula, the accessibility trap most people fall into, and a full type scale you can steal.">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-fluid-typography-clamp">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS Fluid Typography with clamp(): The Complete Guide">
-  <meta name="twitter:description" content="Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.">
+  <meta name="twitter:title" content="Stop Using Breakpoints for Font Sizes — Use clamp() Instead">
+  <meta name="twitter:description" content="How to use CSS clamp() for fluid typography that scales smoothly across every viewport. The formula, the accessibility trap most people fall into, and a full type scale you can steal.">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS Fluid Typography with clamp()",
-  "description": "Master fluid typography in CSS with clamp(): scale font sizes smoothly across viewports without breakpoints. The formula, an accessible recipe, a full type scale, Tailwind, and a free generator.",
+  "headline": "Stop Using Breakpoints for Font Sizes",
+  "description": "How to use CSS clamp() for fluid typography that scales smoothly across every viewport. The formula, the accessibility trap most people fall into, and a full type scale you can steal.",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "What is the clamp() function in CSS?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "clamp(MIN, PREFERRED, MAX) returns the preferred value but never lets it drop below MIN or rise above MAX. For typography the preferred value is viewport-relative, so the font size scales fluidly between the two bounds."
+        "text": "It takes three values — a minimum, a preferred (usually viewport-relative), and a maximum. The browser uses the middle value but clamps it to the bounds. For typography, this means your font size smoothly scales between the min and max as the viewport changes."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "Is fluid typography bad for accessibility?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Only if you use a pure viewport unit like 5vw, which ignores browser zoom. Including a rem component in the preferred value — for example 1rem + 4vw — keeps the text responsive to zoom and user font-size settings."
+        "text": "It can be, if you do it wrong. A pure viewport unit like 5vw ignores browser zoom completely — the text stays the same size when users zoom in. The fix is mixing in a rem component: something like 1rem + 4vw. That way the text still responds to zoom and user font-size preferences."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "Do I still need media queries with clamp()?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "For font sizing, usually not — clamp() interpolates every size between your min and max automatically. You may still use media queries for layout changes, but the typography scales on its own."
+        "text": "For font sizing? Almost never. clamp() handles every size between your bounds automatically. You might still want media queries for layout changes, but the typography part is solved."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "Is clamp() supported in all browsers?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. clamp() has been supported in all modern browsers for years and needs no prefix."
+        "text": "Yes — it's been universally supported for years. No prefix needed. Ship it."
       }
     }
   ]
@@ -141,11 +141,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Fluid Typography with clamp()
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / Stop Using Breakpoints for Font Sizes
     </nav>
 
-    <h1>CSS Fluid Typography with clamp()</h1>
-    <p class="lede">Fluid typography scales your font sizes smoothly with the viewport — no breakpoints, no jumps. It is all powered by one CSS function: <code>clamp()</code>. This guide covers the formula, the accessibility trap to avoid, and a full fluid type scale. Want the numbers solved for you? <a href="https://freereign.dev/#fluidtype">Use the free fluid typography generator →</a></p>
+    <h1>Stop Using Breakpoints for Font Sizes</h1>
+    <p class="lede">If you're still writing three media queries to handle your h1 on mobile, tablet, and desktop, there's a better way. <code>clamp()</code> lets your type scale smoothly between a min and max size with zero breakpoints. But there's an accessibility trap that almost nobody talks about — using pure viewport units breaks browser zoom. Here's how to do it right. <a href="https://freereign.dev/#fluidtype">Or just skip to the generator →</a></p>
 
     <div class="demo">
   <div class="fluid-demo">Aa</div>
@@ -221,13 +221,13 @@ font-size: clamp(1rem, 0.17rem + 4.17vw, 4rem);</code></pre>
 
     <h2>FAQ</h2>
     <h3>What is the clamp() function in CSS?</h3>
-    <p>clamp(MIN, PREFERRED, MAX) returns the preferred value but never lets it drop below MIN or rise above MAX. For typography the preferred value is viewport-relative, so the font size scales fluidly between the two bounds.</p>
+    <p>It takes three values — a minimum, a preferred (usually viewport-relative), and a maximum. The browser uses the middle value but clamps it to the bounds. For typography, this means your font size smoothly scales between the min and max as the viewport changes.</p>
     <h3>Is fluid typography bad for accessibility?</h3>
-    <p>Only if you use a pure viewport unit like 5vw, which ignores browser zoom. Including a rem component in the preferred value — for example 1rem + 4vw — keeps the text responsive to zoom and user font-size settings.</p>
+    <p>It can be, if you do it wrong. A pure viewport unit like 5vw ignores browser zoom completely — the text stays the same size when users zoom in. The fix is mixing in a rem component: something like 1rem + 4vw. That way the text still responds to zoom and user font-size preferences.</p>
     <h3>Do I still need media queries with clamp()?</h3>
-    <p>For font sizing, usually not — clamp() interpolates every size between your min and max automatically. You may still use media queries for layout changes, but the typography scales on its own.</p>
+    <p>For font sizing? Almost never. clamp() handles every size between your bounds automatically. You might still want media queries for layout changes, but the typography part is solved.</p>
     <h3>Is clamp() supported in all browsers?</h3>
-    <p>Yes. clamp() has been supported in all modern browsers for years and needs no prefix.</p>
+    <p>Yes — it's been universally supported for years. No prefix needed. Ship it.</p>
 
     <h2>Related tools</h2>
     <div class="related">

@@ -3,31 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Flexbox: The Complete Guide (Properties, Patterns + Playground) | FreeReign</title>
-  <meta name="description" content="Master CSS flexbox: the mental model, every container and item property, 5 copy-paste layout patterns, flexbox vs grid, Tailwind utilities, and a free visual playground.">
+  <title>Flexbox in 10 Minutes: Every Property, 5 Layouts You'll Actually Use | FreeReign</title>
+  <meta name="description" content="A practical flexbox reference: the mental model, every container and item property explained, and 5 copy-paste layout patterns (navbar, sticky footer, equal columns, centering, card grid).">
   <meta name="keywords" content="css flexbox, flexbox guide, flex css, justify-content, align-items, flex-grow, flexbox layout, flexbox cheat sheet">
   <link rel="canonical" href="https://freereign.dev/blog/css-flexbox-guide">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
   <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
 
-  <meta property="og:title" content="CSS Flexbox: The Complete Guide (Properties, Patterns + Playground)">
-  <meta property="og:description" content="Master CSS flexbox: the mental model, every container and item property, 5 copy-paste layout patterns, flexbox vs grid, Tailwind utilities, and a free visual playground.">
+  <meta property="og:title" content="Flexbox in 10 Minutes: Every Property, 5 Layouts You'll Actually Use">
+  <meta property="og:description" content="A practical flexbox reference: the mental model, every container and item property explained, and 5 copy-paste layout patterns (navbar, sticky footer, equal columns, centering, card grid).">
   <meta property="og:image" content="https://freereign.dev/og-image.png">
   <meta property="og:url" content="https://freereign.dev/blog/css-flexbox-guide">
   <meta property="og:type" content="article">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CSS Flexbox: The Complete Guide (Properties, Patterns + Playground)">
-  <meta name="twitter:description" content="Master CSS flexbox: the mental model, every container and item property, 5 copy-paste layout patterns, flexbox vs grid, Tailwind utilities, and a free visual playground.">
+  <meta name="twitter:title" content="Flexbox in 10 Minutes: Every Property, 5 Layouts You'll Actually Use">
+  <meta name="twitter:description" content="A practical flexbox reference: the mental model, every container and item property explained, and 5 copy-paste layout patterns (navbar, sticky footer, equal columns, centering, card grid).">
   <meta name="twitter:image" content="https://freereign.dev/og-image.png">
 
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "CSS Flexbox: The Complete Guide",
-  "description": "Master CSS flexbox: the mental model, every container and item property, 5 copy-paste layout patterns, flexbox vs grid, Tailwind utilities, and a free visual playground.",
+  "headline": "Flexbox in 10 Minutes",
+  "description": "A practical flexbox reference: the mental model, every container and item property explained, and 5 copy-paste layout patterns (navbar, sticky footer, equal columns, centering, card grid).",
   "author": {
     "@type": "Organization",
     "name": "FreeReign"
@@ -52,7 +52,7 @@
       "name": "What is the difference between flexbox and grid?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Flexbox is one-dimensional — it lays out items in a row or column. Grid is two-dimensional — it controls rows and columns simultaneously. Use flexbox for navbars, button groups, and single-direction layouts. Use grid for page-level layouts and card grids."
+        "text": "Flexbox handles one direction at a time — a row or a column. Grid handles rows and columns together. Use flexbox for navbars, button groups, and anything in a line. Use grid for page layouts and card grids. Combine them freely."
       }
     },
     {
@@ -60,7 +60,7 @@
       "name": "What does flex: 1 mean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "flex: 1 is shorthand for flex-grow: 1, flex-shrink: 1, flex-basis: 0%. It tells the item to grow and take up an equal share of available space."
+        "text": "It's shorthand for flex-grow: 1, flex-shrink: 1, flex-basis: 0%. In plain English: \"take up your fair share of whatever space is left.\" If three items all have flex: 1, they split the space equally."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "How do I center something with flexbox?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Set display: flex, justify-content: center, and align-items: center on the parent container. This centers the children both horizontally and vertically."
+        "text": "display: flex; justify-content: center; align-items: center on the parent. That's it. Three lines, centered both ways. It's probably the most commonly written flexbox pattern."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "Why does my flex item overflow?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Flex items default to min-width: auto, which prevents them from shrinking below their content size. Add min-width: 0 to the item to allow it to shrink, and use overflow-wrap: break-word on text."
+        "text": "Flex items have min-width: auto by default, which means they refuse to shrink below their content width. Add min-width: 0 and the item will shrink properly. For text, also add overflow-wrap: break-word."
       }
     }
   ]
@@ -141,11 +141,11 @@
 <body>
   <div class="container">
     <nav class="breadcrumb">
-      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Flexbox: The Complete Guide
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / Flexbox in 10 Minutes
     </nav>
 
-    <h1>CSS Flexbox: The Complete Guide</h1>
-    <p class="lede">Flexbox is the CSS layout engine for distributing space in one dimension — rows or columns. This guide covers the mental model, every property, and gives you 5 copy-paste patterns for common layouts. Want to experiment visually? <a href="https://freereign.dev/#flexbox">Use the free flexbox playground →</a></p>
+    <h1>Flexbox in 10 Minutes</h1>
+    <p class="lede">Flexbox has a lot of properties, but you only need to understand one thing: there's a main axis and a cross axis. <code>justify-content</code> works on the main axis, <code>align-items</code> works on the cross axis. Once that clicks, everything else falls into place. Here's every property, plus the 5 layout patterns that cover 90% of real-world use cases. <a href="https://freereign.dev/#flexbox">Or just play with it visually →</a></p>
 
     <h2>The flexbox mental model</h2>
     <p>Flexbox works on two axes: the <strong>main axis</strong> (set by <code>flex-direction</code>) and the <strong>cross axis</strong> (perpendicular to it). Everything in flexbox is about distributing space and aligning items along these two axes.</p>
@@ -286,13 +286,13 @@ order: 0; /* default, lower = earlier */</code></pre>
 
     <h2>FAQ</h2>
     <h3>What is the difference between flexbox and grid?</h3>
-    <p>Flexbox is one-dimensional — it lays out items in a row or column. Grid is two-dimensional — it controls rows and columns simultaneously. Use flexbox for navbars, button groups, and single-direction layouts. Use grid for page-level layouts and card grids.</p>
+    <p>Flexbox handles one direction at a time — a row or a column. Grid handles rows and columns together. Use flexbox for navbars, button groups, and anything in a line. Use grid for page layouts and card grids. Combine them freely.</p>
     <h3>What does flex: 1 mean?</h3>
-    <p>flex: 1 is shorthand for flex-grow: 1, flex-shrink: 1, flex-basis: 0%. It tells the item to grow and take up an equal share of available space.</p>
+    <p>It's shorthand for flex-grow: 1, flex-shrink: 1, flex-basis: 0%. In plain English: "take up your fair share of whatever space is left." If three items all have flex: 1, they split the space equally.</p>
     <h3>How do I center something with flexbox?</h3>
-    <p>Set display: flex, justify-content: center, and align-items: center on the parent container. This centers the children both horizontally and vertically.</p>
+    <p>display: flex; justify-content: center; align-items: center on the parent. That's it. Three lines, centered both ways. It's probably the most commonly written flexbox pattern.</p>
     <h3>Why does my flex item overflow?</h3>
-    <p>Flex items default to min-width: auto, which prevents them from shrinking below their content size. Add min-width: 0 to the item to allow it to shrink, and use overflow-wrap: break-word on text.</p>
+    <p>Flex items have min-width: auto by default, which means they refuse to shrink below their content width. Add min-width: 0 and the item will shrink properly. For text, also add overflow-wrap: break-word.</p>
 
     <h2>Related tools</h2>
     <div class="related">
