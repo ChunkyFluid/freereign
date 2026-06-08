@@ -221,6 +221,65 @@ const ARTICLES = [
       animation: pulse-demo 2s ease-in-out infinite; }
     @keyframes pulse-demo { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.7; } }`,
   },
+  {
+    slug: 'css-grid-guide',
+    title: 'CSS Grid: The Complete Guide (Columns, Areas, Patterns + Generator)',
+    description: 'Master CSS Grid: grid-template-columns, rows, areas, auto-fit/auto-fill, repeat(), named lines, alignment, 5 copy-paste layout patterns, and a free visual generator.',
+    keywords: 'css grid, css grid layout, grid-template-columns, grid-template-areas, css grid generator, auto-fit auto-fill, responsive grid',
+    h1: 'CSS Grid: The Complete Guide',
+    lede: 'CSS Grid is the most powerful layout system in CSS — it gives you control over rows and columns simultaneously. This guide covers everything from basic grids to named areas and responsive patterns. Want to build grids visually? <a href="https://freereign.dev/#grid">Use the free CSS Grid generator →</a>',
+    cta: { heading: 'Build grids visually', blurb: 'Set columns, rows, and gaps with sliders — see the grid update in real time and copy the CSS.', label: 'Open the Grid Generator →', toolId: 'grid' },
+    faqs: [
+      { q: 'What is the difference between auto-fill and auto-fit?', a: 'auto-fill creates as many tracks as will fit, leaving empty ones visible. auto-fit collapses empty tracks so items stretch to fill the space. For responsive card grids, auto-fit is usually what you want.' },
+      { q: 'How do I make a responsive grid without media queries?', a: 'Use grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)). Items will automatically wrap to new rows when they can\'t fit at the minimum size.' },
+      { q: 'What is the fr unit?', a: 'fr stands for "fraction of available space." 1fr 2fr 1fr creates three columns where the middle one is twice as wide as the others.' },
+      { q: 'Should I use Grid or Flexbox?', a: 'Use Grid for two-dimensional layouts (page layouts, card grids). Use Flexbox for one-dimensional layouts (navbars, button groups). Combine them: Grid for the outer layout, Flexbox for components inside each cell.' },
+    ],
+    related: [
+      { id: 'grid', icon: '🔲', name: 'CSS Grid Generator' },
+      { id: 'flexbox', icon: '📐', name: 'Flexbox Playground' },
+      { id: 'containerquery', icon: '📦', name: 'Container Queries' },
+      { id: 'breakpoint', icon: '📏', name: 'Breakpoint Tester' },
+    ],
+    extraCss: `
+    .grid-demo { display: grid; grid-template-columns: 120px 1fr; grid-template-rows: auto 1fr auto;
+      grid-template-areas: "header header" "sidebar main" "footer footer"; gap: 8px; max-width: 400px; margin: 0 auto; }
+    .grid-item { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px; text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--accent); }
+    .grid-item--header { grid-area: header; }
+    .grid-item--sidebar { grid-area: sidebar; }
+    .grid-item--main { grid-area: main; min-height: 80px; }
+    .grid-item--footer { grid-area: footer; }`,
+  },
+  {
+    slug: 'css-border-radius-guide',
+    title: 'CSS Border Radius: The Complete Guide (Shapes, Scale + Generator)',
+    description: 'Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.',
+    keywords: 'css border radius, border-radius, css rounded corners, css circle, css pill button, border-radius generator, css blob shape',
+    h1: 'CSS Border Radius: The Complete Guide',
+    lede: 'The <code>border-radius</code> property turns sharp rectangles into circles, pills, cards, and organic blobs — all with one line of CSS. This guide covers every syntax, common shapes, a design system scale, and advanced techniques. Generate it visually? <a href="https://freereign.dev/#borderradius">Use the free border radius generator →</a>',
+    cta: { heading: 'Generate it visually', blurb: 'Drag corners independently, see the shape update live, copy the exact border-radius value.', label: 'Open the Border Radius Generator →', toolId: 'borderradius' },
+    faqs: [
+      { q: 'How do I make a circle with CSS?', a: 'Set border-radius: 50% on an element with equal width and height. If the element is not square, 50% creates an ellipse instead.' },
+      { q: 'How do I make a pill button?', a: 'Set border-radius: 9999px (or 100vmax). This creates a fully rounded capsule shape regardless of the element\'s width or height.' },
+      { q: 'What does the slash (/) mean in border-radius?', a: 'The slash separates horizontal and vertical radii, creating elliptical corners. For example, border-radius: 20px / 10px makes corners that curve more horizontally than vertically.' },
+      { q: 'Does border-radius affect performance?', a: 'No. Border-radius is extremely cheap to render. Unlike box-shadow or filter, you can use it freely without performance concerns.' },
+    ],
+    related: [
+      { id: 'borderradius', icon: '◼️', name: 'Border Radius Generator' },
+      { id: 'boxshadow', icon: '🔳', name: 'Box Shadow Generator' },
+      { id: 'glassmorphism', icon: '🪟', name: 'Glassmorphism Generator' },
+      { id: 'clippath', icon: '✂️', name: 'Clip-Path Generator' },
+    ],
+    extraCss: `
+    .radius-demo { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .radius-box { width: 80px; height: 80px; background: var(--bg-elevated); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+    .radius-box--card { border-radius: 16px; }
+    .radius-box--pill { border-radius: 9999px; width: 120px; height: 44px; }
+    .radius-box--circle { border-radius: 50%; }
+    .radius-box--blob { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }`,
+  },
 ];
 
 function articleJsonLd(a) {

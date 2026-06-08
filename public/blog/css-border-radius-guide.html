@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Border Radius: The Complete Guide (Shapes, Scale + Generator) | FreeReign</title>
+  <meta name="description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <meta name="keywords" content="css border radius, border-radius, css rounded corners, css circle, css pill button, border-radius generator, css blob shape">
+  <link rel="canonical" href="https://freereign.dev/blog/css-border-radius-guide">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script defer data-domain="freereign.dev" src="https://analytics.freereign.dev/js/script.outbound-links.js"></script>
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
+  <meta property="og:title" content="CSS Border Radius: The Complete Guide (Shapes, Scale + Generator)">
+  <meta property="og:description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <meta property="og:image" content="https://freereign.dev/og-image.png">
+  <meta property="og:url" content="https://freereign.dev/blog/css-border-radius-guide">
+  <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Border Radius: The Complete Guide (Shapes, Scale + Generator)">
+  <meta name="twitter:description" content="Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.">
+  <meta name="twitter:image" content="https://freereign.dev/og-image.png">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "CSS Border Radius: The Complete Guide",
+  "description": "Master CSS border-radius: circles, pills, blobs, elliptical corners, design system scale, advanced combos with shadows and gradients, Tailwind utilities, and a free generator.",
+  "author": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FreeReign"
+  },
+  "datePublished": "2026-06-05",
+  "dateModified": "2026-06-05",
+  "mainEntityOfPage": "https://freereign.dev/blog/css-border-radius-guide",
+  "image": "https://freereign.dev/og-image.png"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I make a circle with CSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set border-radius: 50% on an element with equal width and height. If the element is not square, 50% creates an ellipse instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I make a pill button?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set border-radius: 9999px (or 100vmax). This creates a fully rounded capsule shape regardless of the element's width or height."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the slash (/) mean in border-radius?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The slash separates horizontal and vertical radii, creating elliptical corners. For example, border-radius: 20px / 10px makes corners that curve more horizontally than vertically."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does border-radius affect performance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Border-radius is extremely cheap to render. Unlike box-shadow or filter, you can use it freely without performance concerns."
+      }
+    }
+  ]
+}
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f14; --bg-surface: #16161d; --bg-elevated: #1e1e28;
+      --text: #e8e6f0; --text-secondary: #9896a8; --text-tertiary: #6b6980;
+      --accent: #8b5cf6; --accent-secondary: #06b6d4;
+      --border: rgba(255,255,255,0.08); --radius: 12px;
+    }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px; }
+    .breadcrumb { font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 28px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .lede { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; }
+    h2 { font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+    p { margin-bottom: 16px; }
+    a { color: var(--accent); }
+    ul { margin: 0 0 16px 22px; }
+    li { margin-bottom: 8px; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-elevated);
+      padding: 2px 6px; border-radius: 5px; color: #c4b5fd; }
+    pre { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; overflow-x: auto; margin-bottom: 20px; }
+    pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; line-height: 1.6; }
+    .demo { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px 24px; margin: 8px 0 28px; text-align: center; }
+    .demo-note { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 14px; }
+    .callout { background: var(--bg-surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px; font-size: 0.92rem; color: var(--text-secondary); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff; text-decoration: none; transition: transform 200ms, box-shadow 200ms; box-shadow: 0 4px 20px rgba(139,92,246,0.3); }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
+    .cta-wrap { text-align: center; padding: 36px 24px; margin: 36px 0; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); }
+    .cta-wrap h2 { margin-top: 0; }
+    .related { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+    .related a { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500; transition: border-color 200ms; }
+    .related a:hover { border-color: var(--accent); }
+    .related a span:first-child { font-size: 1.3rem; }
+    footer { text-align: center; padding: 32px; font-size: 0.8rem; color: var(--text-tertiary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { h1 { font-size: 1.7rem; } .related { grid-template-columns: 1fr; } }
+    .radius-demo { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .radius-box { width: 80px; height: 80px; background: var(--bg-elevated); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+    .radius-box--card { border-radius: 16px; }
+    .radius-box--pill { border-radius: 9999px; width: 120px; height: 44px; }
+    .radius-box--circle { border-radius: 50%; }
+    .radius-box--blob { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="https://freereign.dev">FreeReign</a> / <a href="https://freereign.dev/blog/">Blog</a> / CSS Border Radius: The Complete Guide
+    </nav>
+
+    <h1>CSS Border Radius: The Complete Guide</h1>
+    <p class="lede">The <code>border-radius</code> property turns sharp rectangles into circles, pills, cards, and organic blobs — all with one line of CSS. This guide covers every syntax, common shapes, a design system scale, and advanced techniques. Generate it visually? <a href="https://freereign.dev/#borderradius">Use the free border radius generator →</a></p>
+
+    <h2>The border-radius property</h2>
+    <p><code>border-radius</code> rounds the corners of any element. It works on divs, images, buttons, inputs — anything with a box model.</p>
+    <pre><code>/* All four corners, same radius */
+border-radius: 12px;
+
+/* Elliptical corners (horizontal / vertical) */
+border-radius: 20px / 10px;
+
+/* Individual corners */
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+border-bottom-right-radius: 12px;
+border-bottom-left-radius: 12px;
+
+/* Shorthand: top-left, top-right, bottom-right, bottom-left */
+border-radius: 12px 0 12px 0;  /* diagonal corners */
+border-radius: 20px 20px 0 0;  /* rounded top only */</code></pre>
+
+    <h2>Common shapes</h2>
+    <pre><code>/* Perfect circle (element must be square) */
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+/* Pill / capsule (for buttons) */
+.pill {
+  border-radius: 9999px;  /* or 100vmax */
+  padding: 8px 24px;
+}
+
+/* Rounded card */
+.card {
+  border-radius: 16px;
+}
+
+/* Subtle rounding (inputs, small elements) */
+.input {
+  border-radius: 6px;
+}
+
+/* Blob / organic shape */
+.blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+/* Half circle (top) */
+.half-circle {
+  width: 200px;
+  height: 100px;
+  border-radius: 100px 100px 0 0;
+}
+
+/* Quarter circle */
+.quarter {
+  width: 100px;
+  height: 100px;
+  border-radius: 100% 0 0 0;
+}</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="radius-demo">
+        <div class="radius-box radius-box--card">16px</div>
+        <div class="radius-box radius-box--pill">pill</div>
+        <div class="radius-box radius-box--circle">50%</div>
+        <div class="radius-box radius-box--blob">blob</div>
+      </div>
+      <p class="demo-note">Common border-radius values and their visual effect.</p>
+    </div>
+
+    <h2>Design system scale</h2>
+    <p>Most design systems use a consistent radius scale. Here's a practical one:</p>
+    <pre><code>:root {
+  --radius-xs: 4px;    /* checkboxes, badges */
+  --radius-sm: 6px;    /* inputs, small buttons */
+  --radius-md: 8px;    /* cards, dropdowns */
+  --radius-lg: 12px;   /* modals, panels */
+  --radius-xl: 16px;   /* hero cards, images */
+  --radius-2xl: 24px;  /* featured sections */
+  --radius-full: 9999px; /* pills, avatars */
+}
+
+.btn       { border-radius: var(--radius-sm); }
+.card      { border-radius: var(--radius-lg); }
+.avatar    { border-radius: var(--radius-full); }
+.modal     { border-radius: var(--radius-lg); }</code></pre>
+
+    <h2>Advanced: elliptical corners</h2>
+    <p>The <code>/</code> syntax lets you set different horizontal and vertical radii for each corner, creating elliptical curves:</p>
+    <pre><code>/* Horizontal radii / Vertical radii */
+border-radius: 50px 50px 50px 50px / 25px 25px 25px 25px;
+
+/* Squircle (iOS-style rounded rectangle) */
+.squircle {
+  border-radius: 22% 22% 22% 22% / 22% 22% 22% 22%;
+  /* Or use a close approximation */
+  border-radius: 25%;
+}
+
+/* Egg shape */
+.egg {
+  width: 100px;
+  height: 130px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}</code></pre>
+
+    <h2>Border-radius with other properties</h2>
+    <pre><code>/* Rounded image */
+img {
+  border-radius: 12px;
+  object-fit: cover;  /* important: prevents stretching */
+}
+
+/* Rounded with box-shadow */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;   /* clips child content to the radius */
+}
+
+/* Rounded with border */
+.outlined {
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+/* Rounded with gradient border */
+.gradient-border {
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+              linear-gradient(135deg, #8b5cf6, #06b6d4) border-box;
+}</code></pre>
+
+    <h2>Border-radius in Tailwind CSS</h2>
+    <pre><code>&lt;div class="rounded-lg"&gt;12px radius&lt;/div&gt;
+&lt;img class="rounded-full" /&gt;  &lt;!-- circle --&gt;
+&lt;button class="rounded-full px-6 py-2"&gt;Pill button&lt;/button&gt;
+&lt;div class="rounded-t-xl"&gt;Top corners only&lt;/div&gt;</code></pre>
+    <p>Scale: <code>rounded-none</code> (0), <code>rounded-sm</code> (2px), <code>rounded</code> (4px), <code>rounded-md</code> (6px), <code>rounded-lg</code> (8px), <code>rounded-xl</code> (12px), <code>rounded-2xl</code> (16px), <code>rounded-3xl</code> (24px), <code>rounded-full</code> (9999px).</p>
+    <p>Corners: <code>rounded-t-*</code>, <code>rounded-b-*</code>, <code>rounded-l-*</code>, <code>rounded-r-*</code>, <code>rounded-tl-*</code>, <code>rounded-tr-*</code>, etc.</p>
+
+    <h2>Common gotchas</h2>
+    <ul>
+      <li><strong>50% doesn't make a circle on rectangles.</strong> <code>border-radius: 50%</code> creates an ellipse on non-square elements. For a true circle, the element must have equal width and height.</li>
+      <li><strong>Children overflow rounded corners.</strong> Add <code>overflow: hidden</code> to the parent so child elements are clipped to the rounded shape.</li>
+      <li><strong>Outline doesn't follow border-radius.</strong> In some older browsers, <code>outline</code> stays rectangular. Use <code>box-shadow</code> for focus rings instead: <code>box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5)</code>.</li>
+      <li><strong>Performance is fine.</strong> Unlike box-shadow or filter, border-radius is extremely cheap to render. Use it freely.</li>
+    </ul>
+
+    <div class="cta-wrap">
+      <h2>Generate it visually</h2>
+      <p>Drag corners independently, see the shape update live, copy the exact border-radius value.</p>
+      <a class="cta-btn" href="https://freereign.dev/#borderradius">Open the Border Radius Generator →</a>
+    </div>
+
+    <h2>FAQ</h2>
+    <h3>How do I make a circle with CSS?</h3>
+    <p>Set border-radius: 50% on an element with equal width and height. If the element is not square, 50% creates an ellipse instead.</p>
+    <h3>How do I make a pill button?</h3>
+    <p>Set border-radius: 9999px (or 100vmax). This creates a fully rounded capsule shape regardless of the element's width or height.</p>
+    <h3>What does the slash (/) mean in border-radius?</h3>
+    <p>The slash separates horizontal and vertical radii, creating elliptical corners. For example, border-radius: 20px / 10px makes corners that curve more horizontally than vertically.</p>
+    <h3>Does border-radius affect performance?</h3>
+    <p>No. Border-radius is extremely cheap to render. Unlike box-shadow or filter, you can use it freely without performance concerns.</p>
+
+    <h2>Related tools</h2>
+    <div class="related">
+      <a href="https://freereign.dev/#borderradius"><span>◼️</span> Border Radius Generator</a>
+      <a href="https://freereign.dev/#boxshadow"><span>🔳</span> Box Shadow Generator</a>
+      <a href="https://freereign.dev/#glassmorphism"><span>🪟</span> Glassmorphism Generator</a>
+      <a href="https://freereign.dev/#clippath"><span>✂️</span> Clip-Path Generator</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ◆ by <a href="https://freereign.dev">FreeReign</a> · 25 CSS generators · <a href="https://freereign.dev/tools/">All tools</a></p>
+  </footer>
+</body>
+</html>

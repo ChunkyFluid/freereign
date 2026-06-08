@@ -1,0 +1,151 @@
+    <h2>The border-radius property</h2>
+    <p><code>border-radius</code> rounds the corners of any element. It works on divs, images, buttons, inputs — anything with a box model.</p>
+    <pre><code>/* All four corners, same radius */
+border-radius: 12px;
+
+/* Elliptical corners (horizontal / vertical) */
+border-radius: 20px / 10px;
+
+/* Individual corners */
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+border-bottom-right-radius: 12px;
+border-bottom-left-radius: 12px;
+
+/* Shorthand: top-left, top-right, bottom-right, bottom-left */
+border-radius: 12px 0 12px 0;  /* diagonal corners */
+border-radius: 20px 20px 0 0;  /* rounded top only */</code></pre>
+
+    <h2>Common shapes</h2>
+    <pre><code>/* Perfect circle (element must be square) */
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+/* Pill / capsule (for buttons) */
+.pill {
+  border-radius: 9999px;  /* or 100vmax */
+  padding: 8px 24px;
+}
+
+/* Rounded card */
+.card {
+  border-radius: 16px;
+}
+
+/* Subtle rounding (inputs, small elements) */
+.input {
+  border-radius: 6px;
+}
+
+/* Blob / organic shape */
+.blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+/* Half circle (top) */
+.half-circle {
+  width: 200px;
+  height: 100px;
+  border-radius: 100px 100px 0 0;
+}
+
+/* Quarter circle */
+.quarter {
+  width: 100px;
+  height: 100px;
+  border-radius: 100% 0 0 0;
+}</code></pre>
+
+    <h2>Live demo</h2>
+    <div class="demo">
+      <div class="radius-demo">
+        <div class="radius-box radius-box--card">16px</div>
+        <div class="radius-box radius-box--pill">pill</div>
+        <div class="radius-box radius-box--circle">50%</div>
+        <div class="radius-box radius-box--blob">blob</div>
+      </div>
+      <p class="demo-note">Common border-radius values and their visual effect.</p>
+    </div>
+
+    <h2>Design system scale</h2>
+    <p>Most design systems use a consistent radius scale. Here's a practical one:</p>
+    <pre><code>:root {
+  --radius-xs: 4px;    /* checkboxes, badges */
+  --radius-sm: 6px;    /* inputs, small buttons */
+  --radius-md: 8px;    /* cards, dropdowns */
+  --radius-lg: 12px;   /* modals, panels */
+  --radius-xl: 16px;   /* hero cards, images */
+  --radius-2xl: 24px;  /* featured sections */
+  --radius-full: 9999px; /* pills, avatars */
+}
+
+.btn       { border-radius: var(--radius-sm); }
+.card      { border-radius: var(--radius-lg); }
+.avatar    { border-radius: var(--radius-full); }
+.modal     { border-radius: var(--radius-lg); }</code></pre>
+
+    <h2>Advanced: elliptical corners</h2>
+    <p>The <code>/</code> syntax lets you set different horizontal and vertical radii for each corner, creating elliptical curves:</p>
+    <pre><code>/* Horizontal radii / Vertical radii */
+border-radius: 50px 50px 50px 50px / 25px 25px 25px 25px;
+
+/* Squircle (iOS-style rounded rectangle) */
+.squircle {
+  border-radius: 22% 22% 22% 22% / 22% 22% 22% 22%;
+  /* Or use a close approximation */
+  border-radius: 25%;
+}
+
+/* Egg shape */
+.egg {
+  width: 100px;
+  height: 130px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}</code></pre>
+
+    <h2>Border-radius with other properties</h2>
+    <pre><code>/* Rounded image */
+img {
+  border-radius: 12px;
+  object-fit: cover;  /* important: prevents stretching */
+}
+
+/* Rounded with box-shadow */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;   /* clips child content to the radius */
+}
+
+/* Rounded with border */
+.outlined {
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+/* Rounded with gradient border */
+.gradient-border {
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+              linear-gradient(135deg, #8b5cf6, #06b6d4) border-box;
+}</code></pre>
+
+    <h2>Border-radius in Tailwind CSS</h2>
+    <pre><code>&lt;div class="rounded-lg"&gt;12px radius&lt;/div&gt;
+&lt;img class="rounded-full" /&gt;  &lt;!-- circle --&gt;
+&lt;button class="rounded-full px-6 py-2"&gt;Pill button&lt;/button&gt;
+&lt;div class="rounded-t-xl"&gt;Top corners only&lt;/div&gt;</code></pre>
+    <p>Scale: <code>rounded-none</code> (0), <code>rounded-sm</code> (2px), <code>rounded</code> (4px), <code>rounded-md</code> (6px), <code>rounded-lg</code> (8px), <code>rounded-xl</code> (12px), <code>rounded-2xl</code> (16px), <code>rounded-3xl</code> (24px), <code>rounded-full</code> (9999px).</p>
+    <p>Corners: <code>rounded-t-*</code>, <code>rounded-b-*</code>, <code>rounded-l-*</code>, <code>rounded-r-*</code>, <code>rounded-tl-*</code>, <code>rounded-tr-*</code>, etc.</p>
+
+    <h2>Common gotchas</h2>
+    <ul>
+      <li><strong>50% doesn't make a circle on rectangles.</strong> <code>border-radius: 50%</code> creates an ellipse on non-square elements. For a true circle, the element must have equal width and height.</li>
+      <li><strong>Children overflow rounded corners.</strong> Add <code>overflow: hidden</code> to the parent so child elements are clipped to the rounded shape.</li>
+      <li><strong>Outline doesn't follow border-radius.</strong> In some older browsers, <code>outline</code> stays rectangular. Use <code>box-shadow</code> for focus rings instead: <code>box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5)</code>.</li>
+      <li><strong>Performance is fine.</strong> Unlike box-shadow or filter, border-radius is extremely cheap to render. Use it freely.</li>
+    </ul>
