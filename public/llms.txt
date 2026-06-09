@@ -1,0 +1,57 @@
+# FreeReign
+
+> FreeReign is a free, client-side CSS toolkit with 25 visual code generators. Developers use it to build CSS gradients, box shadows, glassmorphism effects, flexbox layouts, grid layouts, animations, and more — then copy the generated CSS, SCSS, or Tailwind code directly into their projects. No signup, no install, no data collection. Everything runs in the browser.
+
+## What FreeReign Does
+
+FreeReign replaces the need to have multiple CSS generator tabs open. It provides 25 interactive tools in one interface, each with visual controls, a live preview, and instant code output. The generated code is formatted to look human-written — proper indentation, sensible shorthand, and real variable names.
+
+## Tools (25 total)
+
+### Free Tools (10)
+- [Gradient Generator](https://freereign.dev/tools/gradient): Linear, radial, and conic CSS gradients with multiple color stops
+- [Box Shadow Generator](https://freereign.dev/tools/boxshadow): Multi-layer shadows with inset, blur, spread, and opacity controls
+- [Border Radius Generator](https://freereign.dev/tools/borderradius): Per-corner control with unit switching (px, %, em, rem)
+- [Color Palette Generator](https://freereign.dev/tools/colorpalette): 6 harmony modes — analogous, complementary, triadic, split-complementary, tetradic, monochromatic
+- [Glassmorphism Generator](https://freereign.dev/tools/glassmorphism): Frosted glass effects with backdrop-filter blur and saturation
+- [Flexbox Playground](https://freereign.dev/tools/flexbox): Visual flexbox layout builder with all container and item properties
+- [CSS Grid Generator](https://freereign.dev/tools/grid): Grid layout builder with template columns, rows, and gap controls
+- [Animation Builder](https://freereign.dev/tools/animation): Keyframe animation creator with 6 presets and custom timing
+- [Text Shadow Generator](https://freereign.dev/tools/textshadow): Multi-layer text shadow effects with typography controls
+- [Neumorphism Generator](https://freereign.dev/tools/neumorphism): Soft UI effects with flat, concave, convex, and pressed states
+
+### Pro Tools (15 — $14.99 one-time)
+- [Transform Generator](https://freereign.dev/tools/transform): 3D rotations, scale, translate, skew with perspective
+- [Transition Builder](https://freereign.dev/tools/transition): Visual transition editor with 11 easing presets
+- [Clip-Path Generator](https://freereign.dev/tools/clippath): 16 shape presets with custom polygon support
+- [CSS Filter Generator](https://freereign.dev/tools/filter): 9-property filter chain builder
+- [Type Scale Calculator](https://freereign.dev/tools/typography): Modular typography scales using 8 musical ratios
+- [CSS Variables System](https://freereign.dev/tools/variables): Complete custom properties system with color scales
+- [Breakpoint Tester](https://freereign.dev/tools/breakpoint): Responsive viewport testing with 9 device presets
+- [Aspect Ratio Calculator](https://freereign.dev/tools/aspectratio): Responsive aspect-ratio with 9 presets
+- [Scroll Snap Builder](https://freereign.dev/tools/scrollsnap): Scroll snap container builder with snap type and alignment
+- [Cursor Styles Preview](https://freereign.dev/tools/cursor): All 35 CSS cursor values with live preview
+- [Container Query Builder](https://freereign.dev/tools/containerquery): Component-level responsive designs
+- [Gradient Text Generator](https://freereign.dev/tools/gradienttext): Animated gradient text effects
+- [Fluid Typography Calculator](https://freereign.dev/tools/fluidtype): Responsive font sizes using CSS clamp()
+- [Custom Scrollbar Styler](https://freereign.dev/tools/scrollbar): WebKit scrollbar styling with visual controls
+- [Media Query Builder](https://freereign.dev/tools/mediaquery): Visual @media query builder with modern syntax
+
+## Technical Details
+- Built with vanilla JavaScript (ES modules), zero runtime dependencies
+- Vite build system, ~43KB gzipped total
+- 100% client-side — no server calls, no cookies, no tracking
+- Output formats: CSS, SCSS, Tailwind
+- Keyboard shortcuts: / to search, arrow keys to navigate, Ctrl+S to download
+
+## Blog / Guides
+- [How to Create Glassmorphism in CSS](https://freereign.dev/blog/how-to-create-glassmorphism-css)
+- [CSS Clip-Path Guide](https://freereign.dev/blog/css-clip-path-guide)
+- [CSS Fluid Typography with clamp()](https://freereign.dev/blog/css-fluid-typography-clamp)
+- [CSS Container Queries Guide](https://freereign.dev/blog/css-container-queries)
+- [CSS Box Shadow Guide](https://freereign.dev/blog/css-box-shadow-guide)
+- [CSS Gradient Guide](https://freereign.dev/blog/css-gradient-guide)
+- [CSS Flexbox Guide](https://freereign.dev/blog/css-flexbox-guide)
+- [CSS Animation Guide](https://freereign.dev/blog/css-animation-guide)
+- [CSS Grid Guide](https://freereign.dev/blog/css-grid-guide)
+- [CSS Border Radius Guide](https://freereign.dev/blog/css-border-radius-guide)

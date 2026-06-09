@@ -25,39 +25,105 @@
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "FreeReign",
-    "url": "https://freereign.dev",
-    "description": "25 CSS generators in one toolkit. 10 free tools, 15 Pro tools for $14.99.",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Web",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "description": "Free tier with 10 tools, Pro tier with 15 additional tools for $14.99"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FreeReign",
+      "url": "https://freereign.dev",
+      "description": "25 interactive CSS generators in one toolkit. Visual controls, live preview, and instant code output in CSS, SCSS, and Tailwind formats. 10 free tools, 15 Pro tools. 100% client-side, zero dependencies, no signup required.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Web",
+      "browserRequirements": "Any modern browser (Chrome, Firefox, Safari, Edge)",
+      "softwareVersion": "1.0",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "10 CSS generator tools with CSS output format"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro",
+          "price": "14.99",
+          "priceCurrency": "USD",
+          "description": "All 25 tools, CSS/SCSS/Tailwind output, clean code (no watermark), saved presets, lifetime updates",
+          "url": "https://freereign.lemonsqueezy.com/checkout/buy/4936b146-3b44-4bb4-8a41-38285e8202ab"
+        }
+      ],
+      "featureList": [
+        "CSS Gradient Generator",
+        "Box Shadow Generator",
+        "Border Radius Generator",
+        "Color Palette Generator",
+        "Glassmorphism Generator",
+        "Flexbox Playground",
+        "CSS Grid Generator",
+        "Animation Builder",
+        "Text Shadow Generator",
+        "Neumorphism Generator",
+        "CSS Transform Generator",
+        "Transition Builder",
+        "Clip-Path Generator",
+        "CSS Filter Generator",
+        "Typography Scale Calculator",
+        "CSS Variables System",
+        "Responsive Breakpoint Tester",
+        "Aspect Ratio Calculator",
+        "Scroll Snap Builder",
+        "Cursor Styles Preview",
+        "Container Query Builder",
+        "Gradient Text Generator",
+        "Fluid Typography Calculator",
+        "Custom Scrollbar Styler",
+        "Media Query Builder"
+      ],
+      "screenshot": "https://freereign.dev/og-image.png",
+      "keywords": "CSS generator, gradient generator, box shadow generator, glassmorphism CSS, flexbox playground, CSS grid generator, animation builder, clip-path generator, CSS tools, web design tools, frontend developer tools"
     },
-    "featureList": [
-      "CSS Gradient Generator",
-      "Box Shadow Generator",
-      "Border Radius Generator",
-      "Color Palette Generator",
-      "Glassmorphism Generator",
-      "Flexbox Playground",
-      "CSS Grid Generator",
-      "Animation Builder",
-      "Text Shadow Generator",
-      "CSS Transform Generator",
-      "Neumorphism Generator",
-      "Clip-Path Generator",
-      "CSS Filter Generator",
-      "Typography Scale Calculator",
-      "Responsive Breakpoint Tester"
-    ]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is FreeReign?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FreeReign is a free CSS toolkit with 25 visual code generators for gradients, shadows, glassmorphism, flexbox, grid, animations, and more. It runs entirely in your browser with zero dependencies and no signup required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is FreeReign free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. 10 tools are completely free with CSS output. The Pro upgrade ($14.99 one-time) unlocks all 25 tools plus SCSS and Tailwind output formats, clean code without watermarks, and saved presets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What CSS output formats does FreeReign support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FreeReign generates code in three formats: plain CSS, SCSS (with variables), and Tailwind CSS utility classes. Free users get CSS output; Pro users get all three formats."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does FreeReign collect any data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. FreeReign is 100% client-side. Everything runs in your browser. There are no accounts, no cookies, no server calls, and no data collection."
+          }
+        }
+      ]
+    }
+  ]
   </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">

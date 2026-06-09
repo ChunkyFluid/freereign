@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
 Sitemap: https://freereign.dev/sitemap.xml
+
+# AI / LLM crawlers — site summary for AI consumption
+# See https://llmstxt.org for the llms.txt standard
+# llms.txt: https://freereign.dev/llms.txt
